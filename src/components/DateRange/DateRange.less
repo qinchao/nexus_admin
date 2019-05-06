@@ -1,0 +1,53 @@
+@import "../../common.less";
+
+@inputPlaceholderColor: #61636f;
+@minHeight: 23px;
+
+.pickerWrapper {
+  display: flex;
+  align-items: center;
+
+  .center {
+    display: flex;
+    align-items: center;
+    .pickerTitle {
+      padding-right: 10px;
+      font-size: 14px;
+    }
+
+    .pickerBetween {
+      padding-left: 5px;
+      padding-right: 5px;
+    }
+  }
+
+  .pickerInput {
+    position: relative;
+
+    .icon {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+    }
+
+    input {
+      background-color: transparent;
+      color: @inputTextColor;
+      padding: 0 5px !important;
+      min-height: @minHeight;
+      outline-width: 0;
+      border-radius: 1px;
+      min-width: 150px;
+      background-color: @inputBg;
+      border: 1px solid @borderColor;
+
+      &::-webkit-input-placeholder {
+        color: @inputPlaceholderColor;
+      }
+
+      &:focus {
+        border-color: @mainGreen;
+      }
+    }
+  }
+}

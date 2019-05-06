@@ -1,0 +1,58 @@
+@import "../../common.less";
+
+// internal layout
+@containerWidth: 1400px;
+@panelHeaderHeight: 40px;
+@panelHeaderHigh: 60px;
+
+// center layout
+.ctWrap {
+  min-height: 100vh - 60px;
+  max-width: @containerWidth;
+
+  .ctContainer {
+    min-height: calc(100vh - @headerHeight);
+    width: 100%;
+    font-size: @bodyFontSize;
+  }
+
+  .ctBody {
+    width: 100%;
+  }
+
+  .panelBox {
+    background-color: @panelContentBg;
+    color: @textColorSecondary;
+  }
+
+  .panelHeader,
+  .panelHeaderHigh {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    h3 {
+      font-size: 16px;
+      color: @textColorPrimary;
+    }
+    h4 {
+      font-size: 14px;
+      color: @textColorPrimary;
+    }
+  }
+
+  .panelHeader {
+    height: @panelHeaderHeight;
+    background-color: @panelHeaderBg;
+    padding: 0 20px;
+  }
+
+  .panelHeaderHigh {
+    height: @panelHeaderHigh;
+    padding: 0 30px;
+
+    &.borderLine {
+      border-bottom: 1px solid #e9e9e9;
+    }
+  }
+}

@@ -1,0 +1,168 @@
+@import "../../common.less";
+
+.loginTipsText {
+  line-height: 20px;
+  margin: -10px 0 20px;
+  color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  .website {
+    height: 26px;
+    width: 148px;
+    margin-left: 5px;
+  }
+}
+
+.loginWrap {
+  overflow: hidden;
+  min-height: 100vh;
+  font-size: @bodyFontSize;
+
+  .loginBox {
+    min-height: calc(100vh - 10vh - 98px - 100px);
+    width: 420px;
+    margin: 0 auto;
+
+    a {
+      color: @mainGreen;
+    }
+  }
+
+  .loginHeader {
+    background-color: #f6f6f6;
+    margin: 10vh auto 0;
+    width: 420px;
+    height: 98px;
+    text-align: center;
+    padding-top: 30px;
+    .logo {
+      display: inline-block;
+    }
+  }
+
+  .loginFooter {
+    text-align: center;
+    color: rgba(0, 0, 0, 0.3);
+    padding: 40px 0 20px;
+  }
+  .quickLink {
+    position: absolute;
+    top: 4%;
+    left: 50%;
+    margin-left: -90px;
+
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+    .link,
+    .languageMenu {
+      color: @textColorSecondary;
+      font-size: 14px;
+    }
+    .link::after {
+      content: "";
+      border-right: 1px solid @textColorSecondary;
+      margin: 0 10px;
+    }
+    .languageMenu {
+      position: relative;
+      z-index: 10;
+      cursor: pointer;
+      .navText {
+        padding-bottom: 10px;
+        margin-bottom: -10px;
+      }
+    }
+    .subNav {
+      line-height: normal;
+      display: none;
+      flex-direction: column-reverse;
+      position: absolute;
+      top: auto;
+      top: 18px;
+      left: -10px;
+      font-size: 12px;
+      background: #fff;
+      color: #000;
+      font-weight: normal;
+      box-shadow: 0 -4px 10px 0 rgba(0, 0, 0, 0.2);
+    }
+    .subNavItem {
+      line-height: 21px;
+      width: 82px;
+      padding-left: 14px;
+      text-align: left;
+      display: block;
+      white-space: nowrap;
+      &:hover {
+        background-color: @mainWhite - #090909;
+      }
+    }
+    .languageMenu:hover .subNav {
+      display: flex;
+    }
+    .languageMenu button {
+      cursor: pointer;
+      padding: 0;
+      height: 24px;
+      line-height: 24px;
+      font-size: 12px;
+      text-align: left;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+    .languageMenu::after {
+      position: absolute;
+      right: -10px;
+      top: 6px;
+      content: "";
+      display: inline-block;
+      width: 0;
+      height: 0;
+      border: 3px solid transparent;
+      border-top-width: 4px;
+      border-bottom-width: 2px;
+      border-top-color: @textColorSecondary;
+    }
+  }
+
+  button {
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+
+  button:disabled {
+    cursor: default !important;
+    position: relative;
+    opacity: 0.8;
+    text-indent: 100em;
+    overflow: hidden;
+
+    &:before {
+      content: "";
+      position: absolute;
+      display: block;
+      top: 10px;
+      left: 46%;
+      width: 20px;
+      height: 20px;
+      border: 2px solid;
+      border-color: transparent #ccc #ccc #ccc;
+      border-radius: 50%;
+      margin-right: 5px;
+      animation: loading 1s infinite;
+    }
+
+    @keyframes loading {
+      0% {
+        transform: rotate(0);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+  }
+}

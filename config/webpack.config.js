@@ -42,6 +42,8 @@ const cssRegex = /\.css$/;
 const cssModuleRegex = /\.module\.css$/;
 const sassRegex = /\.(scss|sass)$/;
 const sassModuleRegex = /\.module\.(scss|sass)$/;
+const lessRegex = /\.less$/;
+const lessModuleRegex = /\.module\.less$/;
 
 // This is the production and development configuration.
 // It is focused on developer experience, fast rebuilds, and a minimal bundle.
@@ -273,6 +275,15 @@ module.exports = function(webpackEnv) {
         // Support React Native Web
         // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
         'react-native': 'react-native-web',
+        App: paths.appSrc + "/app",
+        Biz: paths.appSrc + "/biz",
+        Container: paths.appSrc + "/container",
+        Components: paths.appSrc + "/components",
+        Model: paths.appSrc + "/model",
+        Service: paths.appSrc + "/service",
+        Utils: paths.appSrc + "/utils",
+        Img: paths.appSrc + "/img",
+        appSrc: paths.appSrc
       },
       plugins: [
         // Adds support for installing with Plug'n'Play, leading to faster installs and adding
@@ -452,6 +463,26 @@ module.exports = function(webpackEnv) {
                 },
                 'sass-loader'
               ),
+            },
+            // Adds support for CSS Modules, but using less
+            // using the extension .module.scss or .module.less
+            {
+              test: lessModuleRegex,
+              use: getStyleLoaders(
+                {
+                  importLoaders: 3,
+                  modules: true,
+                  getLocalIdent: getCSSModuleLocalIdent
+                },
+                "less-loader"
+              )
+            },
+            // Opt-in support for Less (using .less or .less extensions).
+            // extensions .module.less or .module.less
+            {
+              test: lessRegex,
+              exclude: sassModuleRegex,
+              use: getStyleLoaders({ importLoaders: 3 }, "less-loader")
             },
             // "file" loader makes sure those assets get served by WebpackDevServer.
             // When you `import` an asset, you get its (virtual) filename.

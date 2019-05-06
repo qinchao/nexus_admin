@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "allowSyntheticDefaultImports": false,
+    "baseUrl": "src",
+    "paths": {
+      "App/*": ["src/app/*"],
+      "Biz/*": ["src/biz/*"],
+      "Components/*": ["src/components/*"],
+      "Container/*": ["src/container/*"],
+      "Model/*": ["src/model/*"],
+      "Service/*": ["src/service/*"],
+      "Utils/*": ["src/utils/*"],
+      "Img/*": ["src/img/*"],
+      "appSrc/*": ["src/*"]
+    }
+  },
+  "include": ["src/**/*"]
+}
