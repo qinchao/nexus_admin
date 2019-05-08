@@ -258,7 +258,7 @@ class Login extends Component {
     }
 
     if (authState === authStateEnum.SIGNED_IN) {
-      actions.routing.push("/");
+      actions.routing.push("/operation");
       return;
     }
 

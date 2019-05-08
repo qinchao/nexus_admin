@@ -18,8 +18,8 @@ function Routes() {
   return (
     <Router hashType="hashbang">
       <Switch>
-        <Route path="/operation" component={Operation} />
         <Route path="/login" component={Login} />
+        <Route path="/operation" component={Operation} />
         <Route
           path="/operation/withdrawInspection"
           component={WithdrawInspection}
@@ -30,5 +30,5 @@ function Routes() {
   );
 }
 
-const App = withAuthenticator(Routes);
-render(<App />, document.getElementById("root"));
+// const App = withAuthenticator(Routes);
+render(<Routes />, document.getElementById("root"));
