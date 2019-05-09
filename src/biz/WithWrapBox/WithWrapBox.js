@@ -1,26 +1,36 @@
 import React, { PureComponent } from "react";
 import { actions, Link } from "mirrorx";
-import { Layout, Menu, Button } from "antd";
-import "antd/dist/antd.css";
+import { Layout, Menu, Button, Empty } from "antd";
 
+import { getAdminPermission } from "Utils/";
 import logoImgWhite from "Img/logo_medium.svg";
 import "./WithWrapBox.less";
 
-const { Header, Content, Sider } = Layout;
+const { Header } = Layout;
 
 function withWrapBox(WrappedComponent) {
   class withWrapBox extends PureComponent {
+    constructor(props) {
+      super(props);
+      this.handleClick = this.handleClick.bind(this);
+      this.state = {
+        nav: props.match.params.menu
+      };
+    }
+    handleClick = e => {
+      this.setState({
+        nav: e.key
+      });
+    };
     render() {
       const { user } = this.props;
-
-      let isAdmin = user && user.cognitoGroup;
-      let kycPermission = isAdmin && user.cognitoGroup.includes("KycAdmin");
-      let withdrawPermission =
-        isAdmin && user.cognitoGroup.includes("WalletAdmin");
-      isAdmin = kycPermission || withdrawPermission;
-      if (!isAdmin) {
+      if (!getAdminPermission(user, ["KycAdmin", "WalletAdmin"])) {
         return (
-          <div>Sorry, you don't have the permission to access this page.</div>
+          <Empty
+            style={{ height: "calc(100vh - 128px)" }}
+            description="Sorry, you don't have the permission to access this page."
+            image={Empty.PRESENTED_IMAGE_SIMPLE}
+          />
         );
       }
 
@@ -36,10 +46,12 @@ function withWrapBox(WrappedComponent) {
               <Menu
                 theme="dark"
                 mode="horizontal"
-                defaultSelectedKeys={["1"]}
+                onClick={this.handleClick}
+                selectedKeys={[this.state.nav]}
                 style={{ lineHeight: "64px" }}
               >
-                <Menu.Item key="1">Operation</Menu.Item>
+                <Menu.Item key="operation">Operation</Menu.Item>
+                <Menu.Item key="user">User</Menu.Item>
               </Menu>
             </div>
             <div className="userInfo">
@@ -51,27 +63,7 @@ function withWrapBox(WrappedComponent) {
               </Button>
             </div>
           </Header>
-          <Layout>
-            <Sider width={200} style={{ background: "#fff" }}>
-              <Menu
-                mode="inline"
-                defaultSelectedKeys={["1"]}
-                style={{ height: "100%", borderRight: 0 }}
-              >
-                <Menu.Item key="1">
-                  <Link to="/withdrawList">Withdrawal</Link>
-                </Menu.Item>
-                <Menu.Item key="2">
-                  <Link to="/kycList">KYC</Link>
-                </Menu.Item>
-              </Menu>
-            </Sider>
-            <Layout style={{ padding: "0 24px 24px" }}>
-              <Content className="contentWrap">
-                <WrappedComponent {...this.props} />
-              </Content>
-            </Layout>
-          </Layout>
+          <WrappedComponent {...this.props} />
         </Layout>
       );
     }

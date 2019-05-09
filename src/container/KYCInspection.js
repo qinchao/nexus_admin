@@ -1,4 +1,4 @@
 import { connect } from "mirrorx";
-import KYCInspection from "App/KYC/KYCInspection";
+import KYCInspection from "Biz/KYC/KYCInspection";
 
 export default connect(state => state.kycInspection)(KYCInspection);

@@ -5,104 +5,12 @@ import { actions } from "mirrorx";
 import { Empty } from "antd";
 
 import { formatDate } from "Utils/index";
-import { Radio, Switch, Select } from "antd";
+import { Button, Radio, Switch, Select, Popconfirm } from "antd";
 
-import Popup from "Components/Popup/Popup";
+// import Popup from "Components/Popup/Popup";
 import SimpleTable from "Components/SimpleTable";
 
 import "./WithdrawInspection.less";
-
-const selectStyles = {
-  option: (styles, { isFocused, isSelected }) => {
-    return {
-      ...styles,
-      backgroundColor: isSelected || isFocused ? "#fff" : "#fff",
-      color: "#000"
-    };
-  },
-  placeholder: styles => {
-    return {
-      ...styles,
-      color: "white"
-    };
-  },
-  singleValue: styles => {
-    return {
-      ...styles,
-      color: "#000",
-      margin: "0",
-      borderRadius: "1px"
-    };
-  },
-  noOptionsMessage: styles => {
-    return {
-      ...styles,
-      color: "#000"
-    };
-  },
-  valueContainer: styles => {
-    return {
-      ...styles,
-      padding: "0 5px 0 9px"
-    };
-  },
-  menu: styles => {
-    return {
-      ...styles,
-      backgroundColor: "#fff",
-      borderRadius: "0",
-      border: "none"
-    };
-  },
-  menuList: styles => {
-    return {
-      ...styles,
-      width: "300px",
-      background: "#fff",
-      border: "none",
-      borderRadius: "0",
-      paddingTop: 0,
-      paddingBottom: 0
-    };
-  },
-  indicatorSeparator: styles => {
-    return {
-      ...styles,
-      display: "none"
-    };
-  },
-  dropdownIndicator: styles => {
-    return {
-      ...styles,
-      padding: "0",
-      borderTop: "4px solid rgba(0,0,0,0.6)",
-      borderLeft: "3px solid transparent",
-      borderRight: "3px solid transparent",
-      borderBottom: "none"
-    };
-  },
-  indicatorsContainer: styles => {
-    return {
-      ...styles,
-      alignSelf: "center",
-      paddingRight: "4px"
-    };
-  },
-  control: (styles, { isFocused }) => ({
-    borderRadius: "1px",
-    flex: "1 1 auto",
-    display: "flex",
-    flexDirection: "row",
-    backgroundColor: "#fff",
-    width: "100px",
-    height: "23px",
-    color: "#000",
-
-    outline: null,
-    border: "1px solid rgba(0,0,0,0.13)",
-    boxShadow: null
-  })
-};
 
 class UserProfile extends PureComponent {
   titles = [
@@ -296,7 +204,6 @@ class WithdrawHistory extends PureComponent {
 class InspectResult extends PureComponent {
   state = {
     selectedValue: "",
-    showPop: false,
     message: ""
   };
 
@@ -307,11 +214,6 @@ class InspectResult extends PureComponent {
       message: message
     };
     actions.withdraw.withdrawUpdate(params);
-    this.setState({ showPop: false });
-  };
-
-  onClickCancel = () => {
-    this.setState({ showPop: false });
   };
 
   handleChange = event => {
@@ -346,7 +248,6 @@ class InspectResult extends PureComponent {
             <div style={{ paddingLeft: "20px" }}>
               <Select
                 value={currency}
-                styles={{ ...selectStyles }}
                 isSearchable={true}
                 placeholder={currency.label}
                 onChange={currency =>
@@ -386,26 +287,21 @@ class InspectResult extends PureComponent {
           />
         </div>
 
-        <button
-          onClick={() => this.setState({ showPop: true })}
-          disabled={
-            selectedValue === "" ||
-            (selectedValue === "MANUALLY_REJECT" && !message)
-          }
+        <Popconfirm
+          title={`Are you sure you want submit the ${selectedValue}?`}
+          onConfirm={() => this.onClickSubmit(selectedValue, message)}
+          okText="Yes"
+          cancelText="No"
         >
-          Submit
-        </button>
-
-        {showPop ? (
-          <Popup
-            onClickSubmit={() => this.onClickSubmit(selectedValue, message)}
-            onClickCancel={this.onClickCancel}
+          <Button
+            disabled={
+              selectedValue === "" ||
+              (selectedValue === "MANUALLY_REJECT" && !message)
+            }
           >
-            <div className="warning">{`Are you sure you want submit the ${selectedValue}?`}</div>
-          </Popup>
-        ) : (
-          ""
-        )}
+            Submit
+          </Button>
+        </Popconfirm>
       </div>
     );
   }

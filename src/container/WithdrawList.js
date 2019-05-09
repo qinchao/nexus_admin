@@ -1,6 +1,6 @@
 import { connect } from "mirrorx";
-import Withdraw from "App/Withdraw/Withdraw";
+import Withdraw from "Biz/Withdraw/Withdraw";
 
-export default connect(({ withdraw, user }) => {
-  return { withdraw, user };
+export default connect(({ withdraw }) => {
+  return { withdraw };
 })(Withdraw);

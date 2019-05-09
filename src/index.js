@@ -8,15 +8,13 @@ import {
   ForgotPassword,
   RequireNewPassword
 } from "aws-amplify-react";
-import "./base.less";
 
 import "./hooks";
+import "./base.less";
+import "antd/dist/antd.css";
 
 import Index from "Container/Index";
-import WithdrawList from "Container/WithdrawList";
-import KYCList from "Container/KYCList";
-import WithdrawInspection from "Container/WithdrawInspection";
-import KYCInspection from "Container/KYCInspection";
+import OperationWrap from "Container/OperationWrap";
 
 mirror.defaults({
   historyMode: "browser"
@@ -33,11 +31,10 @@ function Routes() {
           key="/"
           render={() => <Redirect to="/index" />}
         />
-        <Route path="/index" component={Index} />
-        <Route path="/withdrawList" component={WithdrawList} />
-        <Route path="/withdrawInspection" component={WithdrawInspection} />
-        <Route path="/kycList" component={KYCList} />
-        <Route path="/kycInspection" component={KYCInspection} />
+        <Route path="/index" key="index" component={Index} />
+        <Route path="/:menu(operation)/:subMenu" component={OperationWrap} />
+        <Route path="/:menu(user)/:subMenu" component={OperationWrap} />
+        <Route component={Index} />
       </Switch>
     </Router>
   );

@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 import { Button, Select } from "antd";
 
 // import DateRange from "Components/DateRange/DateRange";
-import "../SearchList.less";
+import "./SearchList.less";
 
 const ALL = "All";
 const WAITING_FOR_USER_CONFIRMATION = "WAITING_FOR_USER_CONFIRMATION";

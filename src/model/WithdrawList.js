@@ -50,11 +50,9 @@ export default {
       }
     },
     async initCurrencies(data, getState) {
-      let currencies = await CurrencyConfig.getAllCurrencyInfos();
-      currencies = Array.from(currencies).map(item => {
-        return { value: item.currency, label: item.currency };
-      });
-      currencies.unshift({ value: "All", label: "All" });
+      let currencies = await CurrencyConfig.getAllCurrencies();
+      currencies = Array.from(currencies);
+      currencies.unshift("All");
       actions.withdraw.updateData({ currencies });
     }
   }
