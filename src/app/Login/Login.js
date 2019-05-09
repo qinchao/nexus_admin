@@ -3,7 +3,7 @@ import { actions, Link } from "mirrorx";
 import axios from "axios";
 import { parse } from "qs";
 import { Authenticator } from "aws-amplify-react";
-import { message } from "antd";
+import { notification } from "antd";
 
 import { getClientType } from "Utils/index";
 import APIService from "Service/APIService";
@@ -228,7 +228,10 @@ class Login extends Component {
 
   handleCaptchaError = () => {
     this.toggleLoadigState(false);
-    message.error("Something went wrong, please try again later.");
+    notification.error({
+      message: "Error",
+      description: "Something went wrong, please try again later."
+    });
   };
 
   willSubmit = () => {
@@ -280,7 +283,7 @@ class Login extends Component {
     return (
       <div className="loginWrap">
         <div className="loginHeader">
-          <Link to="/" className="logo p-relative">
+          <Link to="/operation" className="logo p-relative">
             <LogoImgBlack width="170" height="38" />
             <span className="betaIcon" />
           </Link>

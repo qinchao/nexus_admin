@@ -1,8 +1,8 @@
 import React, { PureComponent } from "react";
 import { actions } from "mirrorx";
 import Select from "react-select";
-import TableCell from "@material-ui/core/TableCell";
-import TableRow from "@material-ui/core/TableRow";
+// import TableCell from "@material-ui/core/TableCell";
+// import TableRow from "@material-ui/core/TableRow";
 import { Empty } from "antd";
 
 import { formatDate } from "Utils/index";
@@ -114,32 +114,32 @@ class UserProfile extends PureComponent {
     "First Name",
     "Country or Region"
   ];
-  renderRow = item => {
-    return (
-      <TableRow className="listItemLine" key={item.userCreateDate}>
-        <TableCell align="right">{item.email ? item.email : "N/A"}</TableCell>
-        <TableCell align="right">
-          {item.userCreateDate
-            ? formatDate(new Date(item.userCreateDate))
-            : "N/A"}
-        </TableCell>
-        <TableCell align="right">
-          {item.userLastModifiedDate
-            ? formatDate(new Date(item.userLastModifiedDate))
-            : "N/A"}
-        </TableCell>
-        <TableCell align="right">
-          {item.lastName ? item.lastName : "N/A"}
-        </TableCell>
-        <TableCell align="right">
-          {item.firstName ? item.firstName : "N/A"}
-        </TableCell>
-        <TableCell align="right">
-          {item.countryOrRegion ? item.countryOrRegion : "N/A"}
-        </TableCell>
-      </TableRow>
-    );
-  };
+  // renderRow = item => {
+  //   return (
+  //     <TableRow className="listItemLine" key={item.userCreateDate}>
+  //       <TableCell align="right">{item.email ? item.email : "N/A"}</TableCell>
+  //       <TableCell align="right">
+  //         {item.userCreateDate
+  //           ? formatDate(new Date(item.userCreateDate))
+  //           : "N/A"}
+  //       </TableCell>
+  //       <TableCell align="right">
+  //         {item.userLastModifiedDate
+  //           ? formatDate(new Date(item.userLastModifiedDate))
+  //           : "N/A"}
+  //       </TableCell>
+  //       <TableCell align="right">
+  //         {item.lastName ? item.lastName : "N/A"}
+  //       </TableCell>
+  //       <TableCell align="right">
+  //         {item.firstName ? item.firstName : "N/A"}
+  //       </TableCell>
+  //       <TableCell align="right">
+  //         {item.countryOrRegion ? item.countryOrRegion : "N/A"}
+  //       </TableCell>
+  //     </TableRow>
+  //   );
+  // };
   render() {
     return (
       <div className="userWrap commonWrap">
@@ -168,21 +168,21 @@ class Login extends PureComponent {
     "City",
     "Country or Region"
   ];
-  renderRow = item => {
-    return (
-      <TableRow className="listItemLine" key={item.creationDate}>
-        <TableCell align="right">{item.eventType}</TableCell>
-        <TableCell align="right">
-          {formatDate(new Date(item.creationDate))}
-        </TableCell>
-        <TableCell align="right">{item.eventResponse}</TableCell>
-        <TableCell align="right">{item.deviceName}</TableCell>
-        <TableCell align="right">{item.ipAddress}</TableCell>
-        <TableCell align="right">{item.city}</TableCell>
-        <TableCell align="right">{item.country}</TableCell>
-      </TableRow>
-    );
-  };
+  // renderRow = item => {
+  //   return (
+  //     <TableRow className="listItemLine" key={item.creationDate}>
+  //       <TableCell align="right">{item.eventType}</TableCell>
+  //       <TableCell align="right">
+  //         {formatDate(new Date(item.creationDate))}
+  //       </TableCell>
+  //       <TableCell align="right">{item.eventResponse}</TableCell>
+  //       <TableCell align="right">{item.deviceName}</TableCell>
+  //       <TableCell align="right">{item.ipAddress}</TableCell>
+  //       <TableCell align="right">{item.city}</TableCell>
+  //       <TableCell align="right">{item.country}</TableCell>
+  //     </TableRow>
+  //   );
+  // };
   render() {
     return (
       <div className="loginWrap commonWrap">
@@ -221,41 +221,41 @@ class WithdrawHistory extends PureComponent {
   ];
 
   // TODO hide the whole column
-  renderRow = item => {
-    let style =
-      item.recordId === this.props.recordId
-        ? "listItemLine curRecordId"
-        : "listItemLine";
-    return (
-      <TableRow className={style} key={item.recordId}>
-        {/* For testing purpose <TableCell>{item.userId}</TableCell> */}
-        <TableCell align="right">{item.recordId}</TableCell>
-        <TableCell align="right">{item.currency}</TableCell>
-        <TableCell align="right">{item.amount}</TableCell>
-        <TableCell align="right">
-          {item.sourceAddress ? item.sourceAddress : "N/A"}
-        </TableCell>
-        <TableCell align="right">
-          {item.address ? item.address : "N/A"}
-        </TableCell>
-        {/* May added later <TableCell align="right">{item.confirmedNum}</TableCell> */}
-        <TableCell align="right">{item.device ? item.device : "N/A"}</TableCell>
-        <TableCell align="right">
-          {item.ipAddress ? item.ipAddress : "N/A"}
-        </TableCell>
-        <TableCell align="right">
-          {item.manualReviewerId === 0 ? "N/A" : item.manualReviewerId}
-        </TableCell>
-        <TableCell align="right">{formatDate(item.manualReviewTime)}</TableCell>
-        <TableCell align="right">{formatDate(item.createTime)}</TableCell>
-        <TableCell align="right">{formatDate(item.updateTime)}</TableCell>
-        <TableCell align="right">{item.status}</TableCell>
-        <TableCell align="right">
-          {item.message ? item.message : "N/A"}
-        </TableCell>
-      </TableRow>
-    );
-  };
+  // renderRow = item => {
+  //   let style =
+  //     item.recordId === this.props.recordId
+  //       ? "listItemLine curRecordId"
+  //       : "listItemLine";
+  //   return (
+  //     <TableRow className={style} key={item.recordId}>
+  //       {/* For testing purpose <TableCell>{item.userId}</TableCell> */}
+  //       <TableCell align="right">{item.recordId}</TableCell>
+  //       <TableCell align="right">{item.currency}</TableCell>
+  //       <TableCell align="right">{item.amount}</TableCell>
+  //       <TableCell align="right">
+  //         {item.sourceAddress ? item.sourceAddress : "N/A"}
+  //       </TableCell>
+  //       <TableCell align="right">
+  //         {item.address ? item.address : "N/A"}
+  //       </TableCell>
+  //       {/* May added later <TableCell align="right">{item.confirmedNum}</TableCell> */}
+  //       <TableCell align="right">{item.device ? item.device : "N/A"}</TableCell>
+  //       <TableCell align="right">
+  //         {item.ipAddress ? item.ipAddress : "N/A"}
+  //       </TableCell>
+  //       <TableCell align="right">
+  //         {item.manualReviewerId === 0 ? "N/A" : item.manualReviewerId}
+  //       </TableCell>
+  //       <TableCell align="right">{formatDate(item.manualReviewTime)}</TableCell>
+  //       <TableCell align="right">{formatDate(item.createTime)}</TableCell>
+  //       <TableCell align="right">{formatDate(item.updateTime)}</TableCell>
+  //       <TableCell align="right">{item.status}</TableCell>
+  //       <TableCell align="right">
+  //         {item.message ? item.message : "N/A"}
+  //       </TableCell>
+  //     </TableRow>
+  //   );
+  // };
 
   renderRowWithCondition = item => {
     return this.state.showAllCurrency

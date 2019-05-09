@@ -352,20 +352,10 @@ class WithdrawSearchList extends PureComponent {
           </div>
 
           <div className="compWrapper">
-            <Button
-              type="primary"
-              size="small"
-              width="61"
-              onClick={this.handleSearch}
-            >
+            <Button type="primary" onClick={this.handleSearch}>
               Search
             </Button>
-            <Button
-              className="resetButton"
-              size="small"
-              width="61"
-              onClick={this.handleReset}
-            >
+            <Button className="resetButton" onClick={this.handleReset}>
               Reset
             </Button>
           </div>

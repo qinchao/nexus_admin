@@ -1,58 +1,22 @@
-@import "../../common.less";
+.header {
+  display: flex;
+  justify-content: space-between;
 
-// internal layout
-@containerWidth: 1400px;
-@panelHeaderHeight: 40px;
-@panelHeaderHigh: 60px;
+  color: #fff;
 
-// center layout
-.ctWrap {
-  min-height: 100vh - 60px;
-  max-width: @containerWidth;
-
-  .ctContainer {
-    min-height: calc(100vh - @headerHeight);
-    width: 100%;
-    font-size: @bodyFontSize;
-  }
-
-  .ctBody {
-    width: 100%;
-  }
-
-  .panelBox {
-    background-color: @panelContentBg;
-    color: @textColorSecondary;
-  }
-
-  .panelHeader,
-  .panelHeaderHigh {
+  & > div {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-
-    h3 {
-      font-size: 16px;
-      color: @textColorPrimary;
-    }
-    h4 {
-      font-size: 14px;
-      color: @textColorPrimary;
-    }
   }
-
-  .panelHeader {
-    height: @panelHeaderHeight;
-    background-color: @panelHeaderBg;
-    padding: 0 20px;
+  .logo,
+  .mr20 {
+    margin-right: 20px;
   }
+}
 
-  .panelHeaderHigh {
-    height: @panelHeaderHigh;
-    padding: 0 30px;
-
-    &.borderLine {
-      border-bottom: 1px solid #e9e9e9;
-    }
-  }
+.contentWrap {
+  background: #fff;
+  min-height: calc(100vh - 64px - 24px);
+  padding: 10px 24px 24px;
+  margin: 0;
 }

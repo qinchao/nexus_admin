@@ -1,7 +1,8 @@
 import mirror, { actions } from "mirrorx";
-import OperationModel from "./model/Operation";
-import KYCInspection from "./model/KYCInspection";
-import WithdrawInspection from "./model/WithdrawInspection";
+import OperationModel from "Model/Operation";
+import KYCInspection from "Model/KYCInspection";
+import WithdrawInspection from "Model/WithdrawInspection";
+import User from "Model/User";
 
 import { LOCATION_CHANGE } from "./utils/constant";
 import qs from "qs";
@@ -10,6 +11,7 @@ import qs from "qs";
 mirror.model(OperationModel);
 mirror.model(KYCInspection);
 mirror.model(WithdrawInspection);
+mirror.model(User);
 
 // listen to route change
 //Operation
@@ -18,9 +20,8 @@ mirror.hook((action, getState) => {
     routing: { location }
   } = getState();
   if (
-    action.type === LOCATION_CHANGE &&
-    location.pathname.indexOf("/operation/") === -1 &&
-    location.pathname.indexOf("/operation") >= 0
+    (action.type === LOCATION_CHANGE &&
+      location.pathname.indexOf("/operation")) >= 0
   ) {
     const navTabCurQuery =
       location.search && qs.parse(location.search.substr(1));

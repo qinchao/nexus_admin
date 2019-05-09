@@ -1,7 +1,10 @@
 import React from "react";
-import RadioGroup from "@material-ui/core/RadioGroup";
+// import RadioGroup from "@material-ui/core/RadioGroup";
+// import { withStyles } from "@material-ui/core/styles";
+
 import FormStateContext from "./context";
-import { withStyles } from "@material-ui/core/styles";
+import { Radio } from "antd";
+const RadioGroup = Radio.Group;
 
 const styles = theme => ({
   root: {
@@ -54,4 +57,5 @@ class FormRadioGroup extends React.Component {
   }
 }
 
-export default withStyles(styles)(FormRadioGroup);
+// export default withStyles(styles)(FormRadioGroup);
+export default FormRadioGroup;

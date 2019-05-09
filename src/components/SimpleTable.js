@@ -1,10 +1,12 @@
 import React from "react";
 
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
+// import Table from "@material-ui/core/Table";
+// import TableBody from "@material-ui/core/TableBody";
+// import TableCell from "@material-ui/core/TableCell";
+// import TableHead from "@material-ui/core/TableHead";
+// import TableRow from "@material-ui/core/TableRow";
+import { Table } from "antd";
+
 import Loading from "Components/Loading/Loading";
 
 function SimpleTable(props) {
@@ -12,7 +14,9 @@ function SimpleTable(props) {
 
   return (
     <>
-      <Table>
+      <Table dataSource={list} columns={renderRow} loading={loading} />
+
+      {/* <Table>
         <TableHead>
           <TableRow>
             {tabTitles.map(title => (
@@ -25,7 +29,7 @@ function SimpleTable(props) {
         <TableBody>
         {loading ? <Loading /> : list.length ? list.map(renderRow) : empty}
         </TableBody>
-      </Table>
+      </Table> */}
     </>
   );
 }

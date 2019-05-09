@@ -1,5 +1,5 @@
 import { actions } from "mirrorx";
-import { message } from "antd";
+import { notification } from "antd";
 
 import APIService from "Service/APIService";
 import CurrencyConfig from "Service/CurrencyConfig";
@@ -49,7 +49,10 @@ export default {
         }
       );
       if (!withdrawUpdateRes.error) {
-        message.success(`DnwRecordId ${dnwRecordId} has been ${action}ED.`);
+        notification.success({
+          message: "Success",
+          description: `DnwRecordId ${dnwRecordId} has been ${action}ED.`
+        });
       }
     },
     async fetchKyc(data, getState) {
@@ -75,9 +78,10 @@ export default {
         { userId, createTime, status, message }
       );
       if (!kycStatusUpdateRes.error) {
-        message.success(
-          `kyc request with userId: ${userId} and createTime: ${createTime} has been ${status}`
-        );
+        notification.success({
+          message: "Success",
+          description: `kyc request with userId: ${userId} and createTime: ${createTime} has been ${status}`
+        });
       }
     },
     async initCurrencies(data, getState) {

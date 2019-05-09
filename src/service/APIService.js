@@ -1,7 +1,6 @@
 import Axios from "axios";
-import { actions } from "mirrorx";
 import Amplify, { API, I18n } from "aws-amplify";
-import { message } from "antd";
+import { notification } from "antd";
 
 import {
   AwsAPIEndpointsConfig,
@@ -48,7 +47,10 @@ const successHandler = (response, failCallback) => {
       } else if (!failCallback) {
         // default snackbar tips
         // if don't want this default action, please delivery failcallback as empty function or empty object
-        message.error(data.error.message || ERROE_TEXT);
+        notification.error({
+          message: "Error",
+          description: data.error.message || ERROE_TEXT
+        });
       }
     }
     return data.result ? data.result : data;
@@ -59,7 +61,7 @@ const successHandler = (response, failCallback) => {
 };
 
 const errorHandler = (err, failCallback) => {
-  let errMsg = err.message || ERROE_TEXT;
+  let message = err.message || ERROE_TEXT;
   const returnErr = { error: { code: -1, message } };
 
   if (err.response) {
@@ -67,7 +69,7 @@ const errorHandler = (err, failCallback) => {
       err.response.data &&
       (err.response.data.message || err.response.data.type)
     ) {
-      errMsg = err.response.data.message || err.response.data; // for snackbar msg
+      message = err.response.data.message || err.response.data; // for snackbar msg
       Object.assign(returnErr.error, err.response, err.response.data);
     } else {
       Object.assign(returnErr.error, err.response);
@@ -80,7 +82,10 @@ const errorHandler = (err, failCallback) => {
   } else if (!failCallback) {
     // default snackbar tips
     // if don't want this default action, please delivery failcallback as empty function or empty object
-    message.error(errMsg);
+    notification.error({
+      message: "Error",
+      description: message || ERROE_TEXT
+    });
   }
 
   return returnErr;

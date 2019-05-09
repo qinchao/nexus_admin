@@ -1,7 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
-import Switch from "@material-ui/core/Switch";
+// import { withStyles } from "@material-ui/core/styles";
+// import Switch from "@material-ui/core/Switch";
+import { Switch } from "antd";
 
 const styles = theme => ({
   // switch styles
@@ -92,6 +93,6 @@ SwitchBar.defaultProps = {
   labelName: ""
 };
 
-const SwitchWrapped = withStyles(styles)(SwitchBar);
-
-export default SwitchWrapped;
+// const SwitchWrapped = withStyles(styles)(SwitchBar);
+// export default SwitchWrapped;
+export default SwitchBar;

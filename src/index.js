@@ -1,6 +1,13 @@
 import React from "react";
 import mirror, { render, Router, Switch, Route } from "mirrorx";
-import { withAuthenticator } from "aws-amplify-react";
+import {
+  withAuthenticator,
+  SignIn,
+  ConfirmSignIn,
+  VerifyContact,
+  ForgotPassword,
+  RequireNewPassword
+} from "aws-amplify-react";
 import "./base.less";
 
 import "./hooks";
@@ -18,17 +25,20 @@ function Routes() {
   return (
     <Router hashType="hashbang">
       <Switch>
-        <Route path="/login" component={Login} />
         <Route path="/operation" component={Operation} />
-        <Route
-          path="/operation/withdrawInspection"
-          component={WithdrawInspection}
-        />
-        <Route path="/operation/kycInspection" component={KYCInspection} />
+        <Route path="/withdrawInspection" component={WithdrawInspection} />
+        <Route path="/kycInspection" component={KYCInspection} />
+        <Route path="/login" component={Login} />
       </Switch>
     </Router>
   );
 }
 
-// const App = withAuthenticator(Routes);
-render(<Routes />, document.getElementById("root"));
+const App = withAuthenticator(Routes, false, [
+  <SignIn />,
+  <ConfirmSignIn />,
+  <VerifyContact />,
+  <ForgotPassword />,
+  <RequireNewPassword />
+]);
+render(<App />, document.getElementById("root"));

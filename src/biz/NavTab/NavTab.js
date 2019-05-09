@@ -5,7 +5,7 @@ import "./NavTab.less";
 
 function NavTab({ NavTabItems = [], navTabCur = "", clickEvent }) {
   return (
-    <div className="panelBox ctNav">
+    <div className="ctNav">
       {NavTabItems.map(item => {
         return navTabCur === item.type ? (
           <div key={item.type} className="ctNavItem cur">

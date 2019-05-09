@@ -3,16 +3,18 @@
 .ctNav {
   display: flex;
   flex-direction: column;
-  width: 230px;
+  width: 15%;
+  min-width: 180px;
   font-size: 16px;
+  background-color: #fff;
   border-right: 1px solid #ccc;
-  min-height: calc(
-    100vh - @headerHeight - @panelGap - @footerHeight - @footerGap
-  );
 
   .ctNavItem {
     color: @bodyTextColor;
-    background-color: #282d3a;
+    background-color: #000;
+    height: 60px;
+    line-height: 60px;
+    padding-left: 15px;
     cursor: pointer;
 
     .iconfont {
@@ -25,7 +27,7 @@
       background-color: #282d3a;
     }
     &.cur {
-      border-right: 3px solid @mainTextColor;
+      border-right: 3px solid @mainGreen;
     }
   }
 }

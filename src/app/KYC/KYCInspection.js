@@ -3,10 +3,8 @@ import { actions } from "mirrorx";
 import { Empty } from "antd";
 
 import { formatDate } from "Utils/index";
-import SimpleTable from "Components/SimpleTable";
 
-import TableCell from "@material-ui/core/TableCell";
-import TableRow from "@material-ui/core/TableRow";
+import SimpleTable from "Components/SimpleTable";
 import Popup from "Components/Popup/Popup";
 import "./KYCInspection.less";
 
@@ -62,38 +60,38 @@ class ReviewHistory extends PureComponent {
     "Note"
   ];
 
-  renderRow = item => {
-    let style =
-      item.createTime === this.props.createTime
-        ? "listItemLine curRecordId"
-        : "listItemLine";
-    return (
-      <TableRow className={style} key={item.createTime}>
-        <TableCell align="right">{item.lastName}</TableCell>
-        <TableCell align="right">{item.firstName}</TableCell>
-        <TableCell align="right">{item.idType}</TableCell>
-        <TableCell align="right">{item.idNumber}</TableCell>
-        <TableCell align="right">{item.countryOrRegion}</TableCell>
-        <TableCell align="right">{formatDate(item.createTime)}</TableCell>
-        <TableCell align="right">{item.kycStatus}</TableCell>
-        <TableCell align="right">
-          {item.inspector ? item.inspector : "N/A"}
-        </TableCell>
-        <TableCell align="right">
-          {item.inspectTime ? item.inspectTime : "N/A"}
-        </TableCell>
-        <TableCell
-          align="right"
-          style={{
-            whiteSpace: "normal",
-            wordWrap: "break-word"
-          }}
-        >
-          {item.message ? item.message.split(",").join("; ") : "N/A"}
-        </TableCell>
-      </TableRow>
-    );
-  };
+  // renderRow = item => {
+  //   let style =
+  //     item.createTime === this.props.createTime
+  //       ? "listItemLine curRecordId"
+  //       : "listItemLine";
+  //   return (
+  //     <TableRow className={style} key={item.createTime}>
+  //       <TableCell align="right">{item.lastName}</TableCell>
+  //       <TableCell align="right">{item.firstName}</TableCell>
+  //       <TableCell align="right">{item.idType}</TableCell>
+  //       <TableCell align="right">{item.idNumber}</TableCell>
+  //       <TableCell align="right">{item.countryOrRegion}</TableCell>
+  //       <TableCell align="right">{formatDate(item.createTime)}</TableCell>
+  //       <TableCell align="right">{item.kycStatus}</TableCell>
+  //       <TableCell align="right">
+  //         {item.inspector ? item.inspector : "N/A"}
+  //       </TableCell>
+  //       <TableCell align="right">
+  //         {item.inspectTime ? item.inspectTime : "N/A"}
+  //       </TableCell>
+  //       <TableCell
+  //         align="right"
+  //         style={{
+  //           whiteSpace: "normal",
+  //           wordWrap: "break-word"
+  //         }}
+  //       >
+  //         {item.message ? item.message.split(",").join("; ") : "N/A"}
+  //       </TableCell>
+  //     </TableRow>
+  //   );
+  // };
   render() {
     return (
       <div className="reviewWrap commonWrap">

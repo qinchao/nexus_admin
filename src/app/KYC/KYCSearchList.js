@@ -238,18 +238,12 @@ class KycSearchList extends PureComponent {
           </div>
 
           <div className="compWrapper">
-            <Button
-              type="primary"
-              size="small"
-              width="61"
-              onClick={this.handleSearch}
-            >
+            <Button type="primary" onClick={this.handleSearch}>
               Search
             </Button>
             <Button
               className="resetButton"
-              size="small"
-              width="61"
+              type="primary"
               onClick={this.handleReset}
             >
               Reset
