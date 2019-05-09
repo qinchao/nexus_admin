@@ -183,9 +183,9 @@ class InspectResult extends PureComponent {
       status: this.state.APPROVED ? "APPROVED" : "DENIED",
       message: message
     };
-    await actions.operation.kycStatusUpdate(params);
+    await actions.kyc.kycStatusUpdate(params);
     actions.routing.push(
-      `/operation/kycInspection?userId=${userId}&createTime=${createTime}&inspect=false`
+      `/kycInspection?userId=${userId}&createTime=${createTime}&inspect=false`
     );
   };
 

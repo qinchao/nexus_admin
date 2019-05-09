@@ -1,5 +1,5 @@
 import React from "react";
-import mirror, { render, Router, Switch, Route } from "mirrorx";
+import mirror, { render, Router, Switch, Route, Redirect } from "mirrorx";
 import {
   withAuthenticator,
   SignIn,
@@ -12,10 +12,11 @@ import "./base.less";
 
 import "./hooks";
 
-import Operation from "Container/Operation";
+import Index from "Container/Index";
+import WithdrawList from "Container/WithdrawList";
+import KYCList from "Container/KYCList";
 import WithdrawInspection from "Container/WithdrawInspection";
 import KYCInspection from "Container/KYCInspection";
-import Login from "App/Login/Login";
 
 mirror.defaults({
   historyMode: "browser"
@@ -25,10 +26,18 @@ function Routes() {
   return (
     <Router hashType="hashbang">
       <Switch>
-        <Route path="/operation" component={Operation} />
+        <Route
+          exact
+          strict
+          path="/"
+          key="/"
+          render={() => <Redirect to="/index" />}
+        />
+        <Route path="/index" component={Index} />
+        <Route path="/withdrawList" component={WithdrawList} />
         <Route path="/withdrawInspection" component={WithdrawInspection} />
+        <Route path="/kycList" component={KYCList} />
         <Route path="/kycInspection" component={KYCInspection} />
-        <Route path="/login" component={Login} />
       </Switch>
     </Router>
   );

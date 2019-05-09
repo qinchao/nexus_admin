@@ -1,5 +1,6 @@
 import mirror, { actions } from "mirrorx";
-import OperationModel from "Model/Operation";
+import KYCListModel from "Model/KYCList";
+import WithdrawListModel from "Model/WithdrawList";
 import KYCInspection from "Model/KYCInspection";
 import WithdrawInspection from "Model/WithdrawInspection";
 import User from "Model/User";
@@ -8,55 +9,67 @@ import { LOCATION_CHANGE } from "./utils/constant";
 import qs from "qs";
 
 // inject model
-mirror.model(OperationModel);
-mirror.model(KYCInspection);
-mirror.model(WithdrawInspection);
 mirror.model(User);
+mirror.model(KYCListModel);
+mirror.model(KYCInspection);
+mirror.model(WithdrawListModel);
+mirror.model(WithdrawInspection);
 
 // listen to route change
-//Operation
 mirror.hook((action, getState) => {
   const {
-    routing: { location }
+    routing: { location },
+    user: { cognitoGroup }
   } = getState();
+
+  // index
   if (
-    (action.type === LOCATION_CHANGE &&
-      location.pathname.indexOf("/operation")) >= 0
+    action.type === LOCATION_CHANGE &&
+    location.pathname.indexOf("/index") >= 0
   ) {
-    const navTabCurQuery =
-      location.search && qs.parse(location.search.substr(1));
-    let navTab = navTabCurQuery.tab;
     actions.user.loginRequired().then(user => {
       if (!user) {
         return;
       }
-      const {
-        user: { cognitoGroup }
-      } = getState();
-      if (cognitoGroup.includes("WalletAdmin")) {
-        navTab = navTab || "withdraw";
-      } else if (cognitoGroup.includes("KycAdmin")) {
-        navTab = navTab || "kyc";
+    });
+  }
+
+  // withdrawList
+  if (
+    action.type === LOCATION_CHANGE &&
+    location.pathname.indexOf("/withdrawList") >= 0
+  ) {
+    actions.user.loginRequired().then(user => {
+      if (!user) {
+        return;
       }
-      actions.operation.changeNavTab(navTab);
-      if (navTab === "withdraw") {
-        actions.operation.initCurrencies();
-        let fetchParam = { status: "WAITING_FOR_MANUAL_APPROVAL" };
-        actions.operation.fetchWithdraw(fetchParam);
-      } else if (navTab === "kyc") {
-        let fetchParam = { status: "PENDING_FOR_REVIEW" };
-        actions.operation.fetchKyc(fetchParam);
+
+      if (cognitoGroup.includes("WalletAdmin")) {
+        actions.withdraw.initCurrencies();
+        actions.withdraw.fetchWithdraw({
+          status: "WAITING_FOR_MANUAL_APPROVAL"
+        });
       }
     });
   }
-});
 
-//kycInpsection
-mirror.hook((action, getState) => {
-  const {
-    routing: { location }
-  } = getState();
+  // kycList
+  if (
+    action.type === LOCATION_CHANGE &&
+    location.pathname.indexOf("/kycList") >= 0
+  ) {
+    actions.user.loginRequired().then(user => {
+      if (!user) {
+        return;
+      }
 
+      if (cognitoGroup.includes("KycAdmin")) {
+        actions.kyc.fetchKyc({ status: "PENDING_FOR_REVIEW" });
+      }
+    });
+  }
+
+  // kycInpsection
   if (
     action.type === LOCATION_CHANGE &&
     location.pathname.indexOf("/kycInspection") >= 0
@@ -78,14 +91,8 @@ mirror.hook((action, getState) => {
       actions.kycInspection.initKyc();
     });
   }
-});
 
-//withdrawInspection
-mirror.hook((action, getState) => {
-  const {
-    routing: { location }
-  } = getState();
-
+  // withdrawInspection
   if (
     action.type === LOCATION_CHANGE &&
     location.pathname.indexOf("/withdrawInspection") >= 0

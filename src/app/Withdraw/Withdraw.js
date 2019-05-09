@@ -6,6 +6,8 @@ import { formatDistance } from "date-fns";
 import { Button, Empty } from "antd";
 
 import { getTimeColor } from "Utils/index";
+import { withWrapBox } from "Biz/WithWrapBox/WithWrapBox";
+
 import SimpleTable from "Components/SimpleTable";
 import WithdrawSearchList from "./WithdrawSearchList";
 
@@ -44,7 +46,7 @@ class Withdraw extends PureComponent {
   //         {item.status === "WAITING_FOR_MANUAL_APPROVAL" ||
   //         item.status === "WAITING_FOR_INVESTIGATION" ? (
   //           <NavLink
-  //             to={`/operation/withdrawInspection?userId=${
+  //             to={`/withdrawInspection?userId=${
   //               item.userId
   //             }&recordId=${item.recordId}&currency=${
   //               item.currency
@@ -58,7 +60,7 @@ class Withdraw extends PureComponent {
   //           </NavLink>
   //         ) : (
   //           <NavLink
-  //             to={`/operation/withdrawInspection?userId=${
+  //             to={`/withdrawInspection?userId=${
   //               item.userId
   //             }&recordId=${item.recordId}&inspect=false`}
   //             target="_blank"
@@ -75,7 +77,7 @@ class Withdraw extends PureComponent {
   // };
 
   handleWithdrawSearch = fetchParam => {
-    actions.operation.fetchWithdraw(fetchParam);
+    actions.withdraw.fetchWithdraw(fetchParam);
   };
 
   handleWithdrawReset = () => {
@@ -104,4 +106,4 @@ class Withdraw extends PureComponent {
   }
 }
 
-export default Withdraw;
+export default withWrapBox(Withdraw);

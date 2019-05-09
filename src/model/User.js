@@ -32,7 +32,7 @@ export default {
     async loginRequired(data, getState) {
       const user = await doSetUser();
       if (!user) {
-        actions.routing.push("/login");
+        actions.routing.push("/index");
       }
 
       return user;
@@ -69,7 +69,7 @@ export default {
         cognitoGroup: []
       });
 
-      actions.routing.push("/login");
+      actions.routing.push("/index");
     }
   }
 };

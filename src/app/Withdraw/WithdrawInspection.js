@@ -307,7 +307,7 @@ class InspectResult extends PureComponent {
       action: action,
       message: message
     };
-    actions.operation.withdrawUpdate(params);
+    actions.withdraw.withdrawUpdate(params);
     this.setState({ showPop: false });
   };
 

@@ -5,8 +5,6 @@ import "antd/dist/antd.css";
 
 import logoImgWhite from "Img/logo_medium.svg";
 import "./WithWrapBox.less";
-// import Header from "Container/Header";
-// import NavTab from "Biz/NavTab/NavTab";
 
 const { Header, Content, Sider } = Layout;
 
@@ -22,9 +20,7 @@ function withWrapBox(WrappedComponent) {
       isAdmin = kycPermission || withdrawPermission;
       if (!isAdmin) {
         return (
-          <div>
-            {"Sorry, you don't have the permission to access this page."}
-          </div>
+          <div>Sorry, you don't have the permission to access this page.</div>
         );
       }
 
@@ -33,7 +29,9 @@ function withWrapBox(WrappedComponent) {
           <Header className="header">
             <div>
               <div className="logo">
-                <img src={logoImgWhite} alt="logo" />
+                <Link to="/index">
+                  <img src={logoImgWhite} alt="logo" />
+                </Link>
               </div>
               <Menu
                 theme="dark"
@@ -61,10 +59,10 @@ function withWrapBox(WrappedComponent) {
                 style={{ height: "100%", borderRight: 0 }}
               >
                 <Menu.Item key="1">
-                  <Link to="/operation?tab=withdraw">Withdrawal</Link>
+                  <Link to="/withdrawList">Withdrawal</Link>
                 </Menu.Item>
                 <Menu.Item key="2">
-                  <Link to="/operation?tab=kyc">KYC</Link>
+                  <Link to="/kycList">KYC</Link>
                 </Menu.Item>
               </Menu>
             </Sider>

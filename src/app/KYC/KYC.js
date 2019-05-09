@@ -5,6 +5,7 @@ import { Button, Table, Typography } from "antd";
 import { Form, DatePicker, Select, Input } from "antd";
 
 import { getTimeColor, formatDate } from "Utils/index";
+import { withWrapBox } from "Biz/WithWrapBox/WithWrapBox";
 
 const { RangePicker } = DatePicker;
 const { Option } = Select;
@@ -19,7 +20,7 @@ class KYC extends PureComponent {
   }
 
   handleKycSearch = fetchParam => {
-    actions.operation.fetchKyc(fetchParam);
+    actions.kyc.fetchKyc(fetchParam);
   };
 
   onRangePickerChange(date, dateString) {
@@ -43,7 +44,7 @@ class KYC extends PureComponent {
   };
 
   render() {
-    const { loading, list } = this.props;
+    const { list, loading } = this.props.kyc;
     const { getFieldDecorator } = this.props.form;
 
     const columns = [
@@ -100,9 +101,9 @@ class KYC extends PureComponent {
           <span>
             {item.kycStatus === "PENDING_FOR_REVIEW" ? (
               <NavLink
-                to={`/operation/kycInspection?userId=${
-                  item.userId
-                }&createTime=${item.createTime}&inspect=true`}
+                to={`/kycInspection?userId=${item.userId}&createTime=${
+                  item.createTime
+                }&inspect=true`}
                 target="_blank"
                 activeClassName="selected"
               >
@@ -112,9 +113,9 @@ class KYC extends PureComponent {
               </NavLink>
             ) : (
               <NavLink
-                to={`/operation/kycInspection?userId=${
-                  item.userId
-                }&createTime=${item.createTime}&inspect=false`}
+                to={`/kycInspection?userId=${item.userId}&createTime=${
+                  item.createTime
+                }&inspect=false`}
                 target="_blank"
                 activeClassName="selected"
               >
@@ -193,4 +194,4 @@ class KYC extends PureComponent {
 
 const WrappedKYC = Form.create({ name: "kyc_search" })(KYC);
 
-export default WrappedKYC;
+export default withWrapBox(WrappedKYC);
