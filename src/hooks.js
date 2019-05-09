@@ -18,8 +18,7 @@ mirror.model(WithdrawInspection);
 // listen to route change
 mirror.hook((action, getState) => {
   const {
-    routing: { location },
-    user: { cognitoGroup }
+    routing: { location }
   } = getState();
 
   // index
@@ -44,6 +43,10 @@ mirror.hook((action, getState) => {
         return;
       }
 
+      const {
+        user: { cognitoGroup }
+      } = getState();
+
       if (cognitoGroup.includes("WalletAdmin")) {
         actions.withdraw.initCurrencies();
         actions.withdraw.fetchWithdraw({
@@ -62,6 +65,10 @@ mirror.hook((action, getState) => {
       if (!user) {
         return;
       }
+
+      const {
+        user: { cognitoGroup }
+      } = getState();
 
       if (cognitoGroup.includes("KycAdmin")) {
         actions.kyc.fetchKyc({ status: "PENDING_FOR_REVIEW" });

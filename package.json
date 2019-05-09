@@ -4,8 +4,6 @@
   "homepage": ".",
   "private": true,
   "dependencies": {
-    "@material-ui/core": "^3.9.3",
-    "@material-ui/icons": "^3.0.2",
     "antd": "^3.16.6",
     "aws-amplify": "^1.1.26",
     "aws-amplify-react": "^2.3.6",
@@ -13,12 +11,11 @@
     "classnames": "^2.2.6",
     "date-fns": "^2.0.0-alpha.27",
     "mirrorx": "^0.2.13",
+    "moment": "^2.24.0",
     "prop-types": "^15.7.2",
     "qs": "^6.7.0",
     "react": "^16.8.6",
-    "react-dom": "^16.8.6",
-    "react-select": "^2.4.3",
-    "react-datepicker": "^2.5.0"
+    "react-dom": "^16.8.6"
   },
   "devDependencies": {
     "@babel/core": "7.4.3",

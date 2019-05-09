@@ -3,6 +3,7 @@ import { actions, NavLink } from "mirrorx";
 import { formatDistance } from "date-fns";
 import { Button, Table, Typography } from "antd";
 import { Form, DatePicker, Select, Input } from "antd";
+import moment from "moment";
 
 import { getTimeColor, formatDate } from "Utils/index";
 import { withWrapBox } from "Biz/WithWrapBox/WithWrapBox";
@@ -29,8 +30,26 @@ class KYC extends PureComponent {
 
   handleSearch = e => {
     e.preventDefault();
+
     this.props.form.validateFields((err, values) => {
-      console.log("Received values of form: ", values);
+      const { timeArray, userId, status } = values;
+      let fetchParam = {
+        startTime: timeArray[0].valueOf(),
+        endTime: timeArray[1].valueOf()
+      };
+      if (userId) {
+        fetchParam.userId = userId;
+      }
+      if (status !== "All") {
+        fetchParam.status = status;
+      }
+      if (!userId && status === "All") {
+        this.props.form.setFieldsValue({
+          status: "PENDING_FOR_REVIEW"
+        });
+        fetchParam.status = "PENDING_FOR_REVIEW";
+      }
+      actions.kyc.fetchKyc(fetchParam);
     });
   };
 
@@ -92,7 +111,11 @@ class KYC extends PureComponent {
         title: "Message",
         key: "message",
         dataIndex: "message",
-        render: (text, item) => <>{item.message || "N/A"}</>
+        render: (text, item) => (
+          <div className="wordBreak" style={{ maxWidth: 300 }}>
+            {item.message || "N/A"}
+          </div>
+        )
       },
       {
         title: "Action",
@@ -129,6 +152,9 @@ class KYC extends PureComponent {
       }
     ];
 
+    const startDate = moment().month(moment().month() - 1),
+      endDate = moment();
+
     return (
       <div className="panelBox">
         {/* <KycSearchList
@@ -141,15 +167,15 @@ class KYC extends PureComponent {
           style={{ marginBottom: 15 }}
         >
           <Form.Item label="Date">
-            {getFieldDecorator("range-picker")(
-              <RangePicker onChange={this.onRangePickerChange} />
-            )}
+            {getFieldDecorator("timeArray", {
+              initialValue: [startDate, endDate]
+            })(<RangePicker onChange={this.onRangePickerChange} />)}
           </Form.Item>
           <Form.Item label="userId">
-            {getFieldDecorator("input")(<Input maxLength={25} />)}
+            {getFieldDecorator("userId")(<Input maxLength={25} />)}
           </Form.Item>
           <Form.Item label="status">
-            {getFieldDecorator("select", { initialValue: "All" })(
+            {getFieldDecorator("status", { initialValue: "All" })(
               <Select>
                 <Option value="All">All</Option>
                 <Option value="PENDING_FOR_REVIEW">PENDING_FOR_REVIEW</Option>

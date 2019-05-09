@@ -1,8 +1,7 @@
 import React, { PureComponent } from "react";
-import Select from "react-select";
-import { Button } from "antd";
+import { Button, Select } from "antd";
 
-import DateRange from "Components/DateRange/DateRange";
+// import DateRange from "Components/DateRange/DateRange";
 import "../SearchList.less";
 
 const ALL = "All";
@@ -275,12 +274,12 @@ class WithdrawSearchList extends PureComponent {
     return (
       <div className="searchList" style={{ marginBottom: "80px" }}>
         <div className="filterSection">
-          <DateRange
+          {/* <DateRange
             startDate={startDate}
             endDate={endDate}
             onChangeStartDate={this.handleChangeStartDate}
             onChangeEndDate={this.handleChangeEndDate}
-          />
+          /> */}
 
           <div className="compWrapper">
             <div className="compTitle">fromRecordId</div>

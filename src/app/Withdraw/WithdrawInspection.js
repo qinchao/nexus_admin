@@ -1,15 +1,14 @@
 import React, { PureComponent } from "react";
 import { actions } from "mirrorx";
-import Select from "react-select";
 // import TableCell from "@material-ui/core/TableCell";
 // import TableRow from "@material-ui/core/TableRow";
 import { Empty } from "antd";
 
 import { formatDate } from "Utils/index";
-import Radio from "Components/Form/Radio";
+import { Radio, Switch, Select } from "antd";
+
 import Popup from "Components/Popup/Popup";
 import SimpleTable from "Components/SimpleTable";
-import SwitchWrapped from "Components/SwitchBar/";
 
 import "./WithdrawInspection.less";
 
@@ -271,7 +270,7 @@ class WithdrawHistory extends PureComponent {
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <div className="title">Withdraw History</div>
           <div className="hideAllCancelled">
-            <SwitchWrapped
+            <Switch
               checkedValue={this.state.showAllCurrency}
               clickEvent={event => {
                 this.setState({ showAllCurrency: event.target.checked });
