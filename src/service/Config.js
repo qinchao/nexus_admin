@@ -98,7 +98,7 @@ const AwsAPIEndpointsConfig = {
 const RestAPIEndpointsConfig = {
   development: {
     name: "sophonexapi",
-    endpoint: "https://api.sophonex.com:8888",
+    endpoint: "https://devapi.sophonex.com:8888",
     custom_header: getHeader
   },
   apidev: {
