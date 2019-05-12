@@ -118,7 +118,7 @@ mirror.hook((action, getState) => {
         curRecordId,
         userInfo: { authHistory: [], userId },
         inspect,
-        currency: { value: currency, label: currency }
+        currency
       });
       actions.withdrawInspection.initUserInfo(userId);
       actions.withdrawInspection.initWithdrawHistory(userId);

@@ -24,9 +24,10 @@ export default {
       });
       if (!userInfo.error) {
         //TODO add login-frequent location
-        actions.withdrawInspection.updateData({ userInfo });
+        actions.withdrawInspection.updateData({ userInfo, loading: false });
+      } else {
+        actions.withdrawInspection.updateData({ loading: false });
       }
-      actions.withdrawInspection.updateData({ loading: false });
     },
     async initWithdrawHistory(data, getState) {
       actions.withdrawInspection.updateData({ loading: true });
@@ -69,7 +70,7 @@ export default {
             balance: item.balance,
             available: item.available
           };
-          return { value: item.currency, label: item.currency };
+          return item.currency;
         });
         actions.withdrawInspection.updateData({
           walletBalance: { balance, options }

@@ -112,7 +112,6 @@ const columns = [
     )
   }
 ];
-
 function ReviewHistory({ reviewHistory, loading }) {
   return (
     <Card title="Review History" className="commonWrap reviewWrap">
