@@ -24,16 +24,16 @@ class Index extends PureComponent {
           Welcome! {(user && user.userEmail) || ""}
         </div>
         <div>
-          {user.cognitoGroup.includes("WalletAdmin") && (
-            <Link to={routerConfig.withdrawList}>
+          {user.cognitoGroup.includes("KycAdmin") && (
+            <Link to={routerConfig.operation.kyclist}>
               <Button className="mr20" type="primary">
-                Go to Wallet Management
+                Go to KYC Management
               </Button>
             </Link>
           )}
-          {user.cognitoGroup.includes("KycAdmin") && (
-            <Link to={routerConfig.kycList}>
-              <Button type="primary">Go to KYC Management</Button>
+          {user.cognitoGroup.includes("WalletAdmin") && (
+            <Link to={routerConfig.operation.withdrawlist}>
+              <Button type="primary">Go to Wallet Management</Button>
             </Link>
           )}
         </div>

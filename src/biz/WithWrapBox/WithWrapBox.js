@@ -1,7 +1,8 @@
 import React, { PureComponent } from "react";
-import { actions, Link } from "mirrorx";
+import { actions, NavLink, Link } from "mirrorx";
 import { Layout, Menu, Button, Empty } from "antd";
 
+import routerConfig from "routerConfig";
 import { getAdminPermission } from "Utils/";
 import logoImgWhite from "Img/logo_medium.svg";
 import "./WithWrapBox.less";
@@ -50,7 +51,11 @@ function withWrapBox(WrappedComponent) {
                 selectedKeys={[this.state.nav]}
                 style={{ lineHeight: "64px" }}
               >
-                <Menu.Item key="operation">Operation</Menu.Item>
+                <Menu.Item key="operation">
+                  <NavLink to={routerConfig.operation.kyclist}>
+                    Operation
+                  </NavLink>
+                </Menu.Item>
                 <Menu.Item key="user">User</Menu.Item>
               </Menu>
             </div>

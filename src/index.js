@@ -32,8 +32,14 @@ function Routes() {
           render={() => <Redirect to="/index" />}
         />
         <Route path="/index" key="index" component={Index} />
-        <Route path="/:menu(operation)/:subMenu" component={OperationWrap} />
-        <Route path="/:menu(user)/:subMenu" component={OperationWrap} />
+        <Route
+          path="/:menu(operation)/:secMenu(kyc|withdraw)/:thirdMenu"
+          component={OperationWrap}
+        />
+        <Route
+          path="/:menu(user)/:secMenu/:thirdMenu"
+          component={OperationWrap}
+        />
         <Route component={Index} />
       </Switch>
     </Router>

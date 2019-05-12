@@ -36,7 +36,7 @@ mirror.hook((action, getState) => {
   // withdrawList
   if (
     action.type === LOCATION_CHANGE &&
-    location.pathname.indexOf("/withdrawList") >= 0
+    location.pathname.indexOf("/withdraw/list") >= 0
   ) {
     actions.user.loginRequired().then(user => {
       if (!user) {
@@ -59,7 +59,7 @@ mirror.hook((action, getState) => {
   // kycList
   if (
     action.type === LOCATION_CHANGE &&
-    location.pathname.indexOf("/kycList") >= 0
+    location.pathname.indexOf("/kyc/list") >= 0
   ) {
     actions.user.loginRequired().then(user => {
       if (!user) {
@@ -79,7 +79,7 @@ mirror.hook((action, getState) => {
   // kycInpsection
   if (
     action.type === LOCATION_CHANGE &&
-    location.pathname.indexOf("/kycInspection") >= 0
+    location.pathname.indexOf("/kyc/inspection") >= 0
   ) {
     const params = qs.parse(location.search);
     let userId = params["?userId"];
@@ -102,7 +102,7 @@ mirror.hook((action, getState) => {
   // withdrawInspection
   if (
     action.type === LOCATION_CHANGE &&
-    location.pathname.indexOf("/withdrawInspection") >= 0
+    location.pathname.indexOf("/withdraw/inspection") >= 0
   ) {
     const params = qs.parse(location.search);
     let userId = params["?userId"];

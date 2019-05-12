@@ -70,7 +70,7 @@ const columns = [
         {item.status === "WAITING_FOR_MANUAL_APPROVAL" ||
         item.status === "WAITING_FOR_INVESTIGATION" ? (
           <Link
-            to={`${routerConfig.withdrawInspection}?userId=${
+            to={`${routerConfig.operation.withdrawinspection}?userId=${
               item.userId
             }&recordId=${item.recordId}&currency=${item.currency}&inspect=true`}
             target="_blank"
@@ -81,7 +81,7 @@ const columns = [
           </Link>
         ) : (
           <Link
-            to={`${routerConfig.withdrawInspection}?userId=${
+            to={`${routerConfig.operation.withdrawinspection}?userId=${
               item.userId
             }&recordId=${item.recordId}&inspect=false`}
             target="_blank"
@@ -184,7 +184,9 @@ class Withdraw extends PureComponent {
             {getFieldDecorator("userId")(<Input maxLength={25} />)}
           </Form.Item>
           <Form.Item label="status">
-            {getFieldDecorator("status", { initialValue: "All" })(
+            {getFieldDecorator("status", {
+              initialValue: "WAITING_FOR_MANUAL_APPROVAL"
+            })(
               <Select style={{ minWidth: "200px" }}>
                 <Option value="All">All</Option>
                 <Option value="WAITING_FOR_USER_CONFIRMATION">

@@ -1,19 +1,23 @@
 import React, { PureComponent } from "react";
 import { Link } from "mirrorx";
-import { Layout, Menu, Empty } from "antd";
-import "antd/dist/antd.css";
+import { Layout, Menu, Empty, Breadcrumb } from "antd";
 
+import { getAdminPermission } from "Utils/";
+import routerConfig from "appSrc/routerConfig";
 import { withWrapBox } from "Biz/WithWrapBox/WithWrapBox";
+
 import WithdrawList from "Container/WithdrawList";
 import KYCList from "Container/KYCList";
-import { getAdminPermission } from "Utils/";
 import WithdrawInspection from "Container/WithdrawInspection";
 import KYCInspection from "Container/KYCInspection";
+
 const { Content, Sider } = Layout;
 
 class OperationWrap extends PureComponent {
   render() {
     const { user, match } = this.props;
+    const { menu, secMenu, thirdMenu } = match.params;
+    console.log("match", match);
 
     if (!getAdminPermission(user, ["KycAdmin", "WalletAdmin"])) {
       return (
@@ -30,35 +34,40 @@ class OperationWrap extends PureComponent {
         <Sider width={200} style={{ background: "#fff" }}>
           <Menu
             mode="inline"
-            defaultSelectedKeys={["kycList"]}
+            defaultSelectedKeys={[secMenu]}
             style={{ height: "100%", borderRight: 0 }}
           >
-            <Menu.Item key="kycList">
-              <Link to="/operation/kycList">KYC</Link>
+            <Menu.Item key="kyc">
+              <Link to={routerConfig[menu].kyclist}>KYC</Link>
             </Menu.Item>
-            <Menu.Item key="withdrawList">
-              <Link to="/operation/withdrawList">Withdrawal</Link>
+            <Menu.Item key="withdraw">
+              <Link to={routerConfig[menu].withdrawlist}>Withdrawal</Link>
             </Menu.Item>
           </Menu>
         </Sider>
-        <Layout style={{ padding: "0 24px 24px" }}>
+        <Layout style={{ padding: "24px" }}>
+          <Breadcrumb separator=">" style={{ marginBottom: "15px" }}>
+            <Breadcrumb.Item href={routerConfig.index}>Home</Breadcrumb.Item>
+            <Breadcrumb.Item href={routerConfig[menu][secMenu + "list"]}>
+              {secMenu}
+            </Breadcrumb.Item>
+            <Breadcrumb.Item>{thirdMenu}</Breadcrumb.Item>
+          </Breadcrumb>
+
           <Content className="contentWrap">
-            {match.params.subMenu && match.params.subMenu === "kycList" && (
+            {secMenu === "kyc" && thirdMenu === "list" && (
               <KYCList {...this.props} />
             )}
-            {match.params.subMenu &&
-              match.params.subMenu === "kycInspection" && (
-                <KYCInspection {...this.props} />
-              )}
+            {secMenu === "kyc" && thirdMenu === "inspection" && (
+              <KYCInspection {...this.props} />
+            )}
 
-            {match.params.subMenu &&
-              match.params.subMenu === "withdrawList" && (
-                <WithdrawList {...this.props} />
-              )}
-            {match.params.subMenu &&
-              match.params.subMenu === "withdrawInspection" && (
-                <WithdrawInspection {...this.props} />
-              )}
+            {secMenu === "withdraw" && thirdMenu === "list" && (
+              <WithdrawList {...this.props} />
+            )}
+            {secMenu === "withdraw" && thirdMenu === "inspection" && (
+              <WithdrawInspection {...this.props} />
+            )}
           </Content>
         </Layout>
       </Layout>

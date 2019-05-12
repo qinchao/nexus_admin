@@ -300,8 +300,6 @@ class InspectResult extends PureComponent {
     const { walletBalance, currency } = this.props;
     let balance = this.getBalance(walletBalance, currency);
 
-    console.log("InspectResult this.props: ", this.props);
-
     return (
       <Card title="Inspection Result" className="commonWrap resWrap">
         <Row type="flex" align="middle">
@@ -412,8 +410,6 @@ class WithdrawInspection extends PureComponent {
       currency,
       loading
     } = withdrawInspection;
-
-    console.log("WithdrawInspection this.props: ", this.props);
 
     return (
       <div className="inspectionWrap">
