@@ -6,7 +6,6 @@
     "paths": {
       "App/*": ["src/app/*"],
       "Biz/*": ["src/biz/*"],
-      "Components/*": ["src/components/*"],
       "Container/*": ["src/container/*"],
       "Model/*": ["src/model/*"],
       "Service/*": ["src/service/*"],

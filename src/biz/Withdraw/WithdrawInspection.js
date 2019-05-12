@@ -4,7 +4,7 @@ import { Table, Card, Popconfirm } from "antd";
 import { Button, Radio, Switch, Select, Input, Row } from "antd";
 
 import { formatDate } from "Utils/index";
-import "Components/Inspection.less";
+import "Biz/Inspection.less";
 
 const Option = Select.Option;
 const RadioGroup = Radio.Group;

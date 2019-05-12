@@ -278,7 +278,6 @@ module.exports = function(webpackEnv) {
         App: paths.appSrc + "/app",
         Biz: paths.appSrc + "/biz",
         Container: paths.appSrc + "/container",
-        Components: paths.appSrc + "/components",
         Model: paths.appSrc + "/model",
         Service: paths.appSrc + "/service",
         Utils: paths.appSrc + "/utils",

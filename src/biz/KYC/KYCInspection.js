@@ -3,7 +3,7 @@ import { actions } from "mirrorx";
 import { Button, Table, Checkbox, Card, Modal } from "antd";
 
 import { formatDate } from "Utils/index";
-import "Components/Inspection.less";
+import "Biz/Inspection.less";
 
 function showPopConfirm(title = "", content = "", submitFunc) {
   Modal.confirm({
