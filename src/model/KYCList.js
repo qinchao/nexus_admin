@@ -2,6 +2,7 @@ import { actions } from "mirrorx";
 import { notification } from "antd";
 
 import APIService from "Service/APIService";
+import routerConfig from "appSrc/routerConfig";
 
 export default {
   name: "kyc",
@@ -41,6 +42,10 @@ export default {
           message: "Success",
           description: `kyc request with userId: ${userId} and createTime: ${createTime} has been ${status}`
         });
+
+        actions.routing.push(
+          `${routerConfig.kycInspection}?userId=${userId}&createTime=${createTime}&inspect=false`
+        );
       }
     }
   }

@@ -1,8 +1,15 @@
 import React, { PureComponent } from "react";
 import { actions, Link } from "mirrorx";
 import { formatDistance } from "date-fns";
-import { Button, Table, Typography } from "antd";
-import { Form, DatePicker, Select, Input } from "antd";
+import {
+  Button,
+  Table,
+  Typography,
+  Form,
+  DatePicker,
+  Select,
+  Input
+} from "antd";
 import moment from "moment";
 
 import routerConfig from "appSrc/routerConfig";
@@ -154,7 +161,7 @@ class KYC extends PureComponent {
           </Form.Item>
           <Form.Item label="status">
             {getFieldDecorator("status", {
-              initialValue: "All"
+              initialValue: "PENDING_FOR_REVIEW"
             })(
               <Select style={{ width: "200px" }}>
                 <Option value="All">All</Option>
