@@ -38,28 +38,6 @@ export default {
       return user;
     },
 
-    async isUserLogin(data, getState) {
-      const user = await doSetUser();
-      if (!user) {
-        return false;
-      }
-      return user;
-    },
-
-    async setUser(data, getState) {
-      const {
-        user: { userName }
-      } = getState();
-
-      if (userName) return;
-
-      await doSetUser();
-    },
-
-    clearUserData(data, getState) {
-      actions.openorders.updateData({ openOrders: [], orderHistory: [] });
-    },
-
     async signOut(data, getState) {
       await UserService.signOut();
       actions.user.updateData({
