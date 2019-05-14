@@ -70,7 +70,7 @@ module.exports = function(webpackEnv) {
   // Get environment variables to inject into our app.
   const env = getClientEnvironment(publicUrl);
 
-  console.log("build ENV: ", env.raw);
+  console.log("Production process.env: ", env.stringified["process.env"]);
 
   // common function to get style loaders
   const getStyleLoaders = (cssOptions, preProcessor) => {
