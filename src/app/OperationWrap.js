@@ -17,7 +17,6 @@ class OperationWrap extends PureComponent {
   render() {
     const { user, match } = this.props;
     const { menu, secMenu, thirdMenu } = match.params;
-    console.log("match", match);
 
     if (!getAdminPermission(user, ["KycAdmin", "WalletAdmin"])) {
       return (

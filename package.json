@@ -72,8 +72,9 @@
     "workbox-webpack-plugin": "4.2.0"
   },
   "scripts": {
-    "start": "node scripts/start.js",
-    "build": "node scripts/build.js",
+    "start": "TARGET_ENV=development && node scripts/start.js",
+    "staging": "TARGET_ENV=singapore && node scripts/build.js",
+    "build": "TARGET_ENV=production && node scripts/build.js",
     "test": "node scripts/test.js"
   },
   "eslintConfig": {
