@@ -33,7 +33,11 @@ function Routes() {
         />
         <Route path="/index" key="index" component={Index} />
         <Route
-          path="/:menu(operation)/:secMenu(kyc|withdraw)/:thirdMenu"
+          path="/:menu(operation)/:secMenu/:thirdMenu"
+          component={OperationWrap}
+        />
+        <Route
+          path="/:menu(operation)"
           component={OperationWrap}
         />
         <Route

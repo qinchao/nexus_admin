@@ -300,14 +300,3 @@ export function currencyPairIsValid(pair) {
   return true;
 }
 
-export function getAdminPermission(user, arr = []) {
-  if (!user || !user.cognitoGroup) {
-    return false;
-  }
-  for (let i = 0; i < arr.length; i++) {
-    if (user.cognitoGroup.includes(arr[i])) {
-      return true;
-    }
-  }
-  return false;
-}

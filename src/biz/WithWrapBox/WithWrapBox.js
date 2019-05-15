@@ -2,8 +2,7 @@ import React, { PureComponent } from "react";
 import { actions, NavLink, Link } from "mirrorx";
 import { Layout, Menu, Button, Empty } from "antd";
 
-import routerConfig from "routerConfig";
-import { getAdminPermission } from "Utils/";
+import { getMenuItemData } from "Utils/menu";
 import logoImgWhite from "Img/logo_medium.svg";
 import "./WithWrapBox.less";
 
@@ -25,7 +24,7 @@ function withWrapBox(WrappedComponent) {
     };
     render() {
       const { user } = this.props;
-      if (!getAdminPermission(user, ["KycAdmin", "WalletAdmin"])) {
+      if (!Object.keys(user.permissions).length) {
         return (
           <Empty
             style={{ height: "calc(100vh - 128px)" }}
@@ -51,12 +50,13 @@ function withWrapBox(WrappedComponent) {
                 selectedKeys={[this.state.nav]}
                 style={{ lineHeight: "64px" }}
               >
-                <Menu.Item key="operation">
-                  <NavLink to={routerConfig.operation.kyclist}>
-                    Operation
-                  </NavLink>
-                </Menu.Item>
-                <Menu.Item key="user">User</Menu.Item>
+                {getMenuItemData(user, ["operation", "user"]).map(menuItemData => (
+                  <Menu.Item key={menuItemData.key}>
+                    <NavLink to={menuItemData.to}>
+                      {menuItemData.name}
+                    </NavLink>
+                  </Menu.Item>
+                ))}
               </Menu>
             </div>
             <div className="userInfo">

@@ -56,6 +56,21 @@ const PWD_REGEX = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})");
 
 const ZENDESK_LINK = "https://sophonexhelp.zendesk.com";
 
+
+const PERMISSIONS = {
+  WALLET_ADMIN: 'WALLET_ADMIN',
+  KYC_ADMIN: 'KYC_ADMIN',
+  SITE_ADMIN: 'SITE_ADMIN',
+};
+
+const ADMIN_GROUPS = {
+  WALLET_ADMIN: 'WalletAdmin',
+  KYC_ADMIN: 'KycAdmin',
+  SITE_ADMIN: 'SiteAdmin',
+  SUPER_ADMIN: 'SuperAdmin',
+  OMNI: 'Omni',
+};
+
 export {
   LOCATION_CHANGE,
   COLOR_CONFIG,
@@ -74,5 +89,7 @@ export {
   MIDDLE_SCREEN_WIDTH,
   SMALL_SCREEN_WIDTH,
   PWD_REGEX,
-  ZENDESK_LINK
+  ZENDESK_LINK,
+  PERMISSIONS,
+  ADMIN_GROUPS,
 };

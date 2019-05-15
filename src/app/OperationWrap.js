@@ -1,8 +1,7 @@
 import React, { PureComponent } from "react";
-import { Link } from "mirrorx";
-import { Layout, Menu, Empty, Breadcrumb } from "antd";
+import { Layout, Menu, Breadcrumb } from "antd";
 
-import { getAdminPermission } from "Utils/";
+import { getMenuItemData } from "Utils/menu";
 import routerConfig from "appSrc/routerConfig";
 import { withWrapBox } from "Biz/WithWrapBox/WithWrapBox";
 
@@ -10,6 +9,7 @@ import WithdrawList from "Container/WithdrawList";
 import KYCList from "Container/KYCList";
 import WithdrawInspection from "Container/WithdrawInspection";
 import KYCInspection from "Container/KYCInspection";
+import {NavLink} from "mirrorx";
 
 const { Content, Sider } = Layout;
 
@@ -17,16 +17,6 @@ class OperationWrap extends PureComponent {
   render() {
     const { user, match } = this.props;
     const { menu, secMenu, thirdMenu } = match.params;
-
-    if (!getAdminPermission(user, ["KycAdmin", "WalletAdmin"])) {
-      return (
-        <Empty
-          style={{ height: "calc(100vh - 128px)" }}
-          description="Sorry, you don't have the permission to access this page."
-          image={Empty.PRESENTED_IMAGE_SIMPLE}
-        />
-      );
-    }
 
     return (
       <Layout>
@@ -36,12 +26,16 @@ class OperationWrap extends PureComponent {
             defaultSelectedKeys={[secMenu]}
             style={{ height: "100%", borderRight: 0 }}
           >
-            <Menu.Item key="kyc">
-              <Link to={routerConfig[menu].kyclist}>KYC</Link>
-            </Menu.Item>
-            <Menu.Item key="withdraw">
-              <Link to={routerConfig[menu].withdrawlist}>Withdrawal</Link>
-            </Menu.Item>
+            {getMenuItemData(
+              user,
+              ["operation.kycList", "operation.withdrawList"]
+            ).map(menuItemData => (
+              <Menu.Item key={menuItemData.key}>
+                <NavLink to={menuItemData.to}>
+                  {menuItemData.name}
+                </NavLink>
+              </Menu.Item>
+            ))}
           </Menu>
         </Sider>
         <Layout style={{ padding: "24px" }}>
