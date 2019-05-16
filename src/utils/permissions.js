@@ -1,7 +1,11 @@
-import {ADMIN_GROUPS, PERMISSIONS} from "./constant";
+import { ADMIN_GROUPS, PERMISSIONS } from "./constant";
 
 export function getPermissionsFromGroups(groups) {
   let result = {};
+  if (!groups || !groups.length) {
+    console.warn(`Invalid Groups: ${groups}`);
+    return result;
+  }
   for (let group of groups) {
     switch (group) {
       case ADMIN_GROUPS.WALLET_ADMIN:
@@ -26,8 +30,8 @@ export function getPermissionsFromGroups(groups) {
         result[PERMISSIONS.SUPER_ADMIN] = true;
         break;
       default:
-        console.log(`Invalid Group Name: ${group}`);
+        console.warn(`Invalid Group Name: ${group}`);
     }
   }
   return result;
-};
+}

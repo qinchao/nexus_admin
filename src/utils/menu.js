@@ -8,29 +8,29 @@ import routerConfig from "appSrc/routerConfig";
  * @type {{"operation.withdrawList": {name: string, permission: string, to: string, key: string}, "operation.kycList": {name: string, permission: string, to: (string), key: string}, operation: {name: string, to: string, key: string}, user: {name: string, to: string, key: string}}}
  */
 const adminMenuItemData = {
-  "operation": {
+  operation: {
     key: "operation",
     name: "Operation",
-    to: "/operation",
+    to: "/operation"
   },
   "operation.kycList": {
     key: "operation.kycList",
     name: "KYC",
     to: routerConfig.operation.kycList,
-    permission: PERMISSIONS.KYC_ADMIN,
+    permission: PERMISSIONS.KYC_ADMIN
   },
   "operation.withdrawList": {
     key: "operation.withdrawList",
-    name: "Operation",
+    name: "Withdraw",
     to: routerConfig.operation.withdrawList,
-    permission: PERMISSIONS.WALLET_ADMIN,
+    permission: PERMISSIONS.WALLET_ADMIN
   },
 
-  "user": {
+  user: {
     key: "user",
     name: "User",
-    to: "/user/kyc/list",
-  },
+    to: "/user/kyc/list"
+  }
 };
 
 /**
@@ -43,7 +43,7 @@ const adminMenuItemData = {
 function canSeeMenuItem(user, menuItemData) {
   if (menuItemData.permission) {
     // This is a leaf menu item, check its permission requirement directly.
-   return user.permissions[menuItemData.permission];
+    return user.permissions[menuItemData.permission];
   }
   for (let itemKey of Object.keys(adminMenuItemData)) {
     if (itemKey.startsWith(menuItemData.key + ".")) {

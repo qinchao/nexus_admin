@@ -22,17 +22,9 @@ function withWrapBox(WrappedComponent) {
         nav: e.key
       });
     };
+
     render() {
       const { user } = this.props;
-      if (!Object.keys(user.permissions).length) {
-        return (
-          <Empty
-            style={{ height: "calc(100vh - 128px)" }}
-            description="Sorry, you don't have the permission to access this page."
-            image={Empty.PRESENTED_IMAGE_SIMPLE}
-          />
-        );
-      }
 
       return (
         <Layout>
@@ -50,13 +42,15 @@ function withWrapBox(WrappedComponent) {
                 selectedKeys={[this.state.nav]}
                 style={{ lineHeight: "64px" }}
               >
-                {getMenuItemData(user, ["operation", "user"]).map(menuItemData => (
-                  <Menu.Item key={menuItemData.key}>
-                    <NavLink to={menuItemData.to}>
-                      {menuItemData.name}
-                    </NavLink>
-                  </Menu.Item>
-                ))}
+                {getMenuItemData(user, ["operation", "user"]).map(
+                  menuItemData => (
+                    <Menu.Item key={menuItemData.key}>
+                      <NavLink to={menuItemData.to}>
+                        {menuItemData.name}
+                      </NavLink>
+                    </Menu.Item>
+                  )
+                )}
               </Menu>
             </div>
             <div className="userInfo">
@@ -68,7 +62,16 @@ function withWrapBox(WrappedComponent) {
               </Button>
             </div>
           </Header>
-          <WrappedComponent {...this.props} />
+
+          {!Object.keys(user.permissions).length ? (
+            <Empty
+              style={{ height: "calc(100vh - 128px)" }}
+              description="Sorry, you don't have the permission to access this page."
+              image={Empty.PRESENTED_IMAGE_SIMPLE}
+            />
+          ) : (
+            <WrappedComponent {...this.props} />
+          )}
         </Layout>
       );
     }
