@@ -1,7 +1,7 @@
 {
   "name": "nexus_admin",
   "version": "0.1.0",
-  "homepage": ".",
+  "homepage": "",
   "private": true,
   "dependencies": {
     "antd": "^3.16.6",
