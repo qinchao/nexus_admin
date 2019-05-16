@@ -87,7 +87,7 @@ const AwsAPIEndpointsConfig = {
   production: [
     {
       name: "nexusapi",
-      endpoint: "https://wapi.sophonex.com/web/",
+      endpoint: "https://wapi.sophonex.com/web",
       region: "ap-southeast-1",
       custom_header: getHeader
     }
