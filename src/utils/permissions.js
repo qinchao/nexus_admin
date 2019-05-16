@@ -17,11 +17,13 @@ export function getPermissionsFromGroups(groups) {
         result[PERMISSIONS.SITE_ADMIN] = true;
         result[PERMISSIONS.KYC_ADMIN] = true;
         result[PERMISSIONS.WALLET_ADMIN] = true;
+        result[PERMISSIONS.SUPER_ADMIN] = true;
         break;
       case ADMIN_GROUPS.OMNI:
         result[PERMISSIONS.SITE_ADMIN] = true;
         result[PERMISSIONS.KYC_ADMIN] = true;
         result[PERMISSIONS.WALLET_ADMIN] = true;
+        result[PERMISSIONS.SUPER_ADMIN] = true;
         break;
       default:
         console.log(`Invalid Group Name: ${group}`);
