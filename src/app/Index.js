@@ -1,9 +1,5 @@
 import React, { PureComponent } from "react";
-import { Link } from "mirrorx";
-import { Button } from "antd";
-
 import { withWrapBox } from "Biz/WithWrapBox/WithWrapBox";
-import routerConfig from "appSrc/routerConfig";
 
 class Index extends PureComponent {
   render() {

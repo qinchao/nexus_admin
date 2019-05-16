@@ -14,11 +14,11 @@ async function doSetUser() {
   const user = await UserService.getCurrentUser();
   if (user) {
     let group = user.signInUserSession.accessToken.payload["cognito:groups"];
+    group = group ? group : [];
     actions.user.updateData({
       userName: user.username,
       userEmail: user.attributes.email,
       userInfo: user,
-      cognitoGroup: group ? group : [],
       permissions: getPermissionsFromGroups(group),
     });
   }

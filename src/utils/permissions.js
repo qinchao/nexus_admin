@@ -17,16 +17,21 @@ export function getPermissionsFromGroups(groups) {
       case ADMIN_GROUPS.SITE_ADMIN:
         result[PERMISSIONS.SITE_ADMIN] = true;
         break;
+      case ADMIN_GROUPS.USER_ADMIN:
+        result[PERMISSIONS.USER_ADMIN] = true;
+        break;
       case ADMIN_GROUPS.SUPER_ADMIN:
         result[PERMISSIONS.SITE_ADMIN] = true;
         result[PERMISSIONS.KYC_ADMIN] = true;
         result[PERMISSIONS.WALLET_ADMIN] = true;
+        result[PERMISSIONS.USER_ADMIN] = true;
         result[PERMISSIONS.SUPER_ADMIN] = true;
         break;
       case ADMIN_GROUPS.OMNI:
         result[PERMISSIONS.SITE_ADMIN] = true;
         result[PERMISSIONS.KYC_ADMIN] = true;
         result[PERMISSIONS.WALLET_ADMIN] = true;
+        result[PERMISSIONS.USER_ADMIN] = true;
         result[PERMISSIONS.SUPER_ADMIN] = true;
         break;
       default:

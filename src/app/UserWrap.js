@@ -6,17 +6,14 @@ import { getMenuItemData } from "Utils/menu";
 import routerConfig from "appSrc/routerConfig";
 import { withWrapBox } from "Biz/WithWrapBox/WithWrapBox";
 
-import WithdrawList from "Container/WithdrawList";
-import KYCList from "Container/KYCList";
-import WithdrawInspection from "Container/WithdrawInspection";
-import KYCInspection from "Container/KYCInspection";
+import UserList from "Container/UserList";
 
 const { Content, Sider } = Layout;
 
-class OperationWrap extends PureComponent {
+class UserWrap extends PureComponent {
   render() {
     const { user, match } = this.props;
-    const { menu, secMenu, thirdMenu } = match.params;
+    const {secMenu} = match.params;
 
     return (
       <Layout>
@@ -28,7 +25,7 @@ class OperationWrap extends PureComponent {
           >
             {getMenuItemData(
               user,
-              ["operation.kycList", "operation.withdrawList"]
+              ["user.userList", "user.assets", "user.security"]
             ).map(menuItemData => (
               <Menu.Item key={menuItemData.key}>
                 <NavLink to={menuItemData.to}>
@@ -41,26 +38,20 @@ class OperationWrap extends PureComponent {
         <Layout style={{ padding: "24px" }}>
           <Breadcrumb separator=">" style={{ marginBottom: "15px" }}>
             <Breadcrumb.Item href={routerConfig.index}>Home</Breadcrumb.Item>
-            <Breadcrumb.Item href={routerConfig[menu][secMenu + "list"]}>
-              {secMenu}
-            </Breadcrumb.Item>
-            <Breadcrumb.Item>{thirdMenu}</Breadcrumb.Item>
+            <Breadcrumb.Item>{secMenu}</Breadcrumb.Item>
           </Breadcrumb>
 
           <Content className="contentWrap">
-            {secMenu === "kyc" && thirdMenu === "list" && (
-              <KYCList {...this.props} />
+            {secMenu === "list" && (
+              <UserList {...this.props} />
             )}
-            {secMenu === "kyc" && thirdMenu === "inspection" && (
-              <KYCInspection {...this.props} />
-            )}
+            {/*{secMenu === "assets" && (*/}
+              {/*<UserAssets {...this.props} />*/}
+            {/*)}*/}
 
-            {secMenu === "withdraw" && thirdMenu === "list" && (
-              <WithdrawList {...this.props} />
-            )}
-            {secMenu === "withdraw" && thirdMenu === "inspection" && (
-              <WithdrawInspection {...this.props} />
-            )}
+            {/*{secMenu === "security" && (*/}
+              {/*<UserSecurity {...this.props} />*/}
+            {/*)}*/}
           </Content>
         </Layout>
       </Layout>
@@ -68,4 +59,4 @@ class OperationWrap extends PureComponent {
   }
 }
 
-export default withWrapBox(OperationWrap);
+export default withWrapBox(UserWrap);

@@ -78,7 +78,6 @@ const columns = [
             to={`${routerConfig.operation.kycinspection}?userId=${
               item.userId
             }&createTime=${item.createTime}&inspect=true`}
-            target="_blank"
           >
             <Button size="small" type="primary">
               Inspect
@@ -89,7 +88,6 @@ const columns = [
             to={`${routerConfig.operation.kycinspection}?userId=${
               item.userId
             }&createTime=${item.createTime}&inspect=false`}
-            target="_blank"
           >
             <Button size="small" type="primary">
               Review
@@ -156,10 +154,10 @@ class KYC extends PureComponent {
               initialValue: [startDate, endDate]
             })(<RangePicker />)}
           </Form.Item>
-          <Form.Item label="userId">
+          <Form.Item label="UserId">
             {getFieldDecorator("userId")(<Input maxLength={10} />)}
           </Form.Item>
-          <Form.Item label="status">
+          <Form.Item label="Status">
             {getFieldDecorator("status", {
               initialValue: "PENDING_FOR_REVIEW"
             })(

@@ -73,7 +73,6 @@ const columns = [
             to={`${routerConfig.operation.withdrawinspection}?userId=${
               item.userId
             }&recordId=${item.recordId}&currency=${item.currency}&inspect=true`}
-            target="_blank"
           >
             <Button className="resetButton" type="primary">
               Inspect
@@ -84,7 +83,6 @@ const columns = [
             to={`${routerConfig.operation.withdrawinspection}?userId=${
               item.userId
             }&recordId=${item.recordId}&inspect=false`}
-            target="_blank"
           >
             <Button className="resetButton" type="primary">
               Review

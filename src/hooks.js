@@ -1,4 +1,5 @@
 import mirror, { actions } from "mirrorx";
+import UserListModel from "Model/UserList";
 import KYCListModel from "Model/KYCList";
 import WithdrawListModel from "Model/WithdrawList";
 import KYCInspection from "Model/KYCInspection";
@@ -11,6 +12,7 @@ import qs from "qs";
 
 // inject model
 mirror.model(User);
+mirror.model(UserListModel);
 mirror.model(KYCListModel);
 mirror.model(KYCInspection);
 mirror.model(WithdrawListModel);
@@ -75,6 +77,13 @@ const hookConfigs = [
         createTime
       });
       actions.kycInspection.initKyc();
+    },
+  },
+  {
+    path: "/user/list",
+    permission: PERMISSIONS.KYC_ADMIN,
+    handler: (getState) => {
+      actions.userList.fetchUsers();
     },
   },
 ];

@@ -60,6 +60,7 @@ const ZENDESK_LINK = "https://sophonexhelp.zendesk.com";
 const PERMISSIONS = {
   WALLET_ADMIN: 'WALLET_ADMIN',
   KYC_ADMIN: 'KYC_ADMIN',
+  USER_ADMIN: 'USER_ADMIN',
   SITE_ADMIN: 'SITE_ADMIN',
   SUPER_ADMIN: 'SUPER_ADMIN',
 };
@@ -67,6 +68,7 @@ const PERMISSIONS = {
 const ADMIN_GROUPS = {
   WALLET_ADMIN: 'WalletAdmin',
   KYC_ADMIN: 'KycAdmin',
+  USER_ADMIN: 'UserAdmin',
   SITE_ADMIN: 'SiteAdmin',
   SUPER_ADMIN: 'SuperAdmin',
   OMNI: 'Omni',
