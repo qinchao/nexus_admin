@@ -5,6 +5,7 @@ import WithdrawListModel from "Model/WithdrawList";
 import KYCInspection from "Model/KYCInspection";
 import WithdrawInspection from "Model/WithdrawInspection";
 import User from "Model/User";
+import GlobalConfig from "Model/GlobalConfig";
 
 import {PERMISSIONS} from "./utils/constant"
 import { LOCATION_CHANGE } from "./utils/constant";
@@ -17,6 +18,7 @@ mirror.model(KYCListModel);
 mirror.model(KYCInspection);
 mirror.model(WithdrawListModel);
 mirror.model(WithdrawInspection);
+mirror.model(GlobalConfig);
 
 const hookConfigs = [
   {
@@ -84,6 +86,13 @@ const hookConfigs = [
     permission: PERMISSIONS.KYC_ADMIN,
     handler: (getState) => {
       actions.userList.fetchUsers();
+    },
+  },
+  {
+    path: "/config/global",
+    permission: PERMISSIONS.KYC_ADMIN,
+    handler: (getState) => {
+      actions.globalConfig.fetchGlobalConfig();
     },
   },
 ];

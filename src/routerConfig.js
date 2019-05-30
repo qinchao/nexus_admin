@@ -10,5 +10,8 @@ export default {
     userList: "/user/list",
     userAssets: "/user/assets",
     userSecurity: "/user/security",
+  },
+  config: {
+    globalConfig: "/config/global",
   }
 };

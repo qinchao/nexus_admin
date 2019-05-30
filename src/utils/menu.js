@@ -49,6 +49,17 @@ const adminMenuItemData = {
     to: routerConfig.user.userSecurity,
     permission: PERMISSIONS.USER_ADMIN,
   },
+  config: {
+    key: "config",
+    name: "Config",
+    to: "/config",
+  },
+  "config.global": {
+    key: "globalConfig",
+    name: "Global Config",
+    to: routerConfig.config.globalConfig,
+    permission: PERMISSIONS.USER_ADMIN,
+  },
 };
 
 /**
