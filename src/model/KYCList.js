@@ -44,7 +44,7 @@ export default {
         });
 
         actions.routing.push(
-          `${routerConfig.operation.kycinspection}?userId=${userId}&createTime=${createTime}&inspect=false`
+          `${routerConfig.operation.kycInspection}?userId=${userId}&createTime=${createTime}&inspect=false`
         );
       }
     }

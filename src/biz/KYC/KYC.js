@@ -8,9 +8,9 @@ import {
   Form,
   DatePicker,
   Select,
-  Input
+  Input,
+  notification
 } from "antd";
-import moment from "moment";
 
 import routerConfig from "appSrc/routerConfig";
 import { getTimeColor, formatDate } from "Utils/index";
@@ -111,10 +111,13 @@ class KYC extends PureComponent {
 
     this.props.form.validateFields((err, values) => {
       const { timeArray, userId, status } = values;
-      let fetchParam = {
-        startTime: timeArray[0].valueOf(),
-        endTime: timeArray[1].valueOf()
-      };
+      let fetchParam = {};
+      if(timeArray){
+        fetchParam = {
+          startTime: timeArray[0].valueOf(),
+          endTime: timeArray[1].valueOf()
+        };
+      }
       if (userId) {
         fetchParam.userId = userId;
       }
@@ -124,6 +127,14 @@ class KYC extends PureComponent {
       if (!userId && status === "All") {
         this.props.form.setFieldsValue({
           status: "PENDING_FOR_REVIEW"
+        });
+        notification.open({
+          message: "Reset the status to PENDING_FOR_REVIEW",
+          description: "Please set the userId if you want to search All status.",
+          style: {
+            width: 600,
+            marginLeft: 335 - 600,
+          },
         });
         fetchParam.status = "PENDING_FOR_REVIEW";
       }
@@ -139,9 +150,6 @@ class KYC extends PureComponent {
     const { list, loading } = this.props.kyc;
     const { getFieldDecorator } = this.props.form;
 
-    const startDate = moment().month(moment().month() - 1),
-      endDate = moment();
-
     return (
       <div className="panelBox">
         <Form
@@ -150,9 +158,7 @@ class KYC extends PureComponent {
           style={{ marginBottom: 15 }}
         >
           <Form.Item label="Date">
-            {getFieldDecorator("timeArray", {
-              initialValue: [startDate, endDate]
-            })(<RangePicker />)}
+            {getFieldDecorator("timeArray")(<RangePicker onChange={this.onRangePickerChange} />)}
           </Form.Item>
           <Form.Item label="UserId">
             {getFieldDecorator("userId")(<Input maxLength={10} />)}
