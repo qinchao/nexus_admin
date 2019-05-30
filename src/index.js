@@ -38,6 +38,10 @@ function Routes() {
           component={OperationWrap}
         />
         <Route
+          path="/:menu(operation)/:secMenu"
+          component={OperationWrap}
+        />
+        <Route
           path="/:menu(operation)"
           component={OperationWrap}
         />

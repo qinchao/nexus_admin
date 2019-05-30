@@ -75,7 +75,7 @@ const columns = [
       <span>
         {item.kycStatus === "PENDING_FOR_REVIEW" ? (
           <Link
-            to={`${routerConfig.operation.kycinspection}?userId=${
+            to={`${routerConfig.operation.kycInspection}?userId=${
               item.userId
             }&createTime=${item.createTime}&inspect=true`}
           >
@@ -85,7 +85,7 @@ const columns = [
           </Link>
         ) : (
           <Link
-            to={`${routerConfig.operation.kycinspection}?userId=${
+            to={`${routerConfig.operation.kycInspection}?userId=${
               item.userId
             }&createTime=${item.createTime}&inspect=false`}
           >

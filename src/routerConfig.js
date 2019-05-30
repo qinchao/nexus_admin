@@ -1,9 +1,9 @@
 export default {
   index: "/index",
   operation: {
-    kycList: "/operation/kyc/list",
+    kyc: "/operation/kyc",
     kycInspection: "/operation/kyc/inspection",
-    withdrawList: "/operation/withdraw/list",
+    withdraw: "/operation/withdraw",
     withdrawInspection: "/operation/withdraw/inspection"
   },
   user: {

@@ -1,9 +1,11 @@
 import mirror, { actions } from "mirrorx";
+import moment from "moment";
 import UserListModel from "Model/UserList";
 import KYCListModel from "Model/KYCList";
 import WithdrawListModel from "Model/WithdrawList";
 import KYCInspection from "Model/KYCInspection";
 import WithdrawInspection from "Model/WithdrawInspection";
+import UserInspection from "Model/UserInspection";
 import User from "Model/User";
 
 import {PERMISSIONS} from "./utils/constant"
@@ -13,6 +15,7 @@ import qs from "qs";
 // inject model
 mirror.model(User);
 mirror.model(UserListModel);
+mirror.model(UserInspection);
 mirror.model(KYCListModel);
 mirror.model(KYCInspection);
 mirror.model(WithdrawListModel);
@@ -25,14 +28,14 @@ const hookConfigs = [
     handler: (getState) => {
       actions.withdraw.initCurrencies();
       actions.withdraw.fetchWithdraw({
-        status: "WAITING_FOR_MANUAL_APPROVAL"
+        status: "WAITING_FOR_MANUAL_APPROVAL",
       });
     },
   },
   {
     path: "/operation/withdraw/inspection",
     permission: PERMISSIONS.WALLET_ADMIN,
-    handler: (getState) => {
+    handler: async (getState) => {
       const {
         routing: { location }
       } = getState();
@@ -42,14 +45,14 @@ const hookConfigs = [
       let currency = params["currency"];
       let inspect = params["inspect"] === "true";
 
-      actions.withdrawInspection.updateData({
+      await actions.withdrawInspection.updateData({
         curRecordId,
-        userInfo: { authHistory: [], userId },
+        userId,
         inspect,
         currency
       });
-      actions.withdrawInspection.initUserInfo(userId);
-      actions.withdrawInspection.initWithdrawHistory(userId);
+      actions.withdrawInspection.initUserInfo();
+      actions.withdrawInspection.initWithdrawHistory(currency);
       actions.withdrawInspection.initWalletBalance();
     },
   },

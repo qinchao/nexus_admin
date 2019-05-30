@@ -69,6 +69,7 @@ function UserProfile({ userInfo, loading }) {
         columns={UserProfileColumns}
         dataSource={[userInfo]}
         loading={loading}
+        pagination={false}
       />
     </Card>
   );
@@ -222,44 +223,47 @@ const WithdrawHistoryColumns = [
     render: (text, item) => <>{item.message || "N/A"}</>
   }
 ];
-function WithdrawHistory({
-  showAllCurrency = false,
-  withdrawHistory,
-  loading
-}) {
-  return (
-    <Card title="Withdraw History" className="commonWrap hisWrap">
-      <div className="hideAllCancelled">
-        <span />
-        <Switch
-          defaultChecked
-          checked={showAllCurrency}
-          checkedChildren="Show All Currency"
-          onChange={checked => {
-            this.setState({ showAllCurrency: checked });
-          }}
+
+class WithdrawHistory extends PureComponent{
+  state = {
+    showAllCurrency: false
+  };
+
+  render(){
+    const {withdrawHistory, loading, currency, recordId} = this.props;
+
+    return (
+      <Card title="Withdraw History" className="commonWrap hisWrap"
+        extra={
+        <>
+          <span>Show All Currencies  </span>
+          <Switch
+            checked={this.state.showAllCurrency}
+            onChange={checked => {
+              this.setState({ showAllCurrency: checked });
+              if(checked){
+                actions.withdrawInspection.initWithdrawHistory();
+              }else{
+                actions.withdrawInspection.initWithdrawHistory(currency);
+              }
+            }}
+          />
+        </>
+        }
+      >
+        <Table
+          style={{ marginTop: 15 }}
+          rowKey="recordId"
+          columns={WithdrawHistoryColumns}
+          dataSource={withdrawHistory}
+          scroll={{ x: true }}
+          loading={loading}
+          rowClassName={ (record) => {
+            return record.recordId===parseInt(recordId) ? 'light-row': ''}}
         />
-      </div>
-
-      {/* renderRowWithCondition = item => {
-          return this.state.showAllCurrency
-            ? this.renderRow(item)
-            : this.props.currency.value === item.currency
-            ? this.renderRow(item)
-            : "";
-        }; */}
-
-      {/* // TODO hide the whole column */}
-      <Table
-        style={{ marginTop: 15 }}
-        rowKey="recordId"
-        columns={WithdrawHistoryColumns}
-        dataSource={withdrawHistory}
-        scroll={{ x: true }}
-        loading={loading}
-      />
-    </Card>
-  );
+      </Card>
+    );
+  }
 }
 
 class InspectResult extends PureComponent {
@@ -275,6 +279,7 @@ class InspectResult extends PureComponent {
       message: message
     };
     actions.withdraw.withdrawUpdate(params);
+    actions.withdrawInspection.updateData({inspect:false});
   };
 
   handleChange = event => {
@@ -287,7 +292,7 @@ class InspectResult extends PureComponent {
 
   getBalance = (walletBalance, currency) => {
     if (walletBalance.balance && walletBalance.balance[currency]) {
-      return `balance: ${walletBalance.balance[currency].balance} available: ${
+      return `balance: ${walletBalance.balance[currency].balance} ${currency} available: ${
         walletBalance.balance[currency].available
       }`;
     } else {
@@ -302,8 +307,9 @@ class InspectResult extends PureComponent {
 
     return (
       <Card title="Inspection Result" className="commonWrap resWrap">
+        <Row type="flex" align="middle">{`BALANCE:`}</Row>
         <Row type="flex" align="middle">
-          {`BALANCE: We have ${balance}`}
+          {`We have ${balance}`}
           {balance && (
             <div style={{ paddingLeft: "20px" }}>
               <Select
@@ -353,33 +359,6 @@ class InspectResult extends PureComponent {
             </Row>
           </RadioGroup>
         </Row>
-        {/* <div>
-          <div>Approve</div>
-          <Radio
-            checked={selectedValue === "MANUALLY_APPROVE"}
-            onChange={this.handleChange}
-            value="MANUALLY_APPROVE"
-            color="default"
-          />
-        </div> */}
-        {/* <div>
-          <div>Reject</div>
-          <Radio
-            checked={selectedValue === "MANUALLY_REJECT"}
-            onChange={this.handleChange}
-            value="MANUALLY_REJECT"
-            color="default"
-          />
-          <textarea
-            value={message}
-            onChange={event => {
-              this.setState({
-                message: event.target.value
-              });
-            }}
-          />
-        </div> */}
-
         {selectedValue === "" ||
         (selectedValue === "MANUALLY_REJECT" && !message) ? (
           <Button disabled>Submit</Button>
@@ -400,9 +379,8 @@ class InspectResult extends PureComponent {
 
 class WithdrawInspection extends PureComponent {
   render() {
-    const { withdrawInspection } = this.props;
+    const { withdrawInspection, userInspection } = this.props;
     const {
-      userInfo,
       curRecordId,
       withdrawHistory,
       inspect,
@@ -410,17 +388,17 @@ class WithdrawInspection extends PureComponent {
       currency,
       loading
     } = withdrawInspection;
+    const {userInfo} = userInspection;
 
     return (
       <div className="inspectionWrap">
         <UserProfile userInfo={userInfo} loading={loading} />
-        {/* TODO get the login history of a specific user */}
         <Login loginHistory={userInfo.authHistory} loading={loading} />
         <WithdrawHistory
           recordId={curRecordId}
           withdrawHistory={withdrawHistory}
-          loading={loading}
           currency={currency}
+          loading={loading}
         />
         {inspect && (
           <InspectResult

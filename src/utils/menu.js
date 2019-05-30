@@ -13,16 +13,16 @@ const adminMenuItemData = {
     name: "Operation",
     to: "/operation"
   },
-  "operation.kycList": {
-    key: "operation.kycList",
+  "operation.kyc": {
+    key: "operation.kyc",
     name: "KYC",
-    to: routerConfig.operation.kycList,
+    to: routerConfig.operation.kyc,
     permission: PERMISSIONS.KYC_ADMIN
   },
-  "operation.withdrawList": {
-    key: "operation.withdrawList",
+  "operation.withdraw": {
+    key: "operation.withdraw",
     name: "Withdraw",
-    to: routerConfig.operation.withdrawList,
+    to: routerConfig.operation.withdraw,
     permission: PERMISSIONS.WALLET_ADMIN
   },
 

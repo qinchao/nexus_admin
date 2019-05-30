@@ -235,7 +235,6 @@ class InspectResult extends PureComponent {
 class KYCInspection extends PureComponent {
   render() {
     const { reviewHistory, inspect, userId, createTime, loading } = this.props;
-    console.log(this.props);
 
     return (
       <div className="inspectionWrap">

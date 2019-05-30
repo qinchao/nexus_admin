@@ -4,8 +4,8 @@ import APIService from "../service/APIService";
 export default {
   name: "withdrawInspection",
   initialState: {
-    userInfo: { authHistory: [] },
     curRecordId: "",
+    userId: 0,
     withdrawHistory: [],
     walletBalance: {},
     loading: true
@@ -17,25 +17,19 @@ export default {
   },
   effects: {
     async initUserInfo(data, getState) {
-      actions.withdrawInspection.updateData({ loading: true });
-      const userId = data;
-      let userInfo = await APIService.awsRequest("get", "/admin/user", {
-        userId
-      });
-      if (!userInfo.error) {
-        //TODO add login-frequent location
-        actions.withdrawInspection.updateData({ userInfo, loading: false });
-      } else {
-        actions.withdrawInspection.updateData({ loading: false });
-      }
+      actions.withdrawInspection.updateData({loading: true});
+      const {withdrawInspection: {userId}} = getState();
+      await actions.userInspection.initUserInfo(userId);
+      actions.withdrawInspection.updateData({ loading: false });
     },
     async initWithdrawHistory(data, getState) {
       actions.withdrawInspection.updateData({ loading: true });
-      const userId = data;
+      const {withdrawInspection:{userId}} = getState();
+      const currency = data;
       const withdrawHistory = await APIService.request(
         "get",
         "/admin/dnw_record",
-        { userId, type: "WITHDRAW" }
+        { userId, currency, type: "WITHDRAW" }
       );
       if (!withdrawHistory.error) {
         actions.withdrawInspection.updateData({
@@ -52,17 +46,6 @@ export default {
     async initWalletBalance(data, getState) {
       actions.withdrawInspection.updateData({ loading: true });
       let walletBalance = await APIService.request("get", "/wallet/balance");
-      // temporarily save for testing
-      // walletBalance = {entries: [{
-      //   "currency": "BTC",
-      //   "balance": "1.53400000",
-      //   "available": "1.02300000"
-      // },{
-      //   "currency": "USDT",
-      //   "balance": "1.83400000",
-      //   "available": "1.88300000"
-      // },
-      // ]};
       if (walletBalance.entries && walletBalance.entries.length) {
         let balance = {};
         let options = walletBalance.entries.map(item => {

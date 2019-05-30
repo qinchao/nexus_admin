@@ -2,8 +2,7 @@ import React, { PureComponent } from "react";
 import { actions, Link } from "mirrorx";
 import { formatDistance } from "date-fns";
 import { Button, Table, Typography } from "antd";
-import { Form, DatePicker, Select, Input } from "antd";
-import moment from "moment";
+import { Form, DatePicker, Select, Input, notification } from "antd";
 
 import { getTimeColor } from "Utils/index";
 import routerConfig from "appSrc/routerConfig";
@@ -70,7 +69,7 @@ const columns = [
         {item.status === "WAITING_FOR_MANUAL_APPROVAL" ||
         item.status === "WAITING_FOR_INVESTIGATION" ? (
           <Link
-            to={`${routerConfig.operation.withdrawinspection}?userId=${
+            to={`${routerConfig.operation.withdrawInspection}?userId=${
               item.userId
             }&recordId=${item.recordId}&currency=${item.currency}&inspect=true`}
           >
@@ -80,7 +79,7 @@ const columns = [
           </Link>
         ) : (
           <Link
-            to={`${routerConfig.operation.withdrawinspection}?userId=${
+            to={`${routerConfig.operation.withdrawInspection}?userId=${
               item.userId
             }&recordId=${item.recordId}&inspect=false`}
           >
@@ -113,11 +112,14 @@ class Withdraw extends PureComponent {
         status,
         currency
       } = values;
-      let fetchParam = {
-        startTime: timeArray[0].valueOf(),
-        endTime: timeArray[1].valueOf()
-      };
 
+      let fetchParam = {};
+      if(timeArray){
+        fetchParam = {
+          startTime: timeArray[0].valueOf(),
+          endTime: timeArray[1].valueOf()
+        };
+      }
       if (fromRecordId) {
         fetchParam = {};
         fetchParam.fromRecordId = fromRecordId;
@@ -130,7 +132,7 @@ class Withdraw extends PureComponent {
       }
 
       if (currency !== "All") {
-        fetchParam.currency = currency.value;
+        fetchParam.currency = currency;
       }
       if (userId) {
         fetchParam.userId = userId;
@@ -142,9 +144,16 @@ class Withdraw extends PureComponent {
         this.props.form.setFieldsValue({
           status: "WAITING_FOR_MANUAL_APPROVAL"
         });
+        notification.open({
+          message: "Reset the status to WAITING_FOR_MANUAL_APPROVAL",
+          description: "Please set the userId if you want to search All status.",
+          style: {
+            width: 600,
+            marginLeft: 335 - 600,
+          },
+        });
         fetchParam.status = "WAITING_FOR_MANUAL_APPROVAL";
       }
-
       actions.withdraw.fetchWithdraw(fetchParam);
     });
   };
@@ -157,9 +166,6 @@ class Withdraw extends PureComponent {
     const { loading, list, currencies } = this.props.withdraw;
     const { getFieldDecorator } = this.props.form;
 
-    const startDate = moment().month(moment().month() - 1),
-      endDate = moment();
-
     return (
       <div className="panelBox">
         <Form
@@ -168,20 +174,18 @@ class Withdraw extends PureComponent {
           style={{ marginBottom: 15 }}
         >
           <Form.Item label="Date">
-            {getFieldDecorator("timeArray", {
-              initialValue: [startDate, endDate]
-            })(<RangePicker onChange={this.onRangePickerChange} />)}
+            {getFieldDecorator("timeArray")(<RangePicker onChange={this.onRangePickerChange} />)}
           </Form.Item>
-          <Form.Item label="fromRecordId">
+          <Form.Item label="FromRecordId">
             {getFieldDecorator("fromRecordId")(<Input maxLength={10} />)}
           </Form.Item>
-          <Form.Item label="toRecordId">
+          <Form.Item label="ToRecordId">
             {getFieldDecorator("toRecordId")(<Input maxLength={10} />)}
           </Form.Item>
-          <Form.Item label="userId">
+          <Form.Item label="UserId">
             {getFieldDecorator("userId")(<Input maxLength={25} />)}
           </Form.Item>
-          <Form.Item label="status">
+          <Form.Item label="Status">
             {getFieldDecorator("status", {
               initialValue: "WAITING_FOR_MANUAL_APPROVAL"
             })(
@@ -207,7 +211,7 @@ class Withdraw extends PureComponent {
               </Select>
             )}
           </Form.Item>
-          <Form.Item label="currency">
+          <Form.Item label="Currency">
             {getFieldDecorator("currency", { initialValue: "All" })(
               <Select style={{ minWidth: "100px" }}>
                 {currencies.map(item => (
@@ -242,12 +246,7 @@ class Withdraw extends PureComponent {
         </Text>
         <br />
         <Text type="secondary">
-          3.Except for Date, if you didn't change the values in the boxes, they
-          will not be in the filter
-        </Text>
-        <br />
-        <Text type="secondary">
-          4.If you input fromRecordId or toRecordId, Date will not be in the
+          3.If you input fromRecordId or toRecordId, Date will not be in the
           filer.
         </Text>
 

@@ -17,6 +17,7 @@ class OperationWrap extends PureComponent {
   render() {
     const { user, match } = this.props;
     const { menu, secMenu, thirdMenu } = match.params;
+    console.log("params", match.params);
 
     return (
       <Layout>
@@ -28,7 +29,7 @@ class OperationWrap extends PureComponent {
           >
             {getMenuItemData(
               user,
-              ["operation.kycList", "operation.withdrawList"]
+              ["operation.kyc", "operation.withdraw"]
             ).map(menuItemData => (
               <Menu.Item key={menuItemData.key}>
                 <NavLink to={menuItemData.to}>
@@ -41,21 +42,28 @@ class OperationWrap extends PureComponent {
         <Layout style={{ padding: "24px" }}>
           <Breadcrumb separator=">" style={{ marginBottom: "15px" }}>
             <Breadcrumb.Item href={routerConfig.index}>Home</Breadcrumb.Item>
-            <Breadcrumb.Item href={routerConfig[menu][secMenu + "list"]}>
-              {secMenu}
-            </Breadcrumb.Item>
-            <Breadcrumb.Item>{thirdMenu}</Breadcrumb.Item>
+            <Breadcrumb.Item href={`/${menu}`}>{menu}</Breadcrumb.Item>
+            {thirdMenu ? 
+              <Breadcrumb.Item href={`/${menu}/${secMenu}`}> 
+                {secMenu}
+              </Breadcrumb.Item>
+            : 
+              <Breadcrumb.Item>
+                {secMenu}
+              </Breadcrumb.Item>
+            }
+            {thirdMenu ? <Breadcrumb.Item>{thirdMenu}</Breadcrumb.Item> : ""}
           </Breadcrumb>
 
           <Content className="contentWrap">
-            {secMenu === "kyc" && thirdMenu === "list" && (
+            {secMenu === "kyc" && !thirdMenu && (
               <KYCList {...this.props} />
             )}
             {secMenu === "kyc" && thirdMenu === "inspection" && (
               <KYCInspection {...this.props} />
             )}
 
-            {secMenu === "withdraw" && thirdMenu === "list" && (
+            {secMenu === "withdraw" && !thirdMenu && (
               <WithdrawList {...this.props} />
             )}
             {secMenu === "withdraw" && thirdMenu === "inspection" && (

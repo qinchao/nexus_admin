@@ -13,7 +13,7 @@ const { Content, Sider } = Layout;
 class UserWrap extends PureComponent {
   render() {
     const { user, match } = this.props;
-    const {secMenu} = match.params;
+    const {menu, secMenu} = match.params;
 
     return (
       <Layout>
@@ -38,6 +38,7 @@ class UserWrap extends PureComponent {
         <Layout style={{ padding: "24px" }}>
           <Breadcrumb separator=">" style={{ marginBottom: "15px" }}>
             <Breadcrumb.Item href={routerConfig.index}>Home</Breadcrumb.Item>
+            <Breadcrumb.Item>{menu}</Breadcrumb.Item>
             <Breadcrumb.Item>{secMenu}</Breadcrumb.Item>
           </Breadcrumb>
 
