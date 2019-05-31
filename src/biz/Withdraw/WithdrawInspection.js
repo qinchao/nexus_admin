@@ -4,76 +4,12 @@ import { Table, Card, Popconfirm } from "antd";
 import { Button, Radio, Switch, Select, Input, Row } from "antd";
 
 import { formatDate } from "Utils/index";
+import UserProfile from "Components/UserProfile";
 import "Biz/Inspection.less";
 
 const Option = Select.Option;
 const RadioGroup = Radio.Group;
 const { TextArea } = Input;
-
-const UserProfileColumns = [
-  {
-    title: "Email",
-    dataIndex: "email",
-    key: "email",
-    render: (text, item) => <>{item.email || "N/A"}</>
-  },
-  {
-    title: "Create Time",
-    dataIndex: "createTime",
-    key: "createTime",
-    render: (text, item) => (
-      <>
-        {item.userCreateDate
-          ? formatDate(new Date(item.userCreateDate))
-          : "N/A"}
-      </>
-    )
-  },
-  {
-    title: "Last Modified",
-    dataIndex: "lastModified",
-    key: "lastModified",
-    render: (text, item) => (
-      <>
-        {item.userLastModifiedDate
-          ? formatDate(new Date(item.userLastModifiedDate))
-          : "N/A"}
-      </>
-    )
-  },
-  {
-    title: "Last Name",
-    dataIndex: "lastName",
-    key: "lastName",
-    render: (text, item) => <>{item.lastName || "N/A"}</>
-  },
-  {
-    title: "First Name",
-    dataIndex: "firstName",
-    key: "firstName",
-    render: (text, item) => <>{item.firstName || "N/A"}</>
-  },
-  {
-    title: "Country or Region",
-    dataIndex: "countryOrRegion",
-    key: "countryOrRegion",
-    render: (text, item) => <>{item.countryOrRegion || "N/A"}</>
-  }
-];
-function UserProfile({ userInfo, loading }) {
-  return (
-    <Card title="User Profile" className="commonWrap userWrap">
-      <Table
-        style={{ marginTop: 15 }}
-        rowKey={item => item.userId}
-        columns={UserProfileColumns}
-        dataSource={[userInfo]}
-        loading={loading}
-        pagination={false}
-      />
-    </Card>
-  );
-}
 
 const LoginColumns = [
   {

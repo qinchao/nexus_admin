@@ -37,18 +37,6 @@ const adminMenuItemData = {
     to: routerConfig.user.userList,
     permission: PERMISSIONS.USER_ADMIN,
   },
-  "user.assets": {
-    key: "userAssets",
-    name: "User Assets",
-    to: routerConfig.user.userAssets,
-    permission: PERMISSIONS.USER_ADMIN,
-  },
-  "user.security": {
-    key: "userSecurity",
-    name: "User Security",
-    to: routerConfig.user.userSecurity,
-    permission: PERMISSIONS.USER_ADMIN,
-  },
 };
 
 /**

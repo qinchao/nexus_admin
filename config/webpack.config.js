@@ -281,6 +281,7 @@ module.exports = function(webpackEnv) {
         "react-native": "react-native-web",
         App: paths.appSrc + "/app",
         Biz: paths.appSrc + "/biz",
+        Components: paths.appSrc + "/components",
         Container: paths.appSrc + "/container",
         Model: paths.appSrc + "/model",
         Service: paths.appSrc + "/service",

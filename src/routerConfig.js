@@ -8,7 +8,6 @@ export default {
   },
   user: {
     userList: "/user/list",
-    userAssets: "/user/assets",
-    userSecurity: "/user/security",
+    userInspection: "/user/inspection",
   }
 };

@@ -7,6 +7,7 @@ import routerConfig from "appSrc/routerConfig";
 import { withWrapBox } from "Biz/WithWrapBox/WithWrapBox";
 
 import UserList from "Container/UserList";
+import UserInspection from "Container/UserInspection";
 
 const { Content, Sider } = Layout;
 
@@ -25,7 +26,7 @@ class UserWrap extends PureComponent {
           >
             {getMenuItemData(
               user,
-              ["user.userList", "user.assets", "user.security"]
+              ["user.userList"]
             ).map(menuItemData => (
               <Menu.Item key={menuItemData.key}>
                 <NavLink to={menuItemData.to}>
@@ -46,13 +47,9 @@ class UserWrap extends PureComponent {
             {secMenu === "list" && (
               <UserList {...this.props} />
             )}
-            {/*{secMenu === "assets" && (*/}
-              {/*<UserAssets {...this.props} />*/}
-            {/*)}*/}
-
-            {/*{secMenu === "security" && (*/}
-              {/*<UserSecurity {...this.props} />*/}
-            {/*)}*/}
+            {secMenu === "inspection" && (
+              <UserInspection {...this.props} />
+            )}
           </Content>
         </Layout>
       </Layout>

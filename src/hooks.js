@@ -23,7 +23,7 @@ mirror.model(WithdrawInspection);
 
 const hookConfigs = [
   {
-    path: "/operation/withdraw/list",
+    path: "/operation/withdraw",
     permission: PERMISSIONS.WALLET_ADMIN,
     handler: (getState) => {
       actions.withdraw.initCurrencies();
@@ -37,10 +37,10 @@ const hookConfigs = [
     permission: PERMISSIONS.WALLET_ADMIN,
     handler: async (getState) => {
       const {
-        routing: { location }
+        routing: { location: { search } }
       } = getState();
-      const params = qs.parse(location.search);
-      let userId = params["?userId"];
+      const params = search && qs.parse(search.substr(1));
+      let userId = params["userId"];
       let curRecordId = params["recordId"];
       let currency = params["currency"];
       let inspect = params["inspect"] === "true";
@@ -57,7 +57,7 @@ const hookConfigs = [
     },
   },
   {
-    path: "/operation/kyc/list",
+    path: "/operation/kyc",
     permission: PERMISSIONS.KYC_ADMIN,
     handler: (getState) => {
       actions.kyc.fetchKyc({ status: "PENDING_FOR_REVIEW" });
@@ -68,18 +68,17 @@ const hookConfigs = [
     permission: PERMISSIONS.KYC_ADMIN,
     handler: (getState) => {
       const {
-        routing: { location }
+        routing: { location: { search } }
       } = getState();
-      const params = qs.parse(location.search);
-      let userId = params["?userId"];
+      const params = search && qs.parse(search.substr(1));
+      let userId = params["userId"];
       let createTime = params["createTime"];
       let inspect = params["inspect"] === "true";
       actions.kycInspection.updateData({
-        userId,
         inspect,
         createTime
       });
-      actions.kycInspection.initKyc();
+      actions.kycInspection.initKyc(userId);
     },
   },
   {
@@ -87,6 +86,19 @@ const hookConfigs = [
     permission: PERMISSIONS.KYC_ADMIN,
     handler: (getState) => {
       actions.userList.fetchUsers();
+    },
+  },
+  {
+    path: "/user/inspection",
+    permission: PERMISSIONS.KYC_ADMIN,
+    handler: async (getState) => {
+      const {
+        routing: { location: { search } }
+      } = getState();
+      const params = search && qs.parse(search.substr(1));
+      let userId = params["userId"];
+      actions.userInspection.initUserInfoForUserInspection(userId);
+      actions.userInspection.initKycProfile(userId);
     },
   },
 ];

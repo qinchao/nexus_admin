@@ -7,7 +7,6 @@ export default {
     kycInfo: {},
     reviewHistory: [],
     inspect: false,
-    userId: "",
     createTime: "",
     loading: true,
     frontImage: "",
@@ -22,14 +21,12 @@ export default {
   effects: {
     async initKyc(data, getState) {
       actions.kycInspection.updateData({ loading: true });
-      const {
-        kycInspection: { userId }
-      } = getState();
+      let userId = data;
       let kycRecord = await APIService.awsRequest("get", "/admin/kyc_record", {
         userId
       });
       if (!kycRecord.error) {
-        actions.kycInspection.updateData({ reviewHistory: kycRecord });
+        await actions.kycInspection.updateData({ reviewHistory: kycRecord });
         actions.kycInspection.getCurrentKycProfile();
         actions.kycInspection.initImages();
       }

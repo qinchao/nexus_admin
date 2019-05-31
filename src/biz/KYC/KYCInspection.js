@@ -3,6 +3,8 @@ import { actions } from "mirrorx";
 import { Button, Table, Checkbox, Card, Modal } from "antd";
 
 import { formatDate } from "Utils/index";
+import KycProfile from "Components/KycProfile";
+
 import "Biz/Inspection.less";
 
 function showPopConfirm(title = "", content = "", submitFunc) {
@@ -11,41 +13,6 @@ function showPopConfirm(title = "", content = "", submitFunc) {
     content,
     onOk: () => submitFunc()
   });
-}
-
-function KYCInfo({ kycInfo, frontImage, backImage, humanImage }) {
-  return (
-    <Card title="KYC Information" className="commonWrap infoWrap">
-      <div className="content">
-        <div className="line">
-          <span className="label">Name:</span>
-          {kycInfo.firstName + " " + kycInfo.lastName}
-        </div>
-        <div className="line">
-          <span className="label">Country or Region:</span>
-          {kycInfo.countryOrRegion}
-        </div>
-        <div className="line">
-          <span className="label">Id Type:</span> {kycInfo.idType}
-        </div>
-        <div className="line">
-          <span className="label">Id Number:</span> {kycInfo.idNumber}
-        </div>
-        <div className="line pictures">
-          <span className="label">Front Image:</span>
-          <img src={`data:image/jpeg;base64,${frontImage}`} alt="Front" />
-        </div>
-        <div className="line pictures">
-          <span className="label">Back Image:</span>
-          <img src={`data:image/jpeg;base64,${backImage}`} alt="Back" />
-        </div>
-        <div className="line pictures">
-          <span className="label">Human Image:</span>
-          <img src={`data:image/jpeg;base64,${humanImage}`} alt="Human" />
-        </div>
-      </div>
-    </Card>
-  );
 }
 
 const columns = [
@@ -238,7 +205,7 @@ class KYCInspection extends PureComponent {
 
     return (
       <div className="inspectionWrap">
-        <KYCInfo {...this.props} />
+        <KycProfile {...this.props} />
         <ReviewHistory
           reviewHistory={reviewHistory}
           createTime={createTime}

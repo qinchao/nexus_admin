@@ -1,5 +1,6 @@
 import React, { PureComponent } from "react";
-import { actions } from "mirrorx";
+import { actions, Link } from "mirrorx";
+import routerConfig from "appSrc/routerConfig";
 import { formatDate } from "Utils/index";
 import {
   Button,
@@ -29,7 +30,13 @@ const columns = [
   {
     title: "User",
     dataIndex: "userId",
-    key: "userId"
+    key: "userId",
+    render: (text, item) =>
+    <Link
+      to={`${routerConfig.user.userInspection}?userId=${item.userId}`}
+    >
+      {item.userId}
+    </Link>
   },
   {
     title: "Email",
