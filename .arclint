@@ -1,0 +1,40 @@
+{
+  "linters": {
+    "spelling": {
+      "exclude": "(countryList\\.js$)",
+      "type": "spelling"
+    },
+    "generated": {
+      "type": "generated"
+    },
+    "merge-conflict": {
+      "type": "merge-conflict"
+    },
+    "general-text": {
+      "type": "text",
+      "text.max-line-length": 240,
+      "exclude": ["(\\.svg$)", "(iconfont\\.css$)", "(\\.json$)", "(Datepicker\\.css$)", "(AboutUs\\.js$)"],
+      "severity": {
+        "5": "disabled"
+      }
+    },
+    "json": {
+      "include": [
+          "(^\\.arcconfig$)",
+          "(^\\.arclint$)",
+          "(\\.json$)"
+      ],
+      "type": "json"
+    },
+    "prettier-eslint": {
+      "type": "prettier-eslint",
+      "include": "(\\.js$)",
+      "bin": "./node_modules/.bin/prettier-eslint",
+      "prettier-eslint.cwd": "./src"
+    },
+    "cppcheck": {
+      "type": "cppcheck",
+      "include": "(\\.(h|c|hpp|cpp)$)"
+    }
+  }
+}

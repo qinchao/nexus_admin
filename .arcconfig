@@ -1,3 +1,6 @@
 {
-  "phabricator.uri" : "https://code.sophontech.com/"
+  "phabricator.uri" : "https://code.sophontech.com/",
+  "load": [
+    "pinterest-linters"
+  ]
 }
