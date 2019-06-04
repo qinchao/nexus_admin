@@ -4,8 +4,8 @@ import APIService from "Service/APIService";
 export default {
   name: "userInspection",
   initialState: {
-    userInfo: { authHistory: [], userMFASettingList:[] },
-    loading: false,
+    userInfo: { authHistory: [], userMFASettingList: [] },
+    loading: false
   },
   reducers: {
     updateData(state, data) {
@@ -21,16 +21,16 @@ export default {
       if (!userInfo.error) {
         //TODO add login-frequent location
         actions.userInspection.updateData({ userInfo });
-      } 
+      }
     },
     async initUserInfoForUserInspection(data, getState) {
-      actions.userInspection.updateData({loading: true});
+      actions.userInspection.updateData({ loading: true });
       const userId = data;
       await actions.userInspection.initUserInfo(userId);
       actions.userInspection.updateData({ loading: false });
     },
     async initKycProfile(data, getState) {
-      actions.userInspection.updateData({loading: true});
+      actions.userInspection.updateData({ loading: true });
       const userId = data;
       let kycRecord = await APIService.awsRequest("get", "/admin/kyc_record", {
         userId
@@ -38,9 +38,9 @@ export default {
       if (!kycRecord.error && kycRecord.length) {
         actions.kycInspection.updateData({ kycInfo: kycRecord[0] });
         actions.kycInspection.initImages();
-      }else{
+      } else {
         actions.kycInspection.updateData({
-          kycInfo:{}, 
+          kycInfo: {},
           frontImage: "",
           backImage: "",
           humanImage: ""
@@ -48,5 +48,24 @@ export default {
       }
       actions.userInspection.updateData({ loading: false });
     },
+    async updateUserMFA(data, getState) {
+      let {
+        userInspection: { userInfo }
+      } = getState();
+      let params = {
+        userId: userInfo.userId,
+        func: data.func,
+        action: data.action
+      };
+      let result = await actions.userList.toggleAccountFunction(params);
+      if (result.error) {
+        return;
+      }
+      let userMFASettingList = userInfo.userMFASettingList.filter(
+        item => item !== data.func
+      );
+      userInfo = { ...userInfo, userMFASettingList };
+      actions.userInspection.updateData({ userInfo });
+    }
   }
 };

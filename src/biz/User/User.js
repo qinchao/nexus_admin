@@ -2,41 +2,45 @@ import React, { PureComponent } from "react";
 import { actions, Link } from "mirrorx";
 import routerConfig from "appSrc/routerConfig";
 import { formatDate } from "Utils/index";
-import {
-  Button,
-  Table,
-  Form,
-  Input,
-  Dropdown,
-  Menu,
-  Icon,
-} from "antd";
+import { Button, Table, Form, Input, Dropdown, Menu, Icon } from "antd";
+import { ACCOUNT_FUNCTIONS } from "Utils/constant";
 
-function handleMenuClick(e) {
-  //TODO
+function handleMenuClick(item, e) {
+  actions.userList.updateUserInList({
+    userId: item.userId,
+    func: e.key,
+    action: item.accountFunctions[ACCOUNT_FUNCTIONS[e.key]]
+      ? "DISABLE"
+      : "ENABLE"
+  });
 }
 
-const menu = (
-  <Menu onClick={handleMenuClick}>
-    <Menu.Item key="1">Login As</Menu.Item>
-    <Menu.Item key="2">Disable User</Menu.Item>
-    <Menu.Item key="3">Disable Deposit</Menu.Item>
-    <Menu.Item key="4">Disable Withdraw</Menu.Item>
-    <Menu.Item key="5">Disable Trade</Menu.Item>
-  </Menu>
-);
+const menu = item => {
+  return (
+    <Menu onClick={handleMenuClick.bind(this, item)}>
+      <Menu.Item key="LOGIN">Login As</Menu.Item>
+      {Object.keys(item.accountFunctions).map(key => {
+        let text = key[0] + key.substr(1).toLowerCase();
+        return (
+          <Menu.Item key={key}>
+            {item.accountFunctions[key] ? "Disable " + text : "Enable " + text}
+          </Menu.Item>
+        );
+      })}
+    </Menu>
+  );
+};
 
 const columns = [
   {
     title: "User",
     dataIndex: "userId",
     key: "userId",
-    render: (text, item) =>
-    <Link
-      to={`${routerConfig.user.userInspection}?userId=${item.userId}`}
-    >
-      {item.userId}
-    </Link>
+    render: (text, item) => (
+      <Link to={`${routerConfig.user.userInspection}?userId=${item.userId}`}>
+        {item.userId}
+      </Link>
+    )
   },
   {
     title: "Email",
@@ -53,23 +57,37 @@ const columns = [
     title: "Account Status",
     dataIndex: "accountStatus",
     key: "accountStatus",
+    render: (text, item) => {
+      return item.accountFunctions[ACCOUNT_FUNCTIONS.USER] ? (
+        <div style={{ color: "green" }}> ACTIVATED </div>
+      ) : (
+        <div style={{ color: "red" }}> DISABLE </div>
+      );
+    }
   },
   {
     title: "KYC Status",
     dataIndex: "kycStatus",
-    key: "kycStatus",
+    key: "kycStatus"
   },
   {
     title: "Exchange Status",
     dataIndex: "exchangeStatus",
     key: "exchangeStatus",
-    render: (text, item) => (
-      <>
-        <div style={item.depositDisabled?{ color: "red" }:{ color: "green" }}>Deposit</div>
-        <div style={item.withdrawDisabled?{ color: "red" }:{ color: "green" }}>Withdraw</div>
-        <div style={item.tradeDisabled?{ color: "red" }:{ color: "green" }}>Trade</div>
-      </>
-    )
+    render: (text, item) => {
+      return Object.keys(item.accountFunctions).map(key => {
+        if (key == ACCOUNT_FUNCTIONS.USER) return;
+        return (
+          <div
+            style={
+              item.accountFunctions[key] ? { color: "green" } : { color: "red" }
+            }
+          >
+            {key}
+          </div>
+        );
+      });
+    }
   },
   {
     title: "Register Date",
@@ -82,7 +100,7 @@ const columns = [
     key: "action",
     render: (text, item) => (
       <div>
-        <Dropdown overlay={menu}>
+        <Dropdown overlay={menu(item)}>
           <Button>
             Actions <Icon type="down" />
           </Button>
@@ -108,7 +126,7 @@ class User extends PureComponent {
       if (userId) {
         fetchParam.userId = userId;
       }
-      if (email){
+      if (email) {
         fetchParam.email = email;
       }
       actions.userList.fetchUsers(fetchParam);

@@ -9,7 +9,7 @@ const UserProfileColumns = [
     title: "User Id",
     dataIndex: "userId",
     key: "userId",
-    render: (text, item) => <>{item["custom:id"] || "N/A"}</>
+    render: (text, item) => <>{item.userId || "N/A"}</>
   },
   {
     title: "Email",
@@ -21,13 +21,19 @@ const UserProfileColumns = [
     title: "User Name",
     dataIndex: "userName",
     key: "userName",
-    render: (text, item) => <>{(item.lastName && item.firstName) ? item.lastName+", "+item.firstName : "N/A" }</>
+    render: (text, item) => (
+      <>
+        {item.lastName && item.firstName
+          ? item.lastName + ", " + item.firstName
+          : "N/A"}
+      </>
+    )
   },
   {
     title: "Phone Number",
     dataIndex: "phoneNumber",
     key: "phoneNumber",
-    render: (text, item) => <>{item.phone_number || "N/A"}</>
+    render: (text, item) => <>{item.phoneNumber || "N/A"}</>
   },
   {
     title: "Country or Region",
@@ -42,27 +48,28 @@ const UserProfileColumns = [
     render: (text, item) => <>{item.enabled ? "enabled" : "disabled"}</>
   },
   {
-    title: 
+    title: (
       <Tooltip title="The above date is the account creation date. The below is the last modified date.">
-        Account Time  <Icon type="question-circle" />
-      </Tooltip>,
+        Account Time <Icon type="question-circle" />
+      </Tooltip>
+    ),
     dataIndex: "accountTime",
     key: "accountTime",
     render: (text, item) => (
       <>
-      <div>
-        {item.userCreateDate
-          ? formatDate(new Date(item.userCreateDate))
-          : "N/A"}
-      </div>
-      <div>
-        {item.userLastModifiedDate
-        ? formatDate(new Date(item.userLastModifiedDate))
-        : "N/A"}
-      </div>
+        <div>
+          {item.userCreateDate
+            ? formatDate(new Date(item.userCreateDate))
+            : "N/A"}
+        </div>
+        <div>
+          {item.userLastModifiedDate
+            ? formatDate(new Date(item.userLastModifiedDate))
+            : "N/A"}
+        </div>
       </>
     )
-  },
+  }
 ];
 
 export default function({ userInfo, loading }) {
@@ -79,3 +86,4 @@ export default function({ userInfo, loading }) {
     </Card>
   );
 }
+

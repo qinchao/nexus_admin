@@ -56,22 +56,28 @@ const PWD_REGEX = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})");
 
 const ZENDESK_LINK = "https://sophonexhelp.zendesk.com";
 
-
 const PERMISSIONS = {
-  WALLET_ADMIN: 'WALLET_ADMIN',
-  KYC_ADMIN: 'KYC_ADMIN',
-  USER_ADMIN: 'USER_ADMIN',
-  SITE_ADMIN: 'SITE_ADMIN',
-  SUPER_ADMIN: 'SUPER_ADMIN',
+  WALLET_ADMIN: "WALLET_ADMIN",
+  KYC_ADMIN: "KYC_ADMIN",
+  USER_ADMIN: "USER_ADMIN",
+  SITE_ADMIN: "SITE_ADMIN",
+  SUPER_ADMIN: "SUPER_ADMIN"
 };
 
 const ADMIN_GROUPS = {
-  WALLET_ADMIN: 'WalletAdmin',
-  KYC_ADMIN: 'KycAdmin',
-  USER_ADMIN: 'UserAdmin',
-  SITE_ADMIN: 'SiteAdmin',
-  SUPER_ADMIN: 'SuperAdmin',
-  OMNI: 'Omni',
+  WALLET_ADMIN: "WalletAdmin",
+  KYC_ADMIN: "KycAdmin",
+  USER_ADMIN: "UserAdmin",
+  SITE_ADMIN: "SiteAdmin",
+  SUPER_ADMIN: "SuperAdmin",
+  OMNI: "Omni"
+};
+
+const ACCOUNT_FUNCTIONS = {
+  USER: "USER",
+  DEPOSIT: "DEPOSIT",
+  WITHDRAW: "WITHDRAW",
+  TRADE: "TRADE"
 };
 
 export {
@@ -95,4 +101,5 @@ export {
   ZENDESK_LINK,
   PERMISSIONS,
   ADMIN_GROUPS,
+  ACCOUNT_FUNCTIONS
 };
