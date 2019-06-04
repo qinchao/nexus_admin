@@ -16,6 +16,7 @@ import "antd/dist/antd.css";
 import Index from "Container/Index";
 import OperationWrap from "Container/OperationWrap";
 import UserWrap from "Container/UserWrap";
+import ConfigWrap from "Container/ConfigWrap";
 
 mirror.defaults({
   historyMode: "browser"
@@ -52,6 +53,14 @@ function Routes() {
         <Route
           path="/:menu(user)"
           component={UserWrap}
+        />
+        <Route
+          path="/:menu(config)/:secMenu"
+          component={ConfigWrap}
+        />
+        <Route
+          path="/:menu(config)"
+          component={ConfigWrap}
         />
         <Route component={Index} />
       </Switch>

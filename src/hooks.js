@@ -7,6 +7,7 @@ import KYCInspection from "Model/KYCInspection";
 import WithdrawInspection from "Model/WithdrawInspection";
 import UserInspection from "Model/UserInspection";
 import User from "Model/User";
+import GlobalConfig from "Model/GlobalConfig";
 
 import {PERMISSIONS} from "./utils/constant"
 import { LOCATION_CHANGE } from "./utils/constant";
@@ -20,6 +21,7 @@ mirror.model(KYCListModel);
 mirror.model(KYCInspection);
 mirror.model(WithdrawListModel);
 mirror.model(WithdrawInspection);
+mirror.model(GlobalConfig);
 
 const hookConfigs = [
   {
@@ -99,6 +101,13 @@ const hookConfigs = [
       let userId = params["userId"];
       actions.userInspection.initUserInfoForUserInspection(userId);
       actions.userInspection.initKycProfile(userId);
+    },
+  },
+  {
+    path: "/config/global",
+    permission: PERMISSIONS.SITE_ADMIN,
+    handler: () => {
+      actions.globalConfig.fetchGlobalConfig(true);
     },
   },
 ];
