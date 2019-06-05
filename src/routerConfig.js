@@ -15,5 +15,7 @@ export default {
   config: {
     root: "/config",
     globalConfig: "/config/global",
+    symbolConfig: "/config/symbol",
+    currencyConfig: "/config/currency",
   },
 };

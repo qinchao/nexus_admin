@@ -7,6 +7,8 @@ import routerConfig from "appSrc/routerConfig";
 import { withWrapBox } from "Biz/WithWrapBox/WithWrapBox";
 
 import GlobalConfig from "Container/GlobalConfig";
+import SymbolConfig from "Container/SymbolConfig";
+import CurrencyConfig from "Container/CurrencyConfig";
 
 const { Content, Sider } = Layout;
 
@@ -25,7 +27,7 @@ class ConfigWrap extends PureComponent {
           >
             {getMenuItemData(
               user,
-              ["config.global"]
+              ["config.global", "config.symbol", "config.currency"],
             ).map(menuItemData => (
               <Menu.Item key={menuItemData.key}>
                 <NavLink to={menuItemData.to}>
@@ -45,6 +47,12 @@ class ConfigWrap extends PureComponent {
           <Content className="contentWrap">
             {secMenu === "global" && (
               <GlobalConfig {...this.props} />
+            )}
+            {secMenu === "symbol" && (
+              <SymbolConfig {...this.props} />
+            )}
+            {secMenu === "currency" && (
+              <CurrencyConfig {...this.props} />
             )}
           </Content>
         </Layout>
