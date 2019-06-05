@@ -8,6 +8,15 @@ export function getTimeColor(start) {
   return start < new Date(new Date().setHours(new Date().getHours() - 12));
 }
 
+export function getRawJsonStrFromPretty(prettyJson) {
+  try {
+    let obj = JSON.parse(prettyJson);
+    return JSON.stringify(obj);
+  } catch (e) {
+    return "";
+  }
+}
+
 export function toThousandsString(number) {
   const splitNumber = number.toString().split(".");
   let integer = splitNumber[0];

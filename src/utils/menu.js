@@ -49,6 +49,18 @@ const adminMenuItemData = {
     to: routerConfig.config.globalConfig,
     permission: PERMISSIONS.SITE_ADMIN,
   },
+  "config.currency": {
+    key: "currencyConfig",
+    name: "Currency Config",
+    to: routerConfig.config.currencyConfig,
+    permission: PERMISSIONS.SITE_ADMIN,
+  },
+  "config.symbol": {
+    key: "symbolConfig",
+    name: "Symbol Config",
+    to: routerConfig.config.symbolConfig,
+    permission: PERMISSIONS.SITE_ADMIN,
+  },
 };
 
 /**

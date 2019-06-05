@@ -1,31 +1,23 @@
-import React, { PureComponent } from "react";
+import React from "react";
 import { Form, Select, Spin, Row, Col, Input, Button, message, Icon } from "antd";
 import { actions } from "mirrorx";
-
+import { ConfigPageTemplate } from "./ConfigPageTemplate";
+import { getRawJsonStrFromPretty } from "../../utils/index";
 const { Option } = Select;
-const { TextArea } = Input;
 
-class GlobalConfig extends PureComponent {
+class GlobalConfig extends ConfigPageTemplate {
 
   constructor(props) {
     super(props);
     this.KeyOfNewConfigCategory = "__$newConfig";
+    this.updateModelData = actions.globalConfig.updateData;
   }
-
-  getRawJsonFromPretty = (prettyJson) => {
-    try {
-      let obj = JSON.parse(prettyJson);
-      return JSON.stringify(obj);
-    } catch (e) {
-      return "";
-    }
-  };
 
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        let toUpdateConfig = this.getRawJsonFromPretty(values["inputConfig"]);
+        let toUpdateConfig = getRawJsonStrFromPretty(values["inputConfig"]);
         let toUpdateCategory = null;
         if (values.hasOwnProperty("inputCategory")) {
           toUpdateCategory = values["inputCategory"];
@@ -59,6 +51,7 @@ class GlobalConfig extends PureComponent {
     this.checkIfSubmittable();
   };
 
+  // override parent method since we also need to check inputCategory
   handleInputConfigCheck = (rule, value, callback) => {
     try {
       JSON.parse(value);
@@ -79,18 +72,26 @@ class GlobalConfig extends PureComponent {
         return;
       }
     }
-    const { currentCategory, allConfigs } = this.props.globalConfig;
-    // non-submittable if nothing modified
-    if(JSON.stringify(allConfigs[currentCategory]) === this.getRawJsonFromPretty(this.props.form.getFieldValue("inputConfig"))) {
+    if(JSON.stringify(this.getSelectedConfig()) === getRawJsonStrFromPretty(this.props.form.getFieldValue("inputConfig"))) {
       actions.globalConfig.updateData({submittable: false});
       return;
     }
     actions.globalConfig.updateData({submittable: true});
   };
 
+  getSelectedConfig = () => {
+    const { currentCategory, allConfigs } = this.props.globalConfig;
+    return allConfigs[currentCategory];
+  };
+
   render() {
-    const { allConfigs, loading, inputTextStr, currentCategory, submittable } = this.props.globalConfig;
+    const { allConfigs, loading, currentCategory, submittable } = this.props.globalConfig;
     const { getFieldDecorator } = this.props.form;
+    let initialInput = "{}";
+    if (allConfigs && currentCategory !== this.KeyOfNewConfigCategory) {
+      initialInput = JSON.stringify(allConfigs[currentCategory], null, 2);
+    }
+    let inputArea = this.textAreaTemplate(false, initialInput);
     return (
       <div>
         <Spin spinning={loading}>
@@ -125,21 +126,7 @@ class GlobalConfig extends PureComponent {
                 })(<Input style={{ marginTop: "20px" }} placeholder={"new category name"}/>)
               }
             </Form.Item>
-            <Form.Item>
-              {
-                getFieldDecorator('inputConfig', {
-                  rules: [
-                    { required: true, message: 'Please input Config Detail!' },
-                    { validator: this.handleInputConfigCheck}
-                  ],
-                  initialValue: allConfigs && currentCategory !== this.KeyOfNewConfigCategory ?
-                    JSON.stringify(allConfigs[currentCategory], null, 2) : "{}",
-                  getValueFromEvent: e=>{
-                    return e.target.value;
-                  },
-                })(<TextArea rows={20} />)
-              }
-            </Form.Item>
+            {inputArea}
           </Form>
 
         </Spin>

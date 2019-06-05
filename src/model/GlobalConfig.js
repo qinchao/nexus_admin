@@ -35,16 +35,10 @@ export default {
         "get",
         "/config/global_configs",
       );
-
-      actions.globalConfig.updateData({
-        allConfigs: result,
-        loading: false,
-      });
-
       if (initCurrentCategory){
         let defaultCategory = null;
         let defaultInput = "";
-        if (result) {
+        if (!result.error) {
           defaultCategory = Object.keys(result)[0];
           defaultInput = JSON.stringify(result[defaultCategory], null, 2);
         }
@@ -53,6 +47,10 @@ export default {
           currentCategory: defaultCategory,
         })
       }
+      actions.globalConfig.updateData({
+        allConfigs: result,
+        loading: false,
+      });
     },
 
   }

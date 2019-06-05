@@ -8,6 +8,8 @@ import WithdrawInspection from "Model/WithdrawInspection";
 import UserInspection from "Model/UserInspection";
 import User from "Model/User";
 import GlobalConfig from "Model/GlobalConfig";
+import SymbolConfig from "Model/SymbolConfig";
+import CurrencyConfig from "Model/CurrencyConfig";
 
 import {PERMISSIONS} from "./utils/constant"
 import { LOCATION_CHANGE } from "./utils/constant";
@@ -22,6 +24,8 @@ mirror.model(KYCInspection);
 mirror.model(WithdrawListModel);
 mirror.model(WithdrawInspection);
 mirror.model(GlobalConfig);
+mirror.model(SymbolConfig);
+mirror.model(CurrencyConfig);
 
 const hookConfigs = [
   {
@@ -108,6 +112,20 @@ const hookConfigs = [
     permission: PERMISSIONS.SITE_ADMIN,
     handler: () => {
       actions.globalConfig.fetchGlobalConfig(true);
+    },
+  },
+  {
+    path: "/config/symbol",
+    permission: PERMISSIONS.SITE_ADMIN,
+    handler: () => {
+      actions.symbolConfig.fetchSymbolConfig();
+    },
+  },
+  {
+    path: "/config/currency",
+    permission: PERMISSIONS.SITE_ADMIN,
+    handler: () => {
+      actions.currencyConfig.fetchCurrencyConfig();
     },
   },
 ];
