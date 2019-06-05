@@ -10,12 +10,13 @@ export default {
   user: {
     root: "/user",
     userList: "/user/list",
-    userInspection: "/user/inspection",
+    userInspection: "/user/inspection"
   },
   config: {
     root: "/config",
     globalConfig: "/config/global",
     symbolConfig: "/config/symbol",
     currencyConfig: "/config/currency",
-  },
+    rateLimit: "/config/rateLimit"
+  }
 };

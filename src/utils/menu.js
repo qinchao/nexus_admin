@@ -1,4 +1,4 @@
-  import { PERMISSIONS } from "./constant";
+import { PERMISSIONS } from "./constant";
 import routerConfig from "appSrc/routerConfig";
 
 /**
@@ -11,7 +11,7 @@ const adminMenuItemData = {
   operation: {
     key: "operation",
     name: "Operation",
-    to: routerConfig.operation.root,
+    to: routerConfig.operation.root
   },
   "operation.kyc": {
     key: "operation.kyc",
@@ -29,38 +29,44 @@ const adminMenuItemData = {
   user: {
     key: "user",
     name: "User",
-    to: routerConfig.user.root,
+    to: routerConfig.user.root
   },
   "user.userList": {
     key: "userList",
     name: "User List",
     to: routerConfig.user.userList,
-    permission: PERMISSIONS.USER_ADMIN,
+    permission: PERMISSIONS.USER_ADMIN
   },
   config: {
     key: "config",
     name: "Config",
     to: routerConfig.config.root,
-    permission: PERMISSIONS.SITE_ADMIN,
+    permission: PERMISSIONS.SITE_ADMIN
   },
   "config.global": {
     key: "globalConfig",
     name: "Global Config",
     to: routerConfig.config.globalConfig,
-    permission: PERMISSIONS.SITE_ADMIN,
+    permission: PERMISSIONS.SITE_ADMIN
   },
   "config.currency": {
     key: "currencyConfig",
     name: "Currency Config",
     to: routerConfig.config.currencyConfig,
-    permission: PERMISSIONS.SITE_ADMIN,
+    permission: PERMISSIONS.SITE_ADMIN
   },
   "config.symbol": {
     key: "symbolConfig",
     name: "Symbol Config",
     to: routerConfig.config.symbolConfig,
-    permission: PERMISSIONS.SITE_ADMIN,
+    permission: PERMISSIONS.SITE_ADMIN
   },
+  "config.rateLimit": {
+    key: "rateLimit",
+    name: "Rate Limit",
+    to: routerConfig.config.rateLimit,
+    permission: PERMISSIONS.SITE_ADMIN
+  }
 };
 
 /**

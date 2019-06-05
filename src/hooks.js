@@ -10,8 +10,9 @@ import User from "Model/User";
 import GlobalConfig from "Model/GlobalConfig";
 import SymbolConfig from "Model/SymbolConfig";
 import CurrencyConfig from "Model/CurrencyConfig";
+import RateLimit from "Model/RateLimit";
 
-import {PERMISSIONS} from "./utils/constant"
+import { PERMISSIONS } from "./utils/constant";
 import { LOCATION_CHANGE } from "./utils/constant";
 import qs from "qs";
 
@@ -26,24 +27,27 @@ mirror.model(WithdrawInspection);
 mirror.model(GlobalConfig);
 mirror.model(SymbolConfig);
 mirror.model(CurrencyConfig);
+mirror.model(RateLimit);
 
 const hookConfigs = [
   {
     path: "/operation/withdraw",
     permission: PERMISSIONS.WALLET_ADMIN,
-    handler: (getState) => {
+    handler: getState => {
       actions.withdraw.initCurrencies();
       actions.withdraw.fetchWithdraw({
-        status: "WAITING_FOR_MANUAL_APPROVAL",
+        status: "WAITING_FOR_MANUAL_APPROVAL"
       });
-    },
+    }
   },
   {
     path: "/operation/withdraw/inspection",
     permission: PERMISSIONS.WALLET_ADMIN,
-    handler: async (getState) => {
+    handler: async getState => {
       const {
-        routing: { location: { search } }
+        routing: {
+          location: { search }
+        }
       } = getState();
       const params = search && qs.parse(search.substr(1));
       let userId = params["userId"];
@@ -60,21 +64,23 @@ const hookConfigs = [
       actions.withdrawInspection.initUserInfo();
       actions.withdrawInspection.initWithdrawHistory(currency);
       actions.withdrawInspection.initWalletBalance();
-    },
+    }
   },
   {
     path: "/operation/kyc",
     permission: PERMISSIONS.KYC_ADMIN,
-    handler: (getState) => {
+    handler: getState => {
       actions.kyc.fetchKyc({ status: "PENDING_FOR_REVIEW" });
-    },
+    }
   },
   {
     path: "/operation/kyc/inspection",
     permission: PERMISSIONS.KYC_ADMIN,
-    handler: (getState) => {
+    handler: getState => {
       const {
-        routing: { location: { search } }
+        routing: {
+          location: { search }
+        }
       } = getState();
       const params = search && qs.parse(search.substr(1));
       let userId = params["userId"];
@@ -85,49 +91,58 @@ const hookConfigs = [
         createTime
       });
       actions.kycInspection.initKyc(userId);
-    },
+    }
   },
   {
     path: "/user/list",
     permission: PERMISSIONS.KYC_ADMIN,
-    handler: (getState) => {
+    handler: getState => {
       actions.userList.fetchUsers();
-    },
+    }
   },
   {
     path: "/user/inspection",
     permission: PERMISSIONS.KYC_ADMIN,
-    handler: async (getState) => {
+    handler: async getState => {
       const {
-        routing: { location: { search } }
+        routing: {
+          location: { search }
+        }
       } = getState();
       const params = search && qs.parse(search.substr(1));
       let userId = params["userId"];
       actions.userInspection.initUserInfoForUserInspection(userId);
       actions.userInspection.initKycProfile(userId);
-    },
+    }
   },
   {
     path: "/config/global",
     permission: PERMISSIONS.SITE_ADMIN,
     handler: () => {
       actions.globalConfig.fetchGlobalConfig(true);
-    },
+    }
   },
   {
     path: "/config/symbol",
     permission: PERMISSIONS.SITE_ADMIN,
     handler: () => {
       actions.symbolConfig.fetchSymbolConfig();
-    },
+    }
   },
   {
     path: "/config/currency",
     permission: PERMISSIONS.SITE_ADMIN,
     handler: () => {
       actions.currencyConfig.fetchCurrencyConfig();
-    },
+    }
   },
+  {
+    path: "/config/rateLimit",
+    permission: PERMISSIONS.SITE_ADMIN,
+    handler: () => {
+      actions.rateLimit.fetchRateLimit();
+    }
+  }
 ];
 
 // listen to route change
@@ -147,7 +162,10 @@ mirror.hook((action, getState) => {
 
     for (let hookConfig of hookConfigs) {
       if (location.pathname.indexOf(hookConfig.path) >= 0) {
-        if (hookConfig.permission && !userState.permissions[hookConfig.permission]) {
+        if (
+          hookConfig.permission &&
+          !userState.permissions[hookConfig.permission]
+        ) {
           actions.routing.push("/index");
           return;
         }
