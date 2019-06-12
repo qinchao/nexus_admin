@@ -1,5 +1,6 @@
 import { actions } from "mirrorx";
 import APIService from "Service/APIService";
+import { getIdToCurrency } from "Utils/index";
 
 export default {
   name: "symbolConfig",
@@ -8,6 +9,7 @@ export default {
     innerSymbols: null, // map[symbolId] -> innerSymbol
     quoteBaseSymbols: null, // map[quoteCurrencyId][baseCurrencyId] -> innerSymbol
     submittable: false,
+    idToCurrency: null,
   },
   reducers: {
     updateData(state, data) {
@@ -27,15 +29,15 @@ export default {
 
     async fetchSymbolConfig() {
       actions.symbolConfig.updateData({ loading: true });
+      let idToCurrency = await getIdToCurrency();
       const result = await APIService.request(
         "get",
         "/config/inner_symbols",
       );
-
       let quoteBaseSymbols = new Map();
       let innerSymbols = new Map();
       if (result) {
-        result.map(innerSymbol => {
+        result.forEach(innerSymbol => {
           if (innerSymbol.hasOwnProperty("version")) {
             delete innerSymbol.version;
           }
@@ -54,6 +56,7 @@ export default {
         innerSymbols,
         loading: false,
         quoteBaseSymbols,
+        idToCurrency,
       });
     },
   }

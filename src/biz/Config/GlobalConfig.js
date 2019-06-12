@@ -2,7 +2,7 @@ import React from "react";
 import { Form, Select, Spin, Row, Col, Input, Button, message, Icon } from "antd";
 import { actions } from "mirrorx";
 import { ConfigPageTemplate } from "./ConfigPageTemplate";
-import { getRawJsonStrFromPretty } from "../../utils/index";
+import { getRawJsonStrFromPretty } from "Utils/index";
 const { Option } = Select;
 
 class GlobalConfig extends ConfigPageTemplate {

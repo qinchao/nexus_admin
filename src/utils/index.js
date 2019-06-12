@@ -1,8 +1,25 @@
 import Big from "big.js";
 import format from "date-fns/format";
 import { PAIR_CONNECTION, SYMBOL_CONNECTION, LANG_LIST } from "./constant.js";
+import APIService from "Service/APIService";
 
 Big.RM = 0; // ROUND_DOWN, aka floor
+
+export async function getIdToCurrency() {
+  const currencies = await APIService.request(
+    "get",
+    "/config/currencies",
+  );
+  let idToCurrency = new Map();
+  if (!currencies.error) {
+    currencies.forEach((currency) => {
+      if (currency.hasOwnProperty("currencyId") && currency.hasOwnProperty("currency")) {
+        idToCurrency.set(currency.currencyId, currency.currency);
+      }
+    });
+  }
+  return idToCurrency;
+}
 
 export function getTimeColor(start) {
   return start < new Date(new Date().setHours(new Date().getHours() - 12));

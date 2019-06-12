@@ -32,7 +32,8 @@ class CurrencyConfig extends ConfigPageTemplate {
   };
 
   render() {
-    const { innerCurrencies, loading, selectedCurrency, submittable } = this.props.currencyConfig;
+    const { innerCurrencies, loading, selectedCurrency, submittable, idToCurrency } = this.props.currencyConfig;
+    this.idToCurrency = idToCurrency;
     let initialText = "";
     if (innerCurrencies) {
       initialText = JSON.stringify(innerCurrencies.get(selectedCurrency), null, 2);

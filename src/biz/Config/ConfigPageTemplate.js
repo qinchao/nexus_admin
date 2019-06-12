@@ -1,39 +1,8 @@
 import React, { PureComponent } from "react";
 import { Form, Input, Select } from "antd";
-import { getRawJsonStrFromPretty } from "../../utils/index";
+import { getRawJsonStrFromPretty } from "Utils/index";
 const { TextArea } = Input;
 const { Option } = Select;
-const IdToCurrency = [
-  "USDT",
-  "PAX",
-  "USDC",
-  "BTC",
-  "ETH",
-  "AE",
-  "BAT",
-  "BCHABC",
-  "BCHSV",
-  "BNB",
-  "DASH",
-  "DCR",
-  "EOS",
-  "ETC",
-  "IOST",
-  "KNC",
-  "LTC",
-  "NEO",
-  "OMG",
-  "ONT",
-  "TRX",
-  "VET",
-  "XRP",
-  "XZC",
-  "ZEC",
-  "ZRX",
-  "FORUNITTEST",
-  "BTCSO",
-  "USDSO",
-];
 
 class ConfigPageTemplate extends PureComponent {
 
@@ -81,18 +50,18 @@ class ConfigPageTemplate extends PureComponent {
         }
       </Form.Item>
     );
-  }
+  };
 
   // currency id => option along with currency name
   currencyOptionTemplate = (x) => {
     return(
       <Option key={x}>
-        {x - 1 < IdToCurrency.length ?
-          IdToCurrency[x-1] :
+        {this.idToCurrency && this.idToCurrency.has(x) ?
+          this.idToCurrency.get(x) :
           "UnknownCurrencyId:" + x}
       </Option>
     )
   }
 }
 
-export { ConfigPageTemplate, IdToCurrency };
+export { ConfigPageTemplate };

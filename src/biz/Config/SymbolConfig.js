@@ -57,8 +57,9 @@ class SymbolConfig extends ConfigPageTemplate {
   };
 
   render() {
-    const { innerSymbols, loading, quoteBaseSymbols,
+    const { innerSymbols, loading, quoteBaseSymbols, idToCurrency,
       selectedBaseCurrency, selectedQuoteCurrency, submittable} = this.props.symbolConfig;
+    this.idToCurrency = idToCurrency;
     let initialText = "";
     let selectedSymbol = this.getInnerSymbol(selectedBaseCurrency, selectedQuoteCurrency);
     if (selectedSymbol) {

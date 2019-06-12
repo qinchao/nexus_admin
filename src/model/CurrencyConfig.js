@@ -1,5 +1,6 @@
 import { actions } from "mirrorx";
 import APIService from "Service/APIService";
+import { getIdToCurrency } from "Utils/index";
 
 export default {
   name: "currencyConfig",
@@ -8,6 +9,7 @@ export default {
     submittable: false,
     selectedCurrency: null,
     innerCurrencies: null,
+    idToCurrency: null,
   },
   reducers: {
     updateData(state, data) {
@@ -27,20 +29,25 @@ export default {
 
     async fetchCurrencyConfig(data, getState) {
       actions.currencyConfig.updateData({ loading: true });
+      let idToCurrency = await getIdToCurrency();
       const result = await APIService.request(
         "get",
         "/config/inner_currencies",
       );
       let innerCurrencies = new Map();
       if (!result.error) {
-        result.map((innerCurrency) => {
+        result.forEach((innerCurrency) => {
           if (innerCurrency.hasOwnProperty("version")) {
             delete innerCurrency.version;
           }
           innerCurrencies.set(innerCurrency["currency"], innerCurrency);
         });
       }
-      actions.currencyConfig.updateData({ loading: false, innerCurrencies:innerCurrencies });
+      actions.currencyConfig.updateData({
+        loading: false,
+        innerCurrencies,
+        idToCurrency,
+      });
     },
   }
 };
