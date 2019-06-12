@@ -1,5 +1,4 @@
 import mirror, { actions } from "mirrorx";
-import moment from "moment";
 import UserListModel from "Model/UserList";
 import KYCListModel from "Model/KYCList";
 import WithdrawListModel from "Model/WithdrawList";
@@ -11,6 +10,7 @@ import GlobalConfig from "Model/GlobalConfig";
 import SymbolConfig from "Model/SymbolConfig";
 import CurrencyConfig from "Model/CurrencyConfig";
 import RateLimit from "Model/RateLimit";
+import APIResourceCost from "model/APIResourceCost";
 
 import { PERMISSIONS } from "./utils/constant";
 import { LOCATION_CHANGE } from "./utils/constant";
@@ -28,6 +28,7 @@ mirror.model(GlobalConfig);
 mirror.model(SymbolConfig);
 mirror.model(CurrencyConfig);
 mirror.model(RateLimit);
+mirror.model(APIResourceCost);
 
 const hookConfigs = [
   {
@@ -142,6 +143,13 @@ const hookConfigs = [
     permission: PERMISSIONS.SITE_ADMIN,
     handler: () => {
       actions.rateLimit.fetchRateLimit();
+    }
+  },
+  {
+    path: "/config/apiResourceCost",
+    permission: PERMISSIONS.SITE_ADMIN,
+    handler: () => {
+      actions.apiResourceCost.fetchApiResourceCosts();
     }
   }
 ];

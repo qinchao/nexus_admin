@@ -76,7 +76,7 @@ const columns = [
     key: "exchangeStatus",
     render: (text, item) => {
       return Object.keys(item.accountFunctions).map(key => {
-        if (key == ACCOUNT_FUNCTIONS.USER) return;
+        if (key === ACCOUNT_FUNCTIONS.USER) return "";
         return (
           <div
             style={

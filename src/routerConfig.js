@@ -17,6 +17,7 @@ export default {
     globalConfig: "/config/global",
     symbolConfig: "/config/symbol",
     currencyConfig: "/config/currency",
-    rateLimit: "/config/rateLimit"
+    rateLimit: "/config/rateLimit",
+    apiResourceCost: "/config/apiResourceCost"
   }
 };

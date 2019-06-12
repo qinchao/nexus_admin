@@ -159,6 +159,8 @@ class UserService {
       case "signOut":
         event.emit("signOut");
         break;
+      default:
+        break;
     }
   }
 }

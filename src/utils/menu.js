@@ -66,6 +66,12 @@ const adminMenuItemData = {
     name: "Rate Limit",
     to: routerConfig.config.rateLimit,
     permission: PERMISSIONS.SITE_ADMIN
+  },
+  "config.apiResourceCost": {
+    key: "apiResourceCost",
+    name: "API Resource Cost",
+    to: routerConfig.config.apiResourceCost,
+    permission: PERMISSIONS.SITE_ADMIN
   }
 };
 
