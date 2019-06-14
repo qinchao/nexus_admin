@@ -5,6 +5,7 @@ export default {
   name: "kycInspection",
   initialState: {
     kycInfo: {},
+    userId: "",
     reviewHistory: [],
     inspect: false,
     createTime: "",

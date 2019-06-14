@@ -88,7 +88,8 @@ const hookConfigs = [
       let inspect = params["inspect"] === "true";
       actions.kycInspection.updateData({
         inspect,
-        createTime
+        createTime,
+        userId
       });
       actions.kycInspection.initKyc(userId);
     }
