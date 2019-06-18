@@ -1,11 +1,13 @@
 import React from "react";
-import { Form, Select, Spin, Row, Col, Button, message } from "antd";
+import {Form, Select, Spin, Row, Col, Button, message, Icon} from "antd";
 import { ConfigPageTemplate } from "./ConfigPageTemplate";
 import { actions } from "mirrorx";
+const { Option } = Select;
 
 class SymbolConfig extends ConfigPageTemplate {
   constructor(props) {
     super(props);
+    this.KeyOfNewConfigCategory = -1;
     this.updateModelData = actions.symbolConfig.updateData;
     this.pullNewestData = actions.symbolConfig.fetchSymbolConfig;
   }
@@ -37,7 +39,7 @@ class SymbolConfig extends ConfigPageTemplate {
       selectedBaseCurrency,
       selectedQuoteCurrency
     );
-    if (selectedQuoteCurrency) {
+    if (selectedQuoteCurrency && selectedQuoteCurrency !== this.KeyOfNewConfigCategory) {
       filteredBaseCurrency = [
         ...quoteBaseSymbols.get(selectedQuoteCurrency).keys()
       ];
@@ -59,6 +61,9 @@ class SymbolConfig extends ConfigPageTemplate {
   };
 
   getInnerSymbol = (selectedBaseCurrency, selectedQuoteCurrency) => {
+    if (selectedQuoteCurrency === this.KeyOfNewConfigCategory) {
+      return {};
+    }
     const { quoteBaseSymbols } = this.props.symbolConfig;
     if (selectedBaseCurrency && selectedQuoteCurrency) {
       let lookupSymbol = quoteBaseSymbols.get(selectedQuoteCurrency);
@@ -88,12 +93,11 @@ class SymbolConfig extends ConfigPageTemplate {
       initialText = JSON.stringify(selectedSymbol, null, 2);
     }
     let filteredBaseCurrency = [];
-    if (selectedQuoteCurrency) {
+    if (selectedQuoteCurrency && selectedQuoteCurrency !== this.KeyOfNewConfigCategory) {
       filteredBaseCurrency = [
         ...quoteBaseSymbols.get(selectedQuoteCurrency).keys()
       ];
     }
-    let inputArea = this.textAreaTemplate(selectedSymbol == null, initialText);
     return (
       <div>
         <Spin spinning={loading}>
@@ -111,7 +115,9 @@ class SymbolConfig extends ConfigPageTemplate {
                           : ""
                       }
                       onChange={this.handleBaseChanged.bind(this)}
-                      disabled={!selectedQuoteCurrency}
+                      disabled={
+                        !selectedQuoteCurrency ||
+                        selectedQuoteCurrency === this.KeyOfNewConfigCategory}
                     >
                       {filteredBaseCurrency.map(x =>
                         this.currencyOptionTemplate(x)
@@ -136,6 +142,7 @@ class SymbolConfig extends ConfigPageTemplate {
                       {[...quoteBaseSymbols.keys()].map(x =>
                         this.currencyOptionTemplate(x)
                       )}
+                      <Option key={this.KeyOfNewConfigCategory}><Icon type="plus"/> Add New Config</Option>
                     </Select>
                   )}
                 </Form.Item>
@@ -158,7 +165,7 @@ class SymbolConfig extends ConfigPageTemplate {
               </Col>
             </Row>
           </Form>
-          {inputArea}
+          {this.textAreaTemplate(selectedSymbol == null, initialText)}
         </Spin>
       </div>
     );

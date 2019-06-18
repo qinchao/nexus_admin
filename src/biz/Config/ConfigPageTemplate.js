@@ -9,7 +9,7 @@ class ConfigPageTemplate extends PureComponent {
   handleReset = () => {
     this.pullNewestData();
     this.props.form.resetFields();
-    this.checkContentModified();
+    this.updateModelData({submittable: false});
   };
 
   checkContentModified = () => {

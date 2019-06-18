@@ -1,12 +1,14 @@
 import React from "react";
-import { Button, Col, Form, message, Row, Select, Spin } from "antd";
+import {Button, Col, Form, Icon, Input, message, Row, Select, Spin} from "antd";
 import { ConfigPageTemplate } from "./ConfigPageTemplate";
 import { actions } from "mirrorx";
+const { Option } = Select;
 
 class CurrencyConfig extends ConfigPageTemplate {
 
   constructor(props) {
     super(props);
+    this.KeyOfNewConfigCategory = -1;
     this.updateModelData = actions.currencyConfig.updateData;
     this.pullNewestData = actions.currencyConfig.fetchCurrencyConfig;
   }
@@ -35,10 +37,9 @@ class CurrencyConfig extends ConfigPageTemplate {
     const { innerCurrencies, loading, selectedCurrency, submittable, idToCurrency } = this.props.currencyConfig;
     this.idToCurrency = idToCurrency;
     let initialText = "";
-    if (innerCurrencies) {
+    if (innerCurrencies && innerCurrencies.has(selectedCurrency)) {
       initialText = JSON.stringify(innerCurrencies.get(selectedCurrency), null, 2);
     }
-    let inputArea = this.textAreaTemplate(innerCurrencies && !innerCurrencies.has(selectedCurrency), initialText);
     return (
       <div>
         <Spin spinning={loading}>
@@ -51,6 +52,7 @@ class CurrencyConfig extends ConfigPageTemplate {
                   <Select value={selectedCurrency ? selectedCurrency.toString() : ""} onChange={this.handleCurrencyChanged.bind(this)}>
                     {[...(innerCurrencies || new Map()).keys()].map(
                       x => this.currencyOptionTemplate(x))}
+                    <Option key={this.KeyOfNewConfigCategory}><Icon type="plus"/> Add New Config</Option>
                   </Select>
                 </Form.Item>
               </Col>
@@ -65,7 +67,11 @@ class CurrencyConfig extends ConfigPageTemplate {
               </Col>
             </Row>
           </Form>
-          {inputArea}
+          {this.textAreaTemplate(
+            innerCurrencies &&
+            selectedCurrency !== this.KeyOfNewConfigCategory &&
+            !innerCurrencies.has(selectedCurrency),
+            initialText)}
         </Spin>
       </div>
     );

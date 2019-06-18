@@ -102,7 +102,7 @@ class GlobalConfig extends ConfigPageTemplate {
                   {Object.keys(allConfigs || {}).map(x => (
                     <Option key={x}>{x}</Option>
                   ))}
-                  <Option key={this.KeyOfNewConfigCategory}><Icon type="plus"/> Add new Config</Option>
+                  <Option key={this.KeyOfNewConfigCategory}><Icon type="plus"/> Add New Config</Option>
                 </Select>
               </Col>
               <Col span={12}>
