@@ -65,6 +65,7 @@ const hookConfigs = [
       actions.withdrawInspection.initUserInfo();
       actions.withdrawInspection.initWithdrawHistory(currency);
       actions.withdrawInspection.initWalletBalance();
+      actions.withdrawInspection.initUserBalance();
     }
   },
   {

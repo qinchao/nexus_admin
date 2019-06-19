@@ -6,8 +6,10 @@ export default {
   initialState: {
     curRecordId: "",
     userId: 0,
+    auditResult: [],
     withdrawHistory: [],
-    walletBalance: {},
+    walletBalance: { options: [] },
+    userBalance: { entries: [] },
     loading: true
   },
   reducers: {
@@ -17,14 +19,18 @@ export default {
   },
   effects: {
     async initUserInfo(data, getState) {
-      actions.withdrawInspection.updateData({loading: true});
-      const {withdrawInspection: {userId}} = getState();
+      actions.withdrawInspection.updateData({ loading: true });
+      const {
+        withdrawInspection: { userId }
+      } = getState();
       await actions.userInspection.initUserInfo(userId);
       actions.withdrawInspection.updateData({ loading: false });
     },
     async initWithdrawHistory(data, getState) {
       actions.withdrawInspection.updateData({ loading: true });
-      const {withdrawInspection:{userId}} = getState();
+      const {
+        withdrawInspection: { userId }
+      } = getState();
       const currency = data;
       const withdrawHistory = await APIService.request(
         "get",
@@ -36,6 +42,7 @@ export default {
           withdrawHistory,
           loading: false
         });
+        actions.withdrawInspection.initAuditResult();
       } else {
         actions.withdrawInspection.updateData({
           withdrawHistory: [],
@@ -58,6 +65,34 @@ export default {
         actions.withdrawInspection.updateData({
           walletBalance: { balance, options }
         });
+      }
+      actions.withdrawInspection.updateData({ loading: false });
+    },
+    async initAuditResult(data, getState) {
+      actions.withdrawInspection.updateData({ loading: true });
+      const {
+        withdrawInspection: { curRecordId, withdrawHistory }
+      } = getState();
+      for (let record of withdrawHistory) {
+        if (record.recordId === parseInt(curRecordId)) {
+          actions.withdrawInspection.updateData({
+            loading: false,
+            auditResult: record.auditResult ? [record.auditResult] : []
+          });
+          return;
+        }
+      }
+    },
+    async initUserBalance(data, getState) {
+      const {
+        withdrawInspection: { userId }
+      } = getState();
+      // TODO: change to admin/balance
+      let userBalance = await APIService.request("get", "/account/balance", {
+        precalcAssetValue: true
+      });
+      if (!userBalance.error) {
+        actions.withdrawInspection.updateData({ userBalance });
       }
       actions.withdrawInspection.updateData({ loading: false });
     }

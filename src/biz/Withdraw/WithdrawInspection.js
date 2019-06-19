@@ -160,31 +160,33 @@ const WithdrawHistoryColumns = [
   }
 ];
 
-class WithdrawHistory extends PureComponent{
+class WithdrawHistory extends PureComponent {
   state = {
     showAllCurrency: false
   };
 
-  render(){
-    const {withdrawHistory, loading, currency, recordId} = this.props;
+  render() {
+    const { withdrawHistory, loading, currency, recordId } = this.props;
 
     return (
-      <Card title="Withdraw History" className="commonWrap hisWrap"
+      <Card
+        title="Withdraw History"
+        className="commonWrap hisWrap"
         extra={
-        <>
-          <span>Show All Currencies  </span>
-          <Switch
-            checked={this.state.showAllCurrency}
-            onChange={checked => {
-              this.setState({ showAllCurrency: checked });
-              if(checked){
-                actions.withdrawInspection.initWithdrawHistory();
-              }else{
-                actions.withdrawInspection.initWithdrawHistory(currency);
-              }
-            }}
-          />
-        </>
+          <>
+            <span>Show All Currencies </span>
+            <Switch
+              checked={this.state.showAllCurrency}
+              onChange={checked => {
+                this.setState({ showAllCurrency: checked });
+                if (checked) {
+                  actions.withdrawInspection.initWithdrawHistory();
+                } else {
+                  actions.withdrawInspection.initWithdrawHistory(currency);
+                }
+              }}
+            />
+          </>
         }
       >
         <Table
@@ -194,8 +196,180 @@ class WithdrawHistory extends PureComponent{
           dataSource={withdrawHistory}
           scroll={{ x: true }}
           loading={loading}
-          rowClassName={ (record) => {
-            return record.recordId===parseInt(recordId) ? 'light-row': ''}}
+          rowClassName={record => {
+            return record.recordId === parseInt(recordId) ? "light-row" : "";
+          }}
+        />
+      </Card>
+    );
+  }
+}
+
+const AuditColumn = [
+  {
+    title: "Deposit Amount",
+    dataIndex: "depositAmount",
+    key: "depositAmount"
+  },
+  {
+    title: "Deposit Count",
+    dataIndex: "depositCount",
+    key: "depositCount"
+  },
+  {
+    title: "Open Order Reserved Amount",
+    dataIndex: "openOrderReservedAmount",
+    key: "openOrderReservedAmount"
+  },
+  {
+    title: "Open Order Count",
+    dataIndex: "openOrderCount",
+    key: "openOrderCount"
+  },
+  {
+    title: "Transaction Amount",
+    dataIndex: "transactionAmount",
+    key: "transactionAmount"
+  },
+  {
+    title: "Transaction Count",
+    dataIndex: "transactionCount",
+    key: "transactionCount"
+  },
+  {
+    title: "Withdraw Amount",
+    dataIndex: "withdrawAmount",
+    key: "withdrawAmount"
+  },
+  {
+    title: "Withdraw Count",
+    dataIndex: "withdrawCount",
+    key: "withdrawCount"
+  }
+];
+function AuditResult({ auditResult, loading }) {
+  return (
+    <Card title="Audit Result" className="commonWrap">
+      <Table
+        style={{ marginTop: 15 }}
+        rowKey="withdrawCount"
+        columns={AuditColumn}
+        dataSource={auditResult}
+        loading={loading}
+        pagination={false}
+      />
+    </Card>
+  );
+}
+
+const UserBalanceColumn = [
+  {
+    title: "Currency",
+    dataIndex: "currency",
+    key: "currency"
+  },
+  {
+    title: "Available",
+    dataIndex: "available",
+    key: "available"
+  },
+  {
+    title: "Balance",
+    dataIndex: "balance",
+    key: "balance"
+  },
+  {
+    title: "Value In BTC",
+    dataIndex: "valueInBTC",
+    key: "valueInBTC"
+  },
+  {
+    title: "Value In USD",
+    dataIndex: "valueInUSD",
+    key: "valueInUSD"
+  }
+];
+
+const UserTotalBalanceColumn = [
+  {
+    title: "In Use Value In BTC",
+    dataIndex: "inUseValueInBTC",
+    key: "inUseValueInBTC"
+  },
+  {
+    title: "In Use Value in USD",
+    dataIndex: "inUseValueInUSD",
+    key: "inUseValueInUSD"
+  },
+  {
+    title: "Balance Value In BTC",
+    dataIndex: "balanceValueInBTC",
+    key: "balanceValueInBTC"
+  },
+  {
+    title: "Balance Value In USD",
+    dataIndex: "balanceValueInUSD",
+    key: "balanceValueInUSD"
+  }
+];
+
+class UserBalance extends PureComponent {
+  state = {
+    showAllCurrency: false
+  };
+
+  getUserBalanceEntries = () => {
+    const { userBalance, currency } = this.props;
+    if (!userBalance.entries) return [];
+    if (this.state.showAllCurrency) {
+      return userBalance.entries;
+    }
+    for (let item of userBalance.entries) {
+      if (item.currency === currency) {
+        return [item];
+      }
+    }
+  };
+
+  render() {
+    const { userBalance, loading } = this.props;
+    return (
+      <Card
+        title="User Balance"
+        className="commonWrap"
+        extra={
+          <>
+            <span>Show All Currencies </span>
+            <Switch
+              checked={this.state.showAllCurrency}
+              onChange={checked => {
+                this.setState({ showAllCurrency: checked });
+              }}
+            />
+          </>
+        }
+      >
+        <Table
+          style={{ marginTop: 15 }}
+          rowKey="currency"
+          columns={UserTotalBalanceColumn}
+          dataSource={[
+            {
+              inUseValueInBTC: userBalance.inUseValueInBTC,
+              inUseValueInUSD: userBalance.inUseValueInUSD,
+              balanceValueInBTC: userBalance.balanceValueInBTC,
+              balanceValueInUSD: userBalance.balanceValueInUSD
+            }
+          ]}
+          pagination={false}
+          loading={loading}
+        />
+        <Table
+          style={{ marginTop: 50 }}
+          rowKey="currency"
+          columns={UserBalanceColumn}
+          dataSource={this.getUserBalanceEntries()}
+          loading={loading}
         />
       </Card>
     );
@@ -215,7 +389,7 @@ class InspectResult extends PureComponent {
       message: message
     };
     actions.withdraw.withdrawUpdate(params);
-    actions.withdrawInspection.updateData({inspect:false});
+    actions.withdrawInspection.updateData({ inspect: false });
   };
 
   handleChange = event => {
@@ -228,12 +402,11 @@ class InspectResult extends PureComponent {
 
   getBalance = (walletBalance, currency) => {
     if (walletBalance.balance && walletBalance.balance[currency]) {
-      return `balance: ${walletBalance.balance[currency].balance} ${currency} available: ${
-        walletBalance.balance[currency].available
-      }`;
-    } else {
-      return 0;
+      return `balance: ${
+        walletBalance.balance[currency].balance
+      } ${currency} available: ${walletBalance.balance[currency].available}`;
     }
+    return `balance: 0 ${currency} available: 0`;
   };
 
   render() {
@@ -243,25 +416,23 @@ class InspectResult extends PureComponent {
 
     return (
       <Card title="Inspection Result" className="commonWrap resWrap">
-        <Row type="flex" align="middle">{`BALANCE:`}</Row>
+        <Row type="flex" align="middle">{`WALLET BALANCE:`}</Row>
         <Row type="flex" align="middle">
           {`We have ${balance}`}
-          {balance && (
-            <div style={{ paddingLeft: "20px" }}>
-              <Select
-                value={currency}
-                showSearch={true}
-                placeholder={currency.label}
-                onChange={currency =>
-                  actions.withdrawInspection.updateData({ currency })
-                }
-              >
-                {walletBalance.options.map(item => {
-                  return <Option key={item}>{item}</Option>;
-                })}
-              </Select>
-            </div>
-          )}
+          <div style={{ paddingLeft: "20px" }}>
+            <Select
+              value={currency}
+              showSearch={true}
+              placeholder={currency.label}
+              onChange={currency =>
+                actions.withdrawInspection.updateData({ currency })
+              }
+            >
+              {walletBalance.options.map(item => {
+                return <Option key={item}>{item}</Option>;
+              })}
+            </Select>
+          </div>
         </Row>
 
         <Row style={{ margin: "15px 0" }}>
@@ -322,9 +493,11 @@ class WithdrawInspection extends PureComponent {
       inspect,
       walletBalance,
       currency,
-      loading
+      loading,
+      auditResult,
+      userBalance
     } = withdrawInspection;
-    const {userInfo} = userInspection;
+    const { userInfo } = userInspection;
 
     return (
       <div className="inspectionWrap">
@@ -335,6 +508,12 @@ class WithdrawInspection extends PureComponent {
           withdrawHistory={withdrawHistory}
           currency={currency}
           loading={loading}
+        />
+        <AuditResult auditResult={auditResult} loading={loading} />
+        <UserBalance
+          userBalance={userBalance}
+          loading={loading}
+          currency={currency}
         />
         {inspect && (
           <InspectResult
