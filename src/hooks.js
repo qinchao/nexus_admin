@@ -11,6 +11,7 @@ import SymbolConfig from "Model/SymbolConfig";
 import CurrencyConfig from "Model/CurrencyConfig";
 import RateLimit from "Model/RateLimit";
 import APIResourceCost from "model/APIResourceCost";
+import DepositListModel from "model/DepositList";
 
 import { PERMISSIONS } from "./utils/constant";
 import { LOCATION_CHANGE } from "./utils/constant";
@@ -29,6 +30,7 @@ mirror.model(SymbolConfig);
 mirror.model(CurrencyConfig);
 mirror.model(RateLimit);
 mirror.model(APIResourceCost);
+mirror.model(DepositListModel);
 
 const hookConfigs = [
   {
@@ -94,6 +96,29 @@ const hookConfigs = [
         userId
       });
       actions.kycInspection.initKyc(userId);
+    }
+  },
+  {
+    path: "/operation/deposit",
+    permission: PERMISSIONS.WALLET_ADMIN,
+    handler: getState => {
+      actions.withdraw.initCurrencies();
+      actions.deposit.fetchDeposit();
+    }
+  },
+  {
+    path: "/operation/deposit/inspection",
+    permission: PERMISSIONS.WALLET_ADMIN,
+    handler: getState => {
+      const {
+        routing: {
+          location: { search }
+        }
+      } = getState();
+      const params = search && qs.parse(search.substr(1));
+      let curRecordId = params["recordId"];
+      let userId = params["userId"];
+      actions.deposit.getCurRecord({ curRecordId, userId });
     }
   },
   {

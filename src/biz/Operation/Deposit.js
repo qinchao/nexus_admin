@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 import { actions, Link } from "mirrorx";
 import { formatDistance } from "date-fns";
 import { Button, Table, Typography } from "antd";
-import { Form, DatePicker, Select, Input, notification } from "antd";
+import { Form, DatePicker, Select, Input } from "antd";
 
 import { getTimeColor } from "Utils/index";
 import routerConfig from "appSrc/routerConfig";
@@ -65,35 +65,18 @@ const columns = [
     title: "Action",
     key: "action",
     render: (text, item) => (
-      <span>
-        {item.status === "WAITING_FOR_MANUAL_APPROVAL" ||
-        item.status === "WAITING_FOR_INVESTIGATION" ? (
-          <Link
-            to={`${routerConfig.operation.withdrawInspection}?userId=${
-              item.userId
-            }&recordId=${item.recordId}&currency=${item.currency}&inspect=true`}
-          >
-            <Button className="resetButton" type="primary">
-              Inspect
-            </Button>
-          </Link>
-        ) : (
-          <Link
-            to={`${routerConfig.operation.withdrawInspection}?userId=${
-              item.userId
-            }&recordId=${item.recordId}&inspect=false`}
-          >
-            <Button className="resetButton" type="primary">
-              Review
-            </Button>
-          </Link>
-        )}
-      </span>
+      <Link
+        to={`${routerConfig.operation.depositInspection}?userId=${item.userId}&recordId=${item.recordId}`}
+      >
+        <Button className="resetButton" type="primary">
+          Review
+        </Button>
+      </Link>
     )
   }
 ];
 
-class Withdraw extends PureComponent {
+class Deposit extends PureComponent {
   constructor(props) {
     super(props);
     this.handleSearch = this.handleSearch.bind(this);
@@ -104,17 +87,10 @@ class Withdraw extends PureComponent {
     e.preventDefault();
 
     this.props.form.validateFields((err, values) => {
-      const {
-        timeArray,
-        fromRecordId,
-        toRecordId,
-        userId,
-        status,
-        currency
-      } = values;
+      const { timeArray, fromRecordId, toRecordId, userId, currency } = values;
 
       let fetchParam = {};
-      if(timeArray){
+      if (timeArray) {
         fetchParam = {
           startTime: timeArray[0].valueOf(),
           endTime: timeArray[1].valueOf()
@@ -137,24 +113,7 @@ class Withdraw extends PureComponent {
       if (userId) {
         fetchParam.userId = userId;
       }
-      if (status !== "All") {
-        fetchParam.status = status;
-      }
-      if (!userId && status === "All") {
-        this.props.form.setFieldsValue({
-          status: "WAITING_FOR_MANUAL_APPROVAL"
-        });
-        notification.open({
-          message: "Reset the status to WAITING_FOR_MANUAL_APPROVAL",
-          description: "Please set the userId if you want to search All status.",
-          style: {
-            width: 600,
-            marginLeft: 335 - 600,
-          },
-        });
-        fetchParam.status = "WAITING_FOR_MANUAL_APPROVAL";
-      }
-      actions.withdraw.fetchWithdraw(fetchParam);
+      actions.deposit.fetchDeposit(fetchParam);
     });
   };
 
@@ -163,7 +122,8 @@ class Withdraw extends PureComponent {
   };
 
   render() {
-    const { loading, list, currencies } = this.props.withdraw;
+    const { loading, list } = this.props.deposit;
+    const { currencies } = this.props.withdraw;
     const { getFieldDecorator } = this.props.form;
 
     return (
@@ -174,7 +134,9 @@ class Withdraw extends PureComponent {
           style={{ marginBottom: 15 }}
         >
           <Form.Item label="Date">
-            {getFieldDecorator("timeArray")(<RangePicker onChange={this.onRangePickerChange} />)}
+            {getFieldDecorator("timeArray")(
+              <RangePicker onChange={this.onRangePickerChange} />
+            )}
           </Form.Item>
           <Form.Item label="FromRecordId">
             {getFieldDecorator("fromRecordId")(<Input maxLength={10} />)}
@@ -184,32 +146,6 @@ class Withdraw extends PureComponent {
           </Form.Item>
           <Form.Item label="UserId">
             {getFieldDecorator("userId")(<Input maxLength={25} />)}
-          </Form.Item>
-          <Form.Item label="Status">
-            {getFieldDecorator("status", {
-              initialValue: "WAITING_FOR_MANUAL_APPROVAL"
-            })(
-              <Select style={{ minWidth: "200px" }}>
-                <Option value="All">All</Option>
-                <Option value="WAITING_FOR_USER_CONFIRMATION">
-                  WAITING_FOR_USER_CONFIRMATION
-                </Option>
-                <Option value="WAITING_FOR_AUDIT">WAITING_FOR_AUDIT</Option>
-                <Option value="WAITING_FOR_MANUAL_APPROVAL">
-                  WAITING_FOR_MANUAL_APPROVAL
-                </Option>
-                <Option value="WAITING_FOR_INVESTIGATION">
-                  WAITING_FOR_INVESTIGATION
-                </Option>
-                <Option value="READY_TO_WITHDRAW">READY_TO_WITHDRAW</Option>
-                <Option value="DNW_ONGOING">DNW_ONGOING</Option>
-                <Option value="DNW_SUCC">DNW_SUCC</Option>
-                <Option value="DNW_FAILED">DNW_FAILED</Option>
-                <Option value="DNW_EXPIRED">DNW_EXPIRED</Option>
-                <Option value="DNW_CANCELED">DNW_CANCELED</Option>
-                <Option value="DNW_REJECTED">DNW_REJECTED</Option>
-              </Select>
-            )}
           </Form.Item>
           <Form.Item label="Currency">
             {getFieldDecorator("currency", { initialValue: "All" })(
@@ -232,21 +168,9 @@ class Withdraw extends PureComponent {
           </Form.Item>
         </Form>
 
-        <Text strong>Note</Text>
-        <br />
+        <Text strong>Note: </Text>
         <Text type="secondary">
-          1.Without filtering, you are looking at all the withdraw records with
-          status: WAITING_FOR_MANUAL_APPROVAL.
-        </Text>
-        <br />
-        <Text type="secondary">
-          2.While using the filter, if you didn't specify a userId, you must
-          specify a withdraw status; Otherwise, the status will be set to
-          WAITING_FOR_MANUAL_APPROVAL by default.
-        </Text>
-        <br />
-        <Text type="secondary">
-          3.If you input fromRecordId or toRecordId, Date will not be in the
+          If you input fromRecordId or toRecordId, Date will not be in the
           filer.
         </Text>
 
@@ -262,6 +186,6 @@ class Withdraw extends PureComponent {
   }
 }
 
-const WithdrawList = Form.create({ name: "kyc_search" })(Withdraw);
+const DepositList = Form.create({ name: "deposit_search" })(Deposit);
 
-export default WithdrawList;
+export default DepositList;

@@ -10,6 +10,8 @@ import WithdrawList from "Container/WithdrawList";
 import KYCList from "Container/KYCList";
 import WithdrawInspection from "Container/WithdrawInspection";
 import KYCInspection from "Container/KYCInspection";
+import DepositList from "Container/DepositList";
+import DepositInspection from "Container/DepositInspection";
 
 const { Content, Sider } = Layout;
 
@@ -26,14 +28,13 @@ class OperationWrap extends PureComponent {
             defaultSelectedKeys={[secMenu]}
             style={{ height: "100%", borderRight: 0 }}
           >
-            {getMenuItemData(
-              user,
-              ["operation.kyc", "operation.withdraw"]
-            ).map(menuItemData => (
+            {getMenuItemData(user, [
+              "operation.kyc",
+              "operation.withdraw",
+              "operation.deposit"
+            ]).map(menuItemData => (
               <Menu.Item key={menuItemData.key}>
-                <NavLink to={menuItemData.to}>
-                  {menuItemData.name}
-                </NavLink>
+                <NavLink to={menuItemData.to}>{menuItemData.name}</NavLink>
               </Menu.Item>
             ))}
           </Menu>
@@ -42,22 +43,18 @@ class OperationWrap extends PureComponent {
           <Breadcrumb separator=">" style={{ marginBottom: "15px" }}>
             <Breadcrumb.Item href={routerConfig.index}>Home</Breadcrumb.Item>
             <Breadcrumb.Item href={`/${menu}`}>{menu}</Breadcrumb.Item>
-            {thirdMenu ? 
-              <Breadcrumb.Item href={`/${menu}/${secMenu}`}> 
+            {thirdMenu ? (
+              <Breadcrumb.Item href={`/${menu}/${secMenu}`}>
                 {secMenu}
               </Breadcrumb.Item>
-            : 
-              <Breadcrumb.Item>
-                {secMenu}
-              </Breadcrumb.Item>
-            }
+            ) : (
+              <Breadcrumb.Item>{secMenu}</Breadcrumb.Item>
+            )}
             {thirdMenu ? <Breadcrumb.Item>{thirdMenu}</Breadcrumb.Item> : ""}
           </Breadcrumb>
 
           <Content className="contentWrap">
-            {secMenu === "kyc" && !thirdMenu && (
-              <KYCList {...this.props} />
-            )}
+            {secMenu === "kyc" && !thirdMenu && <KYCList {...this.props} />}
             {secMenu === "kyc" && thirdMenu === "inspection" && (
               <KYCInspection {...this.props} />
             )}
@@ -67,6 +64,13 @@ class OperationWrap extends PureComponent {
             )}
             {secMenu === "withdraw" && thirdMenu === "inspection" && (
               <WithdrawInspection {...this.props} />
+            )}
+
+            {secMenu === "deposit" && !thirdMenu && (
+              <DepositList {...this.props} />
+            )}
+            {secMenu === "deposit" && thirdMenu === "inspection" && (
+              <DepositInspection {...this.props} />
             )}
           </Content>
         </Layout>

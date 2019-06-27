@@ -25,6 +25,12 @@ const adminMenuItemData = {
     to: routerConfig.operation.withdraw,
     permission: PERMISSIONS.WALLET_ADMIN
   },
+  "operation.deposit": {
+    key: "operation.deposit",
+    name: "Deposit",
+    to: routerConfig.operation.deposit,
+    permission: PERMISSIONS.WALLET_ADMIN
+  },
 
   user: {
     key: "user",
@@ -37,6 +43,7 @@ const adminMenuItemData = {
     to: routerConfig.user.userList,
     permission: PERMISSIONS.USER_ADMIN
   },
+
   config: {
     key: "config",
     name: "Config",

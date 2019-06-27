@@ -5,7 +5,9 @@ export default {
     kyc: "/operation/kyc",
     kycInspection: "/operation/kyc/inspection",
     withdraw: "/operation/withdraw",
-    withdrawInspection: "/operation/withdraw/inspection"
+    withdrawInspection: "/operation/withdraw/inspection",
+    deposit: "/operation/deposit",
+    depositInspection: "/operation/deposit/inspection"
   },
   user: {
     root: "/user",

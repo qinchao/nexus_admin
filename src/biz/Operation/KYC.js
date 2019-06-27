@@ -75,9 +75,7 @@ const columns = [
       <span>
         {item.kycStatus === "PENDING_FOR_REVIEW" ? (
           <Link
-            to={`${routerConfig.operation.kycInspection}?userId=${
-              item.userId
-            }&createTime=${item.createTime}&inspect=true`}
+            to={`${routerConfig.operation.kycInspection}?userId=${item.userId}&createTime=${item.createTime}&inspect=true`}
           >
             <Button size="small" type="primary">
               Inspect
@@ -85,9 +83,7 @@ const columns = [
           </Link>
         ) : (
           <Link
-            to={`${routerConfig.operation.kycInspection}?userId=${
-              item.userId
-            }&createTime=${item.createTime}&inspect=false`}
+            to={`${routerConfig.operation.kycInspection}?userId=${item.userId}&createTime=${item.createTime}&inspect=false`}
           >
             <Button size="small" type="primary">
               Review
@@ -112,7 +108,7 @@ class KYC extends PureComponent {
     this.props.form.validateFields((err, values) => {
       const { timeArray, userId, status } = values;
       let fetchParam = {};
-      if(timeArray){
+      if (timeArray) {
         fetchParam = {
           startTime: timeArray[0].valueOf(),
           endTime: timeArray[1].valueOf()
@@ -130,11 +126,12 @@ class KYC extends PureComponent {
         });
         notification.open({
           message: "Reset the status to PENDING_FOR_REVIEW",
-          description: "Please set the userId if you want to search All status.",
+          description:
+            "Please set the userId if you want to search All status.",
           style: {
             width: 600,
-            marginLeft: 335 - 600,
-          },
+            marginLeft: 335 - 600
+          }
         });
         fetchParam.status = "PENDING_FOR_REVIEW";
       }
@@ -158,7 +155,9 @@ class KYC extends PureComponent {
           style={{ marginBottom: 15 }}
         >
           <Form.Item label="Date">
-            {getFieldDecorator("timeArray")(<RangePicker onChange={this.onRangePickerChange} />)}
+            {getFieldDecorator("timeArray")(
+              <RangePicker onChange={this.onRangePickerChange} />
+            )}
           </Form.Item>
           <Form.Item label="UserId">
             {getFieldDecorator("userId")(<Input maxLength={10} />)}

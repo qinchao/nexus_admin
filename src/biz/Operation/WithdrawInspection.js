@@ -87,6 +87,18 @@ const WithdrawHistoryColumns = [
     width: 150
   },
   {
+    title: "Txid",
+    dataIndex: "txid",
+    key: "txid",
+    width: 150
+  },
+  {
+    title: "SubAccount Id",
+    dataIndex: "subAccountId",
+    key: "subAccountId",
+    width: 150
+  },
+  {
     title: "Source Address",
     dataIndex: "sourceAddress",
     key: "sourceAddress",
@@ -402,9 +414,7 @@ class InspectResult extends PureComponent {
 
   getBalance = (walletBalance, currency) => {
     if (walletBalance.balance && walletBalance.balance[currency]) {
-      return `balance: ${
-        walletBalance.balance[currency].balance
-      } ${currency} available: ${walletBalance.balance[currency].available}`;
+      return `balance: ${walletBalance.balance[currency].balance} ${currency} available: ${walletBalance.balance[currency].available}`;
     }
     return `balance: 0 ${currency} available: 0`;
   };
