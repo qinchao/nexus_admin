@@ -2,18 +2,27 @@ import Big from "big.js";
 import format from "date-fns/format";
 import { PAIR_CONNECTION, SYMBOL_CONNECTION, LANG_LIST } from "./constant.js";
 import APIService from "Service/APIService";
+import moment from "moment";
 
 Big.RM = 0; // ROUND_DOWN, aka floor
 
+// truncate hours, minutes and seconds of a moment
+// e.g:
+// Jul 02 2019 12:34:23 -> Jul 02 2019 00:00:00
+export function truncateToDate(t) {
+  const dateFormat = "MM/DD/YYYY";
+  return moment.utc(t.format(dateFormat), dateFormat);
+}
+
 export async function getIdToCurrency() {
-  const currencies = await APIService.request(
-    "get",
-    "/config/currencies",
-  );
+  const currencies = await APIService.request("get", "/config/currencies");
   let idToCurrency = new Map();
   if (!currencies.error) {
-    currencies.forEach((currency) => {
-      if (currency.hasOwnProperty("currencyId") && currency.hasOwnProperty("currency")) {
+    currencies.forEach(currency => {
+      if (
+        currency.hasOwnProperty("currencyId") &&
+        currency.hasOwnProperty("currency")
+      ) {
         idToCurrency.set(currency.currencyId, currency.currency);
       }
     });
@@ -325,4 +334,3 @@ export function currencyPairIsValid(pair) {
   }
   return true;
 }
-

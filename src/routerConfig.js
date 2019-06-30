@@ -21,5 +21,9 @@ export default {
     currencyConfig: "/config/currency",
     rateLimit: "/config/rateLimit",
     apiResourceCost: "/config/apiResourceCost"
+  },
+  statistics: {
+    root: "/statistics",
+    tradingStatistics: "/statistics/trading"
   }
 };

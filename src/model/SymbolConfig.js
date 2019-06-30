@@ -9,7 +9,7 @@ export default {
     innerSymbols: null, // map[symbolId] -> innerSymbol
     quoteBaseSymbols: null, // map[quoteCurrencyId][baseCurrencyId] -> innerSymbol
     submittable: false,
-    idToCurrency: null,
+    idToCurrency: null
   },
   reducers: {
     updateData(state, data) {
@@ -17,26 +17,19 @@ export default {
     }
   },
   effects: {
-    async submitSymbolConfig({symbolConfig}) {
-      await APIService.request(
-        "POST",
-        "/config/inner_symbol",
-        {
-          "symbolConfig": symbolConfig,
-        }
-      );
+    async submitSymbolConfig({ symbolConfig }) {
+      await APIService.request("POST", "/config/inner_symbol", {
+        symbolConfig: symbolConfig
+      });
     },
 
     async fetchSymbolConfig() {
       actions.symbolConfig.updateData({ loading: true });
       let idToCurrency = await getIdToCurrency();
-      const result = await APIService.request(
-        "get",
-        "/config/inner_symbols",
-      );
+      const result = await APIService.request("get", "/config/inner_symbols");
       let quoteBaseSymbols = new Map();
       let innerSymbols = new Map();
-      if (result) {
+      if (!result.error) {
         result.forEach(innerSymbol => {
           if (innerSymbol.hasOwnProperty("version")) {
             delete innerSymbol.version;
@@ -48,7 +41,10 @@ export default {
           if (quoteBaseSymbols.has(quoteCurrency)) {
             quoteBaseSymbols.get(quoteCurrency).set(baseCurrency, innerSymbol);
           } else {
-            quoteBaseSymbols.set(quoteCurrency, new Map([[baseCurrency, innerSymbol]]));
+            quoteBaseSymbols.set(
+              quoteCurrency,
+              new Map([[baseCurrency, innerSymbol]])
+            );
           }
         });
       }
@@ -56,8 +52,8 @@ export default {
         innerSymbols,
         loading: false,
         quoteBaseSymbols,
-        idToCurrency,
+        idToCurrency
       });
-    },
+    }
   }
 };

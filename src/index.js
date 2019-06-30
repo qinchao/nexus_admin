@@ -17,6 +17,7 @@ import Index from "Container/Index";
 import OperationWrap from "Container/OperationWrap";
 import UserWrap from "Container/UserWrap";
 import ConfigWrap from "Container/ConfigWrap";
+import StatisticsWrap from "Container/StatisticsWrap";
 
 mirror.defaults({
   historyMode: "browser"
@@ -38,30 +39,14 @@ function Routes() {
           path="/:menu(operation)/:secMenu/:thirdMenu"
           component={OperationWrap}
         />
-        <Route
-          path="/:menu(operation)/:secMenu"
-          component={OperationWrap}
-        />
-        <Route
-          path="/:menu(operation)"
-          component={OperationWrap}
-        />
-        <Route
-          path="/:menu(user)/:secMenu"
-          component={UserWrap}
-        />
-        <Route
-          path="/:menu(user)"
-          component={UserWrap}
-        />
-        <Route
-          path="/:menu(config)/:secMenu"
-          component={ConfigWrap}
-        />
-        <Route
-          path="/:menu(config)"
-          component={ConfigWrap}
-        />
+        <Route path="/:menu(operation)/:secMenu" component={OperationWrap} />
+        <Route path="/:menu(operation)" component={OperationWrap} />
+        <Route path="/:menu(user)/:secMenu" component={UserWrap} />
+        <Route path="/:menu(user)" component={UserWrap} />
+        <Route path="/:menu(config)/:secMenu" component={ConfigWrap} />
+        <Route path="/:menu(config)" component={ConfigWrap} />
+        <Route path="/:menu(statistics)/:secMenu" component={StatisticsWrap} />
+        <Route path="/:menu(statistics)" component={StatisticsWrap} />
         <Route component={Index} />
       </Switch>
     </Router>

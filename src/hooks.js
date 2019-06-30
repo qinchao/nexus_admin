@@ -10,8 +10,9 @@ import GlobalConfig from "Model/GlobalConfig";
 import SymbolConfig from "Model/SymbolConfig";
 import CurrencyConfig from "Model/CurrencyConfig";
 import RateLimit from "Model/RateLimit";
-import APIResourceCost from "model/APIResourceCost";
-import DepositListModel from "model/DepositList";
+import APIResourceCost from "Model/APIResourceCost";
+import DepositListModel from "Model/DepositList";
+import TradingStatistics from "Model/TradingStatistics";
 
 import { PERMISSIONS } from "./utils/constant";
 import { LOCATION_CHANGE } from "./utils/constant";
@@ -31,6 +32,7 @@ mirror.model(CurrencyConfig);
 mirror.model(RateLimit);
 mirror.model(APIResourceCost);
 mirror.model(DepositListModel);
+mirror.model(TradingStatistics);
 
 const hookConfigs = [
   {
@@ -176,6 +178,13 @@ const hookConfigs = [
     permission: PERMISSIONS.SITE_ADMIN,
     handler: () => {
       actions.apiResourceCost.fetchApiResourceCosts();
+    }
+  },
+  {
+    path: "/statistics/trading",
+    permission: PERMISSIONS.SITE_ADMIN,
+    handler: () => {
+      actions.tradingStatistics.fetchTradingData();
     }
   }
 ];

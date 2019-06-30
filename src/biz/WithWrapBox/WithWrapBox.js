@@ -42,15 +42,16 @@ function withWrapBox(WrappedComponent) {
                 selectedKeys={[this.state.nav]}
                 style={{ lineHeight: "64px" }}
               >
-                {getMenuItemData(user, ["operation", "user", "config"]).map(
-                  menuItemData => (
-                    <Menu.Item key={menuItemData.key}>
-                      <NavLink to={menuItemData.to}>
-                        {menuItemData.name}
-                      </NavLink>
-                    </Menu.Item>
-                  )
-                )}
+                {getMenuItemData(user, [
+                  "operation",
+                  "user",
+                  "config",
+                  "statistics"
+                ]).map(menuItemData => (
+                  <Menu.Item key={menuItemData.key}>
+                    <NavLink to={menuItemData.to}>{menuItemData.name}</NavLink>
+                  </Menu.Item>
+                ))}
               </Menu>
             </div>
             <div className="userInfo">
