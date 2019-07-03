@@ -186,6 +186,13 @@ const hookConfigs = [
     handler: () => {
       actions.tradingStatistics.fetchTradingData();
     }
+  },
+  {
+    path: "/statistics/user",
+    permission: PERMISSIONS.SITE_ADMIN,
+    handler: async () => {
+      actions.userList.getUserStatistics();
+    }
   }
 ];
 

@@ -24,6 +24,7 @@ export default {
   },
   statistics: {
     root: "/statistics",
-    tradingStatistics: "/statistics/trading"
+    tradingStatistics: "/statistics/trading",
+    userStatistics: "/statistics/user"
   }
 };

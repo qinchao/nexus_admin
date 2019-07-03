@@ -14,7 +14,7 @@ const { Content, Sider } = Layout;
 class UserWrap extends PureComponent {
   render() {
     const { user, match } = this.props;
-    const {menu, secMenu} = match.params;
+    const { menu, secMenu } = match.params;
 
     return (
       <Layout>
@@ -24,14 +24,9 @@ class UserWrap extends PureComponent {
             defaultSelectedKeys={[secMenu]}
             style={{ height: "100%", borderRight: 0 }}
           >
-            {getMenuItemData(
-              user,
-              ["user.userList"]
-            ).map(menuItemData => (
+            {getMenuItemData(user, ["user.userList"]).map(menuItemData => (
               <Menu.Item key={menuItemData.key}>
-                <NavLink to={menuItemData.to}>
-                  {menuItemData.name}
-                </NavLink>
+                <NavLink to={menuItemData.to}>{menuItemData.name}</NavLink>
               </Menu.Item>
             ))}
           </Menu>
@@ -44,12 +39,8 @@ class UserWrap extends PureComponent {
           </Breadcrumb>
 
           <Content className="contentWrap">
-            {secMenu === "list" && (
-              <UserList {...this.props} />
-            )}
-            {secMenu === "inspection" && (
-              <UserInspection {...this.props} />
-            )}
+            {secMenu === "list" && <UserList {...this.props} />}
+            {secMenu === "inspection" && <UserInspection {...this.props} />}
           </Content>
         </Layout>
       </Layout>

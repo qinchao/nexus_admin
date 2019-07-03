@@ -80,6 +80,7 @@ const adminMenuItemData = {
     to: routerConfig.config.apiResourceCost,
     permission: PERMISSIONS.SITE_ADMIN
   },
+
   statistics: {
     key: "statistics",
     name: "Statistics",
@@ -90,6 +91,12 @@ const adminMenuItemData = {
     key: "tradingStatistics",
     name: "Trading Statistics",
     to: routerConfig.statistics.tradingStatistics,
+    permission: PERMISSIONS.SITE_ADMIN
+  },
+  "statistics.user": {
+    key: "user",
+    name: "User Statistics",
+    to: routerConfig.statistics.userStatistics,
     permission: PERMISSIONS.SITE_ADMIN
   }
 };

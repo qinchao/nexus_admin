@@ -6,7 +6,8 @@ export default {
   name: "userList",
   initialState: {
     loading: false,
-    list: []
+    list: [],
+    userStatistics: []
   },
   reducers: {
     updateData(state, data) {
@@ -66,6 +67,19 @@ export default {
         }
       }
       actions.userList.updateData({ list });
+    },
+    async getUserStatistics(data, getState) {
+      actions.userList.updateData({ loading: true });
+      const result = await APIService.awsRequest(
+        "get",
+        "/admin/user_statistics",
+        data
+      );
+      let list = [];
+      if (!result.error) {
+        list = result;
+      }
+      actions.userList.updateData({ userStatistics: list, loading: false });
     }
   }
 };

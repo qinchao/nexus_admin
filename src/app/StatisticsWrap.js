@@ -7,6 +7,7 @@ import routerConfig from "appSrc/routerConfig";
 import { withWrapBox } from "Biz/WithWrapBox/WithWrapBox";
 
 import TradingStatistics from "Container/TradingStatistics";
+import UserStatistics from "Container/UserStatistics";
 
 const { Content, Sider } = Layout;
 
@@ -23,7 +24,10 @@ class StatisticsWrap extends PureComponent {
             defaultSelectedKeys={[secMenu]}
             style={{ height: "100%", borderRight: 0 }}
           >
-            {getMenuItemData(user, ["statistics.trading"]).map(menuItemData => (
+            {getMenuItemData(user, [
+              "statistics.trading",
+              "statistics.user"
+            ]).map(menuItemData => (
               <Menu.Item key={menuItemData.key}>
                 <NavLink to={menuItemData.to}>{menuItemData.name}</NavLink>
               </Menu.Item>
@@ -41,6 +45,7 @@ class StatisticsWrap extends PureComponent {
 
           <Content className="contentWrap">
             {secMenu === "trading" && <TradingStatistics {...this.props} />}
+            {secMenu === "user" && <UserStatistics {...this.props} />}
           </Content>
         </Layout>
       </Layout>
