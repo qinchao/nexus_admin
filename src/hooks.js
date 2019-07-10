@@ -13,10 +13,14 @@ import RateLimit from "Model/RateLimit";
 import APIResourceCost from "Model/APIResourceCost";
 import DepositListModel from "Model/DepositList";
 import TradingStatistics from "Model/TradingStatistics";
+import DepositStatistics from "Model/DepositStatistics";
+import WithdrawStatistics from "Model/WithdrawStatistics";
+import OverallStatistics from "Model/OverallStatistics";
 
 import { PERMISSIONS } from "./utils/constant";
 import { LOCATION_CHANGE } from "./utils/constant";
 import qs from "qs";
+import moment from "moment";
 
 // inject model
 mirror.model(User);
@@ -33,6 +37,9 @@ mirror.model(RateLimit);
 mirror.model(APIResourceCost);
 mirror.model(DepositListModel);
 mirror.model(TradingStatistics);
+mirror.model(DepositStatistics);
+mirror.model(WithdrawStatistics);
+mirror.model(OverallStatistics);
 
 const hookConfigs = [
   {
@@ -192,6 +199,66 @@ const hookConfigs = [
     permission: PERMISSIONS.SITE_ADMIN,
     handler: async () => {
       actions.userList.getUserStatistics();
+    }
+  },
+  {
+    path: "/statistics/deposit",
+    permission: PERMISSIONS.SITE_ADMIN,
+    handler: async () => {
+      const endDateStr = moment()
+        .utc()
+        .startOf("day")
+        .add(1, "d").format("MM/DD/YYYY");
+      const startDateStr = moment()
+        .utc()
+        .startOf("day")
+        .subtract(6, "d").format("MM/DD/YYYY");
+      const timeZone = "UTC";
+      actions.depositStatistics.fetchDnwData({
+        startDateStr,
+        endDateStr,
+        timeZone,
+      });
+    }
+  },
+  {
+    path: "/statistics/withdraw",
+    permission: PERMISSIONS.SITE_ADMIN,
+    handler: async () => {
+      const endDateStr = moment()
+        .utc()
+        .startOf("day")
+        .add(1, "d").format("MM/DD/YYYY");
+      const startDateStr = moment()
+        .utc()
+        .startOf("day")
+        .subtract(6, "d").format("MM/DD/YYYY");
+      const timeZone = "UTC";
+      actions.withdrawStatistics.fetchDnwData({
+        startDateStr,
+        endDateStr,
+        timeZone,
+      });
+    }
+  },
+  {
+    path: "/statistics/overall",
+    permission: PERMISSIONS.SITE_ADMIN,
+    handler: async () => {
+      const endDateStr = moment()
+        .utc()
+        .startOf("day")
+        .add(1, "d").format("MM/DD/YYYY");
+      const startDateStr = moment()
+        .utc()
+        .startOf("day")
+        .subtract(29, "d").format("MM/DD/YYYY");
+      const timeZone = "UTC";
+      actions.overallStatistics.fetchData({
+        startDateStr,
+        endDateStr,
+        timeZone,
+      });
     }
   }
 ];

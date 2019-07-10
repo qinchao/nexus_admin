@@ -1,5 +1,5 @@
 import React from "react";
-import {Button, Col, Form, Icon, Input, message, Row, Select, Spin} from "antd";
+import {Button, Col, Form, Icon, message, Row, Select, Spin} from "antd";
 import { ConfigPageTemplate } from "./ConfigPageTemplate";
 import { actions } from "mirrorx";
 const { Option } = Select;

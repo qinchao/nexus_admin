@@ -1,7 +1,6 @@
 import React, { PureComponent } from "react";
-import { Form, Select, Table, DatePicker, Button, notification } from "antd";
+import { Form, Select, Table, DatePicker, Button } from "antd";
 import { actions } from "mirrorx";
-import { truncateToDate } from "Utils/index";
 import moment from "moment-timezone";
 
 const { Option } = Select;

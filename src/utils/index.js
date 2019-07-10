@@ -14,6 +14,11 @@ export function truncateToDate(t) {
   return moment.utc(t.format(dateFormat), dateFormat);
 }
 
+export function dateStrWithTimezoneToUnix(dateStr, timezone) {
+  const dateFormat = "MM/DD/YYYY";
+  return moment.tz(dateStr, dateFormat, timezone).unix();
+}
+
 export async function getIdToCurrency() {
   const currencies = await APIService.request("get", "/config/currencies");
   let idToCurrency = new Map();

@@ -87,6 +87,12 @@ const adminMenuItemData = {
     to: routerConfig.statistics.root,
     permission: PERMISSIONS.SITE_ADMIN
   },
+  "statistics.overall": {
+    key: "overallStatistics",
+    name: "Overall Statistics",
+    to: routerConfig.statistics.overall,
+    permission: PERMISSIONS.SITE_ADMIN
+  },
   "statistics.trading": {
     key: "tradingStatistics",
     name: "Trading Statistics",
@@ -98,7 +104,19 @@ const adminMenuItemData = {
     name: "User Statistics",
     to: routerConfig.statistics.userStatistics,
     permission: PERMISSIONS.SITE_ADMIN
-  }
+  },
+  "statistics.deposit": {
+    key: "depositStatistics",
+    name: "Deposit Statistics",
+    to: routerConfig.statistics.depositStatistics,
+    permission: PERMISSIONS.SITE_ADMIN
+  },
+  "statistics.withdraw": {
+    key: "withdrawStatistics",
+    name: "Withdraw Statistics",
+    to: routerConfig.statistics.withdrawStatistics,
+    permission: PERMISSIONS.SITE_ADMIN
+  },
 };
 
 /**

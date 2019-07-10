@@ -24,7 +24,10 @@ export default {
   },
   statistics: {
     root: "/statistics",
+    overall: "/statistics/overall",
     tradingStatistics: "/statistics/trading",
-    userStatistics: "/statistics/user"
+    userStatistics: "/statistics/user",
+    depositStatistics: "/statistics/deposit",
+    withdrawStatistics: "/statistics/withdraw",
   }
 };

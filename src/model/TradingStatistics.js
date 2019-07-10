@@ -1,8 +1,6 @@
 import { actions } from "mirrorx";
 import APIService from "Service/APIService";
 import moment from "moment";
-import { truncateToDate } from "Utils/index";
-const dateFormat = "MM/DD/YYYY";
 
 export default {
   name: "tradingStatistics",
