@@ -29,5 +29,9 @@ export default {
     userStatistics: "/statistics/user",
     depositStatistics: "/statistics/deposit",
     withdrawStatistics: "/statistics/withdraw",
-  }
+  },
+  dashboard: {
+    root: "/dashboard",
+    gluejob: "/dashboard/gluejob",
+  },
 };

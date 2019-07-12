@@ -46,7 +46,8 @@ function withWrapBox(WrappedComponent) {
                   "operation",
                   "user",
                   "config",
-                  "statistics"
+                  "statistics",
+                  "dashboard",
                 ]).map(menuItemData => (
                   <Menu.Item key={menuItemData.key}>
                     <NavLink to={menuItemData.to}>{menuItemData.name}</NavLink>

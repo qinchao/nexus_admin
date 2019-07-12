@@ -16,6 +16,7 @@ import TradingStatistics from "Model/TradingStatistics";
 import DepositStatistics from "Model/DepositStatistics";
 import WithdrawStatistics from "Model/WithdrawStatistics";
 import OverallStatistics from "Model/OverallStatistics";
+import GlueJob from "Model/GlueJob";
 
 import { PERMISSIONS } from "./utils/constant";
 import { LOCATION_CHANGE } from "./utils/constant";
@@ -40,6 +41,7 @@ mirror.model(TradingStatistics);
 mirror.model(DepositStatistics);
 mirror.model(WithdrawStatistics);
 mirror.model(OverallStatistics);
+mirror.model(GlueJob);
 
 const hookConfigs = [
   {
@@ -260,7 +262,15 @@ const hookConfigs = [
         timeZone,
       });
     }
+  },
+  {
+    path: "/dashboard/gluejob",
+    permission: PERMISSIONS.SITE_ADMIN,
+    handler: async () => {
+      actions.glueJob.fetchGlueJobData();
+    }
   }
+
 ];
 
 // listen to route change

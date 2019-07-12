@@ -117,6 +117,18 @@ const adminMenuItemData = {
     to: routerConfig.statistics.withdrawStatistics,
     permission: PERMISSIONS.SITE_ADMIN
   },
+  dashboard: {
+    key: "dashboard",
+    name: "Dashboard",
+    to: routerConfig.dashboard.root,
+    permission: PERMISSIONS.SITE_ADMIN
+  },
+  "dashboard.gluejob": {
+    key: "glueJob",
+    name: "Glue Job",
+    to: routerConfig.dashboard.gluejob,
+    permission: PERMISSIONS.SITE_ADMIN
+  },
 };
 
 /**

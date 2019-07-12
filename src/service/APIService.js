@@ -17,21 +17,21 @@ Amplify.configure({
   Auth: AuthConfig,
   endpoints: AwsAPIEndpointsConfig
 });
-
+const timeout = 30000;
 // axios config
 const axiosLogin = Axios.create({
   baseURL: RestAPIEndpointsConfig.endpoint,
-  timeout: 15000
+  timeout: timeout
 });
 
 const axios = Axios.create({
   baseURL: RestAPIEndpointsConfig.endpoint,
-  timeout: 15000
+  timeout: timeout
 });
 
 const axiosAwsWithoutLogin = Axios.create({
   baseURL: AwsAPIEndpointsConfig[0].endpoint,
-  timeout: 15000
+  timeout: timeout
 });
 
 const ERROE_TEXT = "Something went wrong, please try again later.";

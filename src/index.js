@@ -18,6 +18,7 @@ import OperationWrap from "Container/OperationWrap";
 import UserWrap from "Container/UserWrap";
 import ConfigWrap from "Container/ConfigWrap";
 import StatisticsWrap from "Container/StatisticsWrap";
+import DashboardWrap from "container/DashboardWrap";
 
 mirror.defaults({
   historyMode: "browser"
@@ -47,6 +48,8 @@ function Routes() {
         <Route path="/:menu(config)" component={ConfigWrap} />
         <Route path="/:menu(statistics)/:secMenu" component={StatisticsWrap} />
         <Route path="/:menu(statistics)" component={StatisticsWrap} />
+        <Route path="/:menu(dashboard)/:secMenu" component={DashboardWrap} />
+        <Route path="/:menu(dashboard)" component={DashboardWrap} />
         <Route component={Index} />
       </Switch>
     </Router>
