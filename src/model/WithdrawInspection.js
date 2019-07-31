@@ -87,8 +87,8 @@ export default {
       const {
         withdrawInspection: { userId }
       } = getState();
-      // TODO: change to admin/balance
-      let userBalance = await APIService.request("get", "/account/balance", {
+      let userBalance = await APIService.request("get", "/admin/balance", {
+        userId: userId,
         precalcAssetValue: true
       });
       if (!userBalance.error) {
